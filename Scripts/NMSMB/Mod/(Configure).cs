@@ -47,7 +47,7 @@ public class Configure : cmk.NMS.Script.ModClass
 		// the save it's like all those missions are treated as newly added
 		// so they will likely all start with their first stage.
 		// Defaults to false to make sure user aware of risk.
-		//Mod<Mission_Skip>().IsExecutable = false;
+		Mod<Mission_Skip>().IsExecutable = false;
 	}
 
 	//...........................................................
