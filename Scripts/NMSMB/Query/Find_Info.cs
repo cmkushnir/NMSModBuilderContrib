@@ -11,7 +11,7 @@ public class Find_Info : cmk.NMS.Script.QueryClass
 
 		// can search using regex, predicate, startswith, endwith, contains.
 		// click on FindInfo and look at intellisense list below.
-		var regex = new Regex("ROLLER.*MBIN");		
+		var regex = new Regex("AISPACESHIPGLOBALS.*MBIN");		
 		var list  = Game.PCBANKS.FindInfo(regex);
 
 		foreach( var info in list ) {

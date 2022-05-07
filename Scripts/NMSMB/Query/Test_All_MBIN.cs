@@ -32,7 +32,7 @@ public class Test_All_MBIN : cmk.NMS.Script.QueryClass
 				Log.AddFailure($"Compile {MBIN.Path}");
 				lock( fail_compile ) fail_compile.Add(MBIN.Path);
 				return;
-			}
+			}			
 			var exml2 = mbinc.NMSTemplateToExml(mbin);  // mbin -> exml
 			if( exml2.IsNullOrEmpty() ) {
 				Log.AddFailure($"Decompile 2 {MBIN.Path}");

@@ -17,7 +17,7 @@ public class Export_Descriptor_Trees : cmk.NMS.Script.QueryClass
 
 	//...........................................................
 
-	protected override void Execute ()
+	protected override void Execute()
 	{		
 		var dir = Dialog.SelectFolder();
 		if( dir.IsNullOrEmpty() ) return;

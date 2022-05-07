@@ -17,7 +17,7 @@ public class Search_All_MBIN : cmk.NMS.Script.QueryClass
 		Game.PCBANKS.ForEachMbin(( MBIN, LOG, CANCEL ) => {
 			Interlocked.Increment(ref count);
 			var ebin   = MBIN.CreateEBIN();
-			var index  = ebin.IndexOf("GcCharacterCustomisationColourData"); //, StringComparison.OrdinalIgnoreCase);
+			var index  = ebin.IndexOf("UseInteractCamera"); //, StringComparison.OrdinalIgnoreCase);
 			if( index >= 0 ) LOG.AddInformation($"{MBIN.Path.Full}[{ebin.Length}] @ {index}.");
 		},	Log, Cancel);
 		
