@@ -18,6 +18,7 @@ global using global::libMBIN.NMS.Toolkit;
 global using global::libMBIN.NMS.SketchNodes;
 
 global using global::cmk;
+global using global::cmk.NMS;  // required for some extension methods
 
 global using nms = global::libMBIN.NMS;
 global using NMS = global::cmk.NMS;
@@ -26,13 +27,16 @@ global using NMS = global::cmk.NMS;
 // libMBIN enum aliases:
 //=============================================================================
 
+global using AerialViewModeEnum              = global::libMBIN.NMS.GameComponents.GcCameraAerialViewData.AerialViewModeEnum;
 global using AlienRaceEnum                   = global::libMBIN.NMS.GameComponents.GcAlienRace.AlienRaceEnum;
+global using AutoStartEnum                   = global::libMBIN.NMS.GameComponents.GcGenericMissionSequence.AutoStartEnum;
 global using BaseTerrainEditShapeEnum        = global::libMBIN.NMS.GameComponents.GcBaseBuildingEntry.BaseTerrainEditShapeEnum;
 global using BiomeEnum                       = global::libMBIN.NMS.GameComponents.GcBiomeType.BiomeEnum;
 global using BootModeEnum                    = global::libMBIN.NMS.Globals.GcDebugOptions.BootModeEnum;
 global using BuildingClassEnum               = global::libMBIN.NMS.GameComponents.GcBuildingClassification.BuildingClassEnum;
 global using BuildingLocationEnum            = global::libMBIN.NMS.GameComponents.GcScanEventData.BuildingLocationEnum;
 global using CompletionRequirementEnum       = global::libMBIN.NMS.GameComponents.GcMaintenanceElement.CompletionRequirementEnum;
+global using ConditionTestEnum               = global::libMBIN.NMS.GameComponents.GcMissionConditionTest.ConditionTestEnum;
 global using DependsOnHotspotsEnum           = global::libMBIN.NMS.GameComponents.GcBaseLinkGridData.DependsOnHotspotsEnum;
 global using EventStartTypeEnum              = global::libMBIN.NMS.GameComponents.GcScanEventData.EventStartTypeEnum;
 global using FrigateStatTypeEnum             = global::libMBIN.NMS.GameComponents.GcFrigateStatType.FrigateStatTypeEnum;

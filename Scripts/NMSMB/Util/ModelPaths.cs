@@ -3,6 +3,20 @@
 // related items.  Was designed to be used by Add_Decal, does not exactly follow
 // where HG puts the varioud related items.
 // See: mod script Add_Decal.
+// PATH e.g.              "MODELS/CMK/POSTERS/"
+// NAME e.g.              "POSTER001"
+// Descriptor:            "MODELS/CMK/POSTERS/POSTER001/POSTER001.DESCRIPTOR.MBIN"
+// Scene:                 "MODELS/CMK/POSTERS/POSTER001/POSTER001.SCENE.MBIN"
+// Geometry:              "MODELS/CMK/POSTERS/POSTER001/POSTER001.GEOMETRY.MBIN.PC"
+// GeometryData:          "MODELS/CMK/POSTERS/POSTER001/POSTER001.GEOMETRY.DATA.MBIN.PC"
+// Material:              "MODELS/CMK/POSTERS/POSTER001/POSTER001.MATERIAL.MBIN"
+// PlacementScene:        "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.SCENE.MBIN"
+// PlacementGeometry:     "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.GEOMETRY.MBIN.PC"
+// PlacementGeometryData: "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.GEOMETRY.DATA.MBIN.PC"
+// PlacementMaterial:     "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.MATERIAL.MBIN"
+// Entity:                "MODELS/CMK/POSTERS/POSTER001/ENTITIES/POSTER001.ENTITY.MBIN"
+// PlacementEntity:       "MODELS/CMK/POSTERS/POSTER001/ENTITIES/PLACEMENTDATA.ENTITY.MBIN"
+// There may also be a POSTER001_LOD set of folder|mbin's.
 //=============================================================================
 
 public class ModelPaths
@@ -19,22 +33,6 @@ public class ModelPaths
 	public NMS.PAK.Item.Path PlacementMaterial;
 	public NMS.PAK.Item.Path PlacementEntity;
 
-	/// <summary>
-	/// PATH e.g.              "MODELS/CMK/POSTERS/"
-	/// NAME e.g.              "POSTER001"
-	/// Descriptor:            "MODELS/CMK/POSTERS/POSTER001/POSTER001.DESCRIPTOR.MBIN"
-	/// Scene:                 "MODELS/CMK/POSTERS/POSTER001/POSTER001.SCENE.MBIN"
-	/// Geometry:              "MODELS/CMK/POSTERS/POSTER001/POSTER001.GEOMETRY.MBIN.PC"
-	/// GeometryData:          "MODELS/CMK/POSTERS/POSTER001/POSTER001.GEOMETRY.DATA.MBIN.PC"
-	/// Material:              "MODELS/CMK/POSTERS/POSTER001/POSTER001.MATERIAL.MBIN"
-	/// PlacementScene:        "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.SCENE.MBIN"
-	/// PlacementGeometry:     "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.GEOMETRY.MBIN.PC"
-	/// PlacementGeometryData: "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.GEOMETRY.DATA.MBIN.PC"
-	/// PlacementMaterial:     "MODELS/CMK/POSTERS/POSTER001/POSTER001_PLACEMENT.MATERIAL.MBIN"
-	/// Entity:                "MODELS/CMK/POSTERS/POSTER001/ENTITIES/POSTER001.ENTITY.MBIN"
-	/// PlacementEntity:       "MODELS/CMK/POSTERS/POSTER001/ENTITIES/PLACEMENTDATA.ENTITY.MBIN"
-	/// There may also be a POSTER001_LOD set of folder|mbin's.
-	/// </summary>
 	public static ModelPaths Create( string PATH, string NAME )
 	{
 		var path     = System.IO.Path.Combine(PATH, NAME, NAME);        // "MODELS/CMK/POSTERS/POSTER001/POSTER001"
