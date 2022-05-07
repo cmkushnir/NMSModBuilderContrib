@@ -7,8 +7,6 @@ public class Globals : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		Try(() => GcDebugOptions());
-		Try(() => GcCameraGlobals());
-		Try(() => GcGraphicsGlobals());
 		Try(() => GcCharacterGlobals());
 	}
 
@@ -27,32 +25,6 @@ public class Globals : cmk.NMS.Script.ModClass
 		mbin.SpecialsShop               = true;
 		mbin.DisableProfanityFilter     = true;
 		mbin.GenerateFarLodBuildingDist = 4000;  // 1000
-	}
-
-	//...........................................................
-
-	protected void GcCameraGlobals()
-	{
-		var mbin = ExtractMbin<GcCameraGlobals>(
-			"GCCAMERAGLOBALS.GLOBAL.MBIN"
-		);
-		// deactivate all camera shake effects
-		foreach( var data in mbin.CameraShakeTable ) {
-			data.CapturedData  .Active = false;
-			data.MechanicalData.Active = false;
-		}
-	}
-
-	//...........................................................
-
-	protected void GcGraphicsGlobals()
-	{
-		var mbin = ExtractMbin<GcGraphicsGlobals>(
-			"GCGRAPHICSGLOBALS.GLOBAL.MBIN"
-		);
-		mbin.LensDirt     = 0;  // 0.3
-		mbin.LensDirtCave = 0;  // 0.4
-		mbin.TargetTextureMemUsageMB = 5120;  // 1280
 	}
 
 	//...........................................................

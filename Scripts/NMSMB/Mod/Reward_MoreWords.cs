@@ -4,6 +4,12 @@
 
 public class Reward_MoreWords : cmk.NMS.Script.ModClass
 {
+	public static uint  BonusWords      = 3;
+	public static uint  BonusAtlasWords = 3;
+	public static float BonusAtlasWordChance = 30.0f;
+
+	//...........................................................
+	
 	protected override void Execute()
 	{
 		var mbin = ExtractMbin<GcRewardTable>(
@@ -44,15 +50,15 @@ public class Reward_MoreWords : cmk.NMS.Script.ModClass
 			}
 			if( source_race == RaceEnum.Diplomats ) continue;  // no learn word reward found
 			
-			// add 3 more words, same race & category, 100% chance
-			for( var i = 0; i < 3; ++i ) {
+			// add BonusWords more words, same race & category, 100% chance
+			for( var i = 0; i < BonusWords; ++i ) {
 				var word = CreateGcRewardTableItemTeachWord(source_race, source_category);
 				entry.List.List.Add(word);
 			}
 			
-			// add 3 more words, Atlas, misc category, 30% chance
-			for( var i = 0; i < 3; ++i ) {
-				var word = CreateGcRewardTableItemTeachWord(RaceEnum.Atlas, WordEnum.MISC, 30.0f);			
+			// add BonusAtlasWords more words, Atlas, misc category, BonusAtlasWordChance% chance
+			for( var i = 0; i < BonusAtlasWords; ++i ) {
+				var word = CreateGcRewardTableItemTeachWord(RaceEnum.Atlas, WordEnum.MISC, BonusAtlasWordChance);			
 				entry.List.List.Add(word);
 			}
 		}

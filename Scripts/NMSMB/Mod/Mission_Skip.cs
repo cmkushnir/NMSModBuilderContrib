@@ -5,6 +5,17 @@
 
 public class Mission_Skip : cmk.NMS.Script.ModClass
 {
+	// three ways to skip missions:
+	// i) remove missions from their mission mbins,
+	//    when you remove the mod the missions will get added to game and
+	//    initialized as if they were newly added.
+	// ii) mark missions so they auto-complete.
+	// iii) add missions id's to SKIP_TUT mission.
+	public enum   SkipMethodEnum { Remove, Mark, SkipTut };
+	public static SkipMethodEnum SkipMethod = SkipMethodEnum.Remove;
+	
+	//...........................................................
+	
 	protected override void Execute()
 	{
 		GcDebugOptions();
@@ -30,6 +41,8 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 	){
 		// each of these skips missions in a different mission mbin
 		
+		R_SKIP_MISS_Tutorial(MISS, PROD, TECH);
+		
 		R_SKIP_MISS_Wiki(MISS, PROD, TECH);
 
 		R_SKIP_MISS_BaseComputer(MISS, PROD, TECH);
@@ -38,6 +51,22 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 
 		R_SKIP_MISS_Act1(MISS, PROD, TECH);
 		R_SKIP_MISS_Act2(MISS, PROD, TECH);
+	}
+
+	//...........................................................
+
+	// Tutorial missions, like find a droppod to increase exosuit slots:
+	protected void R_SKIP_MISS_Tutorial(
+		List<nms.NMSString0x10> MISS,
+		List<nms.NMSString0x10> PROD,
+		List<nms.NMSString0x10> TECH
+	){
+		R_SKIP_MISS_AddTable(MISS, PROD, TECH,
+			"METADATA/SIMULATION/MISSIONS/TUTORIALMISSIONTABLE.MBIN",
+			MISS => false  // only skip missions that match following:
+			|| MISS.MissionID.Value.StartsWith("TUT_")
+			|| MISS.MissionID.Value.EndsWith("_TUT")
+		);
 	}
 
 	//...........................................................
@@ -146,18 +175,6 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcMissionTable>(		
 			"METADATA/SIMULATION/MISSIONS/SEASONALMISSIONTABLE.MBIN"
 		);
-		var skip = CloneMbin(mbin.Missions.Find(MISSION => MISSION.MissionID == "SKIP_TUT"));
-		
-		mbin = ExtractMbin<GcMissionTable>(
-			"METADATA/SIMULATION/MISSIONS/TUTORIALMISSIONTABLE.MBIN"
-		);
-		
-		// remove tut missions, like find a droppod to increase exosuit slots
-		mbin.Missions.RemoveAll(MISSION => MISSION.MissionID.Value.StartsWith("TUT_"));
-		mbin.Missions.RemoveAll(MISSION => MISSION.MissionID.Value.EndsWith("_TUT"));
-		
-		// add SKIP_TUT clone from SEASONALMISSIONTABLE to TUTORIALMISSIONTABLE
-		mbin.Missions.Add(skip);
 
 		// clone already has Rewards:
 		// R_SKIP_NEXUS
@@ -174,14 +191,30 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 		// R_SKIP_FIX - Weapon, Ship
 		// R_SKIP_INSTALL
 		// - SCANBINOC1, TERRAINEDITOR, HYPERDRIVE
+		var skip = CloneMbin(mbin.Missions.Find(MISSION => MISSION.MissionID == "SKIP_TUT"));
+		skip.Rewards.Find(REWARD => REWARD.Id == "R_SKIP_FIX")    .List.List.Clear();
+		skip.Rewards.Find(REWARD => REWARD.Id == "R_SKIP_INSTALL").List.List.Clear();
+		
 		var r_skip_tech = skip.Rewards.Find(REWARD => REWARD.Id == "R_SKIP_TECH") .List.List[0].Reward as GcRewardMultiSpecificTechRecipes;
 		var r_skip_prod = skip.Rewards.Find(REWARD => REWARD.Id == "R_SKIP_PRODS").List.List[0].Reward as GcRewardMultiSpecificProductRecipes;
 		var r_skip_miss = skip.Rewards.Find(REWARD => REWARD.Id == "R_SKIP_MISS") .List.List[0].Reward as GcRewardCompleteMultiMission;
+		
+		r_skip_tech.TechIds   .Clear();
+		r_skip_prod.ProductIds.Clear();
+		r_skip_miss.Missions  .Clear();
+		
+		// mark|remove all missions we want to skip
 		R_SKIP_MISS(
 			r_skip_miss.Missions,
 			r_skip_prod.ProductIds,
 			r_skip_tech.TechIds
 		);
+	
+		// add SKIP_TUT clone from SEASONALMISSIONTABLE to TUTORIALMISSIONTABLE
+		mbin = ExtractMbin<GcMissionTable>(
+			"METADATA/SIMULATION/MISSIONS/TUTORIALMISSIONTABLE.MBIN"
+		);
+		mbin.Missions.Add(skip);
 
 		CopyKnown(
 			r_skip_prod.ProductIds,
@@ -212,8 +245,6 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 	//...........................................................
 	
 	// Helper method to skip missions from a LOOKUP mission (mbin) table.
-	// Move MATCHing missions from LOOKUP mbin to MISS list,
-	// also add any MATCHing mission prod|tech rewards to PROD|TECH lists.
 	protected GcMissionTable R_SKIP_MISS_AddTable(
 		List<nms.NMSString0x10> MISS,
 		List<nms.NMSString0x10> PROD,
@@ -223,23 +254,47 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 	){
 		var mbin = ExtractMbin<GcMissionTable>(LOOKUP);
 		foreach( var mission in mbin.Missions ) {
-			if( MATCH(mission) ) R_SKIP_MISS_AddMission(MISS, PROD, TECH, mission);
+			if( !MATCH(mission) ) continue;
+			R_SKIP_MISS_GetRewards(mission, PROD, TECH);
+			switch( SkipMethod ) {
+				case SkipMethodEnum.Remove: break;
+				case SkipMethodEnum.SkipTut:
+					MISS.AddUnique(mission.MissionID);
+					break;
+				case SkipMethodEnum.Mark:
+					mission.AutoStart           = AutoStartEnum.NotCreative;
+					mission.BlocksPinning       = false;
+					mission.CancelConditionTest.ConditionTest = ConditionTestEnum.AnyTrue;
+					mission.CancelSetsComplete  = true;
+					mission.ForcesBuildMenuHint = false;
+					mission.ForcesPageHint      = false;
+					mission.IsRecurring         = false;
+					mission.MissionIsCritical   = false;
+					mission.RestartOnCompletion = false;
+					mission.Stages.Clear();
+					mission.StartingConditions.Clear();
+					mission.StartIsCancel       = true;  // w/ CancelSetsComplete == auto-complete ?
+					break;
+			}
 		}
-		mbin.Missions.RemoveAll(MISSION => MISS.Contains(MISSION.MissionID));
+		switch( SkipMethod ) {
+			case SkipMethodEnum.Remove:
+				mbin.Missions.RemoveAll(MISSION => MISS.Contains(MISSION.MissionID));
+				break;
+			case SkipMethodEnum.SkipTut: break;
+			case SkipMethodEnum.Mark:    break;
+		}
 		return mbin;
 	}
 
 	//...........................................................
 	
-	// For each MISSION we add to MISS, go through its rewards
-	// and add all product and technology rewards to PROD and TECH.
-	protected void R_SKIP_MISS_AddMission(
-		List<nms.NMSString0x10>  MISS,
+	// Go through MISSION rewards and add all product and technology rewards to PROD and TECH.
+	protected void R_SKIP_MISS_GetRewards(
+		GcGenericMissionSequence MISSION,
 		List<nms.NMSString0x10>  PROD,
-		List<nms.NMSString0x10>  TECH,
-		GcGenericMissionSequence MISSION
+		List<nms.NMSString0x10>  TECH
 	){
-		MISS.AddUnique(MISSION.MissionID);
 		foreach( var reward in MISSION.Rewards ) {
 			foreach( var item in reward.List.List ) {
 				if( item.Reward is GcRewardMultiSpecificProductRecipes prods ) {

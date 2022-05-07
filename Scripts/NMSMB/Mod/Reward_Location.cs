@@ -31,7 +31,7 @@ public class Reward_Location : cmk.NMS.Script.ModClass
 	public static float InhabitedObservatory { get; set; } = 10;     //  6 B, 8 C
 	public static float InhabitedAbandoned   { get; set; } = 10;     // 12 B
 
-	public static float AncientRuin     { get; set; } = 10;  // 12 - use treasure chart ?
+	public static float AncientRuin     { get; set; } = 10;  // 12 - gives words or marks treaure site (excavate)
 	public static float AncientPlaque   { get; set; } = 10;  // 12
 	public static float AncientMonolith { get; set; } = 10;  // 12
 	public static float AncientPortal   { get; set; } = 60;  // N/A

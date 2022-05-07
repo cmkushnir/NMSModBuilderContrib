@@ -72,7 +72,14 @@ public class Ship : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcAISpaceshipGlobals>(
 			"GCAISPACESHIPGLOBALS.GLOBAL.MBIN"
 		);
+
 		mbin.VisibleDistance = 20000;  // 3500
+
+		var ranges = mbin.PlayerSquadronConfig.PilotRankTraitRanges;
+		for( var i = 0; i < ranges.Length; ++i ) {
+			ranges[i].x = 0.10f + (i * 0.20f);  // min: 0.10, 0.30, 0.50, 0.70
+			ranges[i].y = 0.55f + (i * 0.15f);  // max: 0.55, 0.70, 0.85, 1.00
+		}
 	}
 
 	//...........................................................

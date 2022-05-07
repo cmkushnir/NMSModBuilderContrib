@@ -62,10 +62,11 @@ public class Inventory_ExoSuit : cmk.NMS.Script.ModClass
 		CONTAINER.Add(Inventory.Product("ACCESS3", 1, MaxAmount));  // AtlasPass v3
 
 		// see Reward_Location for custom MAP_*
-		CONTAINER.Add(Inventory.Product("MAP_DISTRESS", 1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("MAP_SHOP",     1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("MAP_PORTAL",   1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("CHART_SETTLE", 1000, MaxAmount));  // Settlement - Yellow Beacon
+		CONTAINER.Add(Inventory.Product("MAP_DISTRESS",   1000, MaxAmount));  // 
+		CONTAINER.Add(Inventory.Product("MAP_SHOP",       1000, MaxAmount));  // 
+		CONTAINER.Add(Inventory.Product("MAP_PORTAL",     1000, MaxAmount));  // 
+		CONTAINER.Add(Inventory.Product("CHART_SETTLE",   1000, MaxAmount));  // Settlement - Yellow Beacon
+		CONTAINER.Add(Inventory.Product("CHART_TREASURE", 1000, MaxAmount));  // ruins to excavate
 		
 		CONTAINER.Add(Inventory.Product("NAV_DATA",    10000, MaxAmount));  // Navigation Data
 		CONTAINER.Add(Inventory.Product("ABAND_LOCATOR", 200, MaxAmount));  // Emergency Broadcast Receiver

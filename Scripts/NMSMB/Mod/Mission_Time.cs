@@ -4,6 +4,10 @@
 
 public class Mission_Time : cmk.NMS.Script.ModClass
 {
+	public static ulong MaxTimeSeconds = 10;
+	
+	//...........................................................
+	
 	protected override void Execute()
 	{
 		var type = Game.Mbinc.FindClass("GcMissionTable");
@@ -25,7 +29,7 @@ public class Mission_Time : cmk.NMS.Script.ModClass
 				GcGenericMissionStage(group.Stages);  // recurse
 			}
 			if( stage.Stage is GcMissionSequenceWaitRealTime timer ) {
-				if( timer.Time > 10 ) timer.Time = 10;  // seconds
+				if( timer.Time > MaxTimeSeconds ) timer.Time = MaxTimeSeconds;  // seconds
 			}
 		}
 	}

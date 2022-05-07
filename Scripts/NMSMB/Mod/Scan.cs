@@ -7,8 +7,9 @@ public class Scan : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		Try(() => GcGameplayGlobals());
-		Try(() => GcBuildingGlobals());		
-		Try(() => GcScanEventTable());		
+		Try(() => GcBuildingGlobals());
+		Try(() => GcScanEventTable());
+		Try(() => GcMissionTable());
 	}
 
 	//...........................................................
@@ -53,23 +54,41 @@ public class Scan : cmk.NMS.Script.ModClass
 		foreach( var path in GcScanEventTable_class.PakItems ) {
 			var mbin = ExtractMbin<GcScanEventTable>(path);
 			foreach( var data in mbin.Events ) {
+				data.SurveyDistance = 0;
 				if( data.BuildingClass.BuildingClass == BuildingClassEnum.Portal ) {
 					continue;
 				}
 				switch( data.BuildingLocation ) {
 					case BuildingLocationEnum.Random:
 						data.BuildingLocation = BuildingLocationEnum.Nearest;
-						goto case BuildingLocationEnum.Nearest;
+						data.ForceWideRandom  = false;
+						break;
 					case BuildingLocationEnum.AllNearest:
 					case BuildingLocationEnum.Nearest:
 						data.ForceWideRandom = false;  // does this do anything ?
 						break;
 					case BuildingLocationEnum.PlanetSearch:
 					case BuildingLocationEnum.PlayerSettlement:
+						break;
 					case BuildingLocationEnum.RandomOnFarPlanet:
 					case BuildingLocationEnum.RandomOnNearPlanet:
 						data.ForceWideRandom = true;
 						break;
+				}
+			}
+		}
+	}
+
+	//...........................................................
+
+	protected void GcMissionTable()
+	{
+		var GcMissionTable_class = Game.Mbinc.FindClass("GcMissionTable");
+		foreach( var path in GcMissionTable_class.PakItems ) {
+			var mbin = ExtractMbin<GcMissionTable>(path);
+			foreach( var sequence in mbin.Missions ) {
+				foreach( var scan in sequence.ScanEvents ) {
+					scan.SurveyDistance = 0;
 				}
 			}
 		}

@@ -20,12 +20,6 @@ public class Lod : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcEnvironmentGlobals>(
 			"GCENVIRONMENTGLOBALS.GLOBAL.MBIN"
 		);
-		foreach( var setting in mbin.LODSettings ) {
-			//if( setting.LODAdjust[0] < 1 ) continue;
-			for( var i = 0; i < setting.LODAdjust.Length; ++i ) {
-				setting.LODAdjust[i] = i + 1;
-			}
-		}
 		var scale = 0.2f;
 		mbin.TerrainFadeTime       *= scale;
 		mbin.TerrainFadeTimeInShip *= scale;
@@ -63,10 +57,8 @@ public class Lod : cmk.NMS.Script.ModClass
 			"GCGRAPHICSGLOBALS.GLOBAL.MBIN"
 		);
 					
-		//mbin.TerrainMipDistanceLow  = new nms.Vector4f { x =  0, y = 94, z = 228, t = 356 };
-		//mbin.TerrainMipDistanceMed  = new nms.Vector4f { x =  0, y = 94, z = 228, t = 356 };
-		mbin.TerrainMipDistanceHigh = new nms.Vector4f { x =  0, y =  64, z = 128, t = 4 };  // { x =  0, y = 94, z = 228,   t = 356 };
-		mbin.TerrainMipDistanceUlt  = new nms.Vector4f { x =  0, y = 128, z = 256, t = 4 };  // { x = 48, y = 64, z = 0.02f, t = 3 };
+		mbin.TerrainMipDistanceHigh = new nms.Vector4f { x =  0, y =  64, z = 128, t = 256 };
+		mbin.TerrainMipDistanceUlt  = new nms.Vector4f { x =  0, y = 128, z = 256, t = 512 };
 
 		mbin.TerrainDroppedMipsLow = 0;
 		mbin.TerrainDroppedMipsMed = 0;

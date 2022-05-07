@@ -10,8 +10,7 @@ public class Space_Asteroid : cmk.NMS.Script.ModClass
 			"GCSOLARGENERATIONGLOBALS.GLOBAL.MBIN"
 		);
 
-		mbin.AsteroidSpacing         *= 2;   //  1000
-		//mbin.AsteroidMaxNumGenerates /= 10;  // 50000  removed in outlaws ?
+		mbin.AsteroidSpacing *= 2;  // 1000
 
 		var GcSolarGenerationGlobals_t = typeof(GcSolarGenerationGlobals);
 		

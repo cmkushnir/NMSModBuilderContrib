@@ -29,7 +29,6 @@ public class Configure : cmk.NMS.Script.ModClass
 	{
 		Presets();
 		
-		// call 0+ play-as Execute:
 		PlayAs<Custom>();
 		PlayAs<Salvager>();
 
@@ -41,13 +40,19 @@ public class Configure : cmk.NMS.Script.ModClass
 	// set initial state for scripts
 	protected void Presets()
 	{
-		// Mission_Skip removes missions from mbins.
-		// If a save had this enabled then it won't have stages for
-		// the removed missions.  If you then remove the mod and load
-		// the save it's like all those missions are treated as newly added
-		// so they will likely all start with their first stage.
-		// Defaults to false to make sure user aware of risk.
-		Mod<Mission_Skip>().IsExecutable = false;
+		Add_Tech_Rockets.AddShipRocketTech     = false;
+		Add_Tech_Rockets.AddShipRocketProcTech = true;
+		
+		Inventory_.MaxAmount = 100000;
+		
+		Mission_Skip.SkipMethod     = Mission_Skip.SkipMethodEnum.Remove;
+		Mission_Time.MaxTimeSeconds = 10;
+		
+		Planet.FogStrengthMult = 0.1f;
+		
+		Reward_MoreWords.BonusWords      = 3;
+		Reward_MoreWords.BonusAtlasWords = 3;
+		Reward_MoreWords.BonusAtlasWordChance = 30.0f;
 	}
 
 	//...........................................................
