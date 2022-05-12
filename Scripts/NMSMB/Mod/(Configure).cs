@@ -29,8 +29,16 @@ public class Configure : cmk.NMS.Script.ModClass
 	{
 		Presets();
 		
-		PlayAs<Custom>();
+		// call 0+ play-as scripts:
+		PlayAs<Archaeologist>();
+		PlayAs<Cartographer>();
+		PlayAs<Explorer>();
+		PlayAs<Fighter>();
+		PlayAs<Miner>();
 		PlayAs<Salvager>();
+		PlayAs<Settler>();
+		PlayAs<Zoologist>();
+		PlayAs<Custom>();
 
 		Postsets();
 	}
@@ -40,12 +48,9 @@ public class Configure : cmk.NMS.Script.ModClass
 	// set initial state for scripts
 	protected void Presets()
 	{
-		Add_Tech_Rockets.AddShipRocketTech     = false;
-		Add_Tech_Rockets.AddShipRocketProcTech = true;
-		
 		Inventory_.MaxAmount = 100000;
 		
-		Mission_Skip.SkipMethod     = Mission_Skip.SkipMethodEnum.Remove;
+		Mission_Skip.SkipMethod     = Mission_Skip.SkipMethodEnum.Mark;
 		Mission_Time.MaxTimeSeconds = 10;
 		
 		Planet.FogStrengthMult = 0.1f;
@@ -53,6 +58,17 @@ public class Configure : cmk.NMS.Script.ModClass
 		Reward_MoreWords.BonusWords      = 3;
 		Reward_MoreWords.BonusAtlasWords = 3;
 		Reward_MoreWords.BonusAtlasWordChance = 30.0f;
+		
+		// enable following mods in play-as scripts:	
+		Mod<Add_Tech_Rockets>()       .IsExecutable = false;  // Fighter
+		Mod<Base_Extractor>()         .IsExecutable = false;  // Settler
+		Mod<Base_Power>()             .IsExecutable = false;  // Settler
+		Mod<Creature_Pet>()           .IsExecutable = false;  // Zoologist
+		Mod<Creature_Ride>()          .IsExecutable = false;  // Zoologist
+		Mod<Harvester_Rate>()         .IsExecutable = false;  // Settler
+		Mod<Placeable_Egg_Sequencer>().IsExecutable = false;  // Zoologist
+		Mod<Placeable_Salvage>()      .IsExecutable = false;  // Salvager
+		Mod<Starcharts>()             .IsExecutable = false;  // Cartographer
 	}
 
 	//...........................................................

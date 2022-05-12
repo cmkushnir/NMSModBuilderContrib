@@ -17,6 +17,9 @@ public class Explorer : cmk.NMS.Script.ModClass
 		
 		// Inventory
 		// - vanilla
+
+		// - auto-mark portals
+		Scan_Auto.EnablePortal = true;
 	}
 }
 

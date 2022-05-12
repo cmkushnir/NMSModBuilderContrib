@@ -7,6 +7,7 @@ public class Creature_Ride : cmk.NMS.Script.ModClass
 {
 	protected override void Execute()
 	{
+		if( !Mod<Creature_Pet>().IsExecutable ) return;
 		GcCreatureDataTable();
 		GcCreatureDataTable_RobotFix();
 	}

@@ -45,6 +45,7 @@ public class Camera : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcGraphicsGlobals>(
 			"GCGRAPHICSGLOBALS.GLOBAL.MBIN"
 		);
+		mbin.SunLightIntensity = 4.9f;  // 3
 		mbin.LensDirt     = 0;  // 0.3
 		mbin.LensDirtCave = 0;  // 0.4
 		mbin.TargetTextureMemUsageMB = 5120;  // 1280

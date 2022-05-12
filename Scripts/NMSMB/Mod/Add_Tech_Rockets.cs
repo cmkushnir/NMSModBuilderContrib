@@ -5,7 +5,7 @@
 public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 {
 	public static bool AddShipRocketTech     = false;  // add fixed spec upgrade to ship tech tree
-	public static bool AddShipRocketProcTech = true;   // add proc gen tech upgrade(s)
+	public static bool AddShipRocketProcTech = false;   // add proc gen tech upgrade(s)
 
 	//...........................................................
 
@@ -19,12 +19,14 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 
 	//...........................................................
 	
+	// non-proc gen tech class is based on (highest?) StatBonuses.Level,
+	// Level 1 = C, 2 = B, 3 = A, 4 = S.
 	protected void GcTechnologyTable()
 	{
 		if( !AddShipRocketTech ) return;			
 		var mbin = ExtractMbin<GcTechnologyTable>(
 			"METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN"
-		);
+		);	
 		
 		var dmg = CloneMbin(mbin.Table.Find(TECH => TECH.ID == "UT_ROCKETS"));  // clone Large Rocket Tubes
 		dmg.ID          = "UT_ROCKETS_DMG";

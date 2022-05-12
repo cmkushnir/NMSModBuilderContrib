@@ -14,12 +14,16 @@ public class Settler : cmk.NMS.Script.ModClass
 		
 		// Inventory
 		// - max suit and ship
+
+		// - improved base items
+		Mod<Base_Extractor>().IsExecutable = true;
+		Mod<Base_Power>()    .IsExecutable = true;
+		Mod<Harvester_Rate>().IsExecutable = true;
 		
 		// - auto-mark base related locations
 		Scan_Auto.EnableBaseSite         = true;
 		Scan_Auto.EnableSettlements      = true;
 		Scan_Auto.EnableMinorSettlements = true;
-		Scan_Auto.EnablePortal           = true;
 	}
 }
 

@@ -19,6 +19,11 @@ public class Fighter : cmk.NMS.Script.ModClass
 		
 		// - increase chance for post-warp freighter battles
 		// - increase chance for pirate attacks
+
+		// - your old contacts can get you BFG level upgrades
+		Mod<Add_Tech_Rockets>().IsExecutable   = true;
+	//	Add_Tech_Rockets.AddShipRocketTech     = true;  // fixed
+		Add_Tech_Rockets.AddShipRocketProcTech = true;	// proc-gen
 	}
 }
 

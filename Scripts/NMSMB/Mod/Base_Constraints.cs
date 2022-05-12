@@ -52,7 +52,7 @@ public class Base_Constraints : cmk.NMS.Script.ModClass
 			var mbin = ExtractMbin<GcBaseBuildingTable>(path);			
 			mbin.Objects.ForEach(ITEM => {
 				ITEM.RemovesAttachedDecoration = false;
-				ITEM.CheckPlaceholderCollision = false;
+			//	ITEM.CheckPlaceholderCollision = false;
 				ITEM.CanChangeColour           = true;
 				ITEM.CanPlaceOnItself          = true;
 				ITEM.CanRotate3D               = true;

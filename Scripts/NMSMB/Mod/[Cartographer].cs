@@ -16,6 +16,9 @@ public class Cartographer : cmk.NMS.Script.ModClass
 		// - vanilla		
 		// - a bunch of each map type
 
+		// you know a guy who knows a guy who can get you specific charts
+		Mod<Starcharts>().IsExecutable = true;
+		
 		// - auto-mark most building locations
 		Scan_Auto.EnableBaseSite         = true;
 		Scan_Auto.EnableMinorSettlements = true;

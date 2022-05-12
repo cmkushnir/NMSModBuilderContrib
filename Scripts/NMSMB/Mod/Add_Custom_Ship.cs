@@ -28,10 +28,10 @@ public class Add_Custom_Ship : cmk.NMS.Script.ModClass
 				Inventory.Technology("WARP_ALIEN",     120, 120, 0)
 			},
 			new() {
-				new(){ BaseStatID = "SHIP_DAMAGE",     Value = 1 },
-				new(){ BaseStatID = "SHIP_SHIELD",     Value = 1 },
-				new(){ BaseStatID = "SHIP_HYPERDRIVE", Value = 1 },
-				new(){ BaseStatID = "ALIEN_SHIP",      Value = 1 }
+				InventoryBaseStat.Create("SHIP_DAMAGE"),
+				InventoryBaseStat.Create("SHIP_SHIELD"),
+				InventoryBaseStat.Create("SHIP_HYPERDRIVE"),
+				InventoryBaseStat.Create("ALIEN_SHIP")
 			}
 		);
 		mbin.GenericTable.Add(ship);		

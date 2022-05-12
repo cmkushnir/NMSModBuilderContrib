@@ -19,6 +19,10 @@ public class Zoologist : cmk.NMS.Script.ModClass
 		
 		// - can make all fauna pets
 		// - can ride all fauna
+		// - buildable egg sequencer
+		Mod<Creature_Pet>()           .IsExecutable = true;
+		Mod<Creature_Ride>()          .IsExecutable = true;
+		Mod<Placeable_Egg_Sequencer>().IsExecutable = true;
 	}
 }
 

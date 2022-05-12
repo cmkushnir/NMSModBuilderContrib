@@ -4,8 +4,8 @@
 
 public class Inventory_ExoSuit : cmk.NMS.Script.ModClass
 {
-	public static int MaxAmount   { get; set; } = Inventory_.MaxAmount;
-	public static int StartAmount { get; set; } = MaxAmount / 2;	
+	public static int MaxAmount   => Inventory_.MaxAmount;
+	public static int StartAmount => MaxAmount / 2;	
 	
 	//...........................................................
 
@@ -62,11 +62,8 @@ public class Inventory_ExoSuit : cmk.NMS.Script.ModClass
 		CONTAINER.Add(Inventory.Product("ACCESS3", 1, MaxAmount));  // AtlasPass v3
 
 		// see Reward_Location for custom MAP_*
-		CONTAINER.Add(Inventory.Product("MAP_DISTRESS",   1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("MAP_SHOP",       1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("MAP_PORTAL",     1000, MaxAmount));  // 
-		CONTAINER.Add(Inventory.Product("CHART_SETTLE",   1000, MaxAmount));  // Settlement - Yellow Beacon
-		CONTAINER.Add(Inventory.Product("CHART_TREASURE", 1000, MaxAmount));  // ruins to excavate
+		CONTAINER.Add(Inventory.Product("MAP_DISTRESS", 1000, MaxAmount));  // 
+		CONTAINER.Add(Inventory.Product("MAP_PORTAL",   1000, MaxAmount));  // 
 		
 		CONTAINER.Add(Inventory.Product("NAV_DATA",    10000, MaxAmount));  // Navigation Data
 		CONTAINER.Add(Inventory.Product("ABAND_LOCATOR", 200, MaxAmount));  // Emergency Broadcast Receiver
@@ -75,17 +72,13 @@ public class Inventory_ExoSuit : cmk.NMS.Script.ModClass
 		CONTAINER.Add(Inventory.Product("SHIP_INV_TOKEN", 2000, MaxAmount));  // Storage Augmentation
 		CONTAINER.Add(Inventory.Product("WEAP_INV_TOKEN", 1000, MaxAmount));  // Multi-Tool Expansion Slot
 		CONTAINER.Add(Inventory.Product("SUIT_INV_TOKEN",   40, MaxAmount));  // Exosuit Expansion Unit, for seasonal
-
-		CONTAINER.Add(Inventory.Product("STATION_KEY", 100, MaxAmount));  // Station Override
-		
+	
 		CONTAINER.Add(Inventory.Product("EXP_CURIO1", 500, MaxAmount));  // Korvax Casing
 		CONTAINER.Add(Inventory.Product("WAR_CURIO2", 500, MaxAmount));  // Vy'keen Dagger
 		CONTAINER.Add(Inventory.Product("TRA_CURIO1", 500, MaxAmount));  // Gek Relic
 		
 		CONTAINER.Add(Inventory.Product("AMMO",       StartAmount, MaxAmount));  // Projectile Ammunition
 		CONTAINER.Add(Inventory.Product("BAIT_BASIC", StartAmount, MaxAmount));  // Creature Pellets
-
-		CONTAINER.Add(Inventory.Substance("AF_METAL", StartAmount, MaxAmount));  // Tainted Metal
 	}
 	
 	//...........................................................
@@ -176,6 +169,8 @@ public class Inventory_ExoSuit : cmk.NMS.Script.ModClass
 		CONTAINER.Add(Inventory.Product("NANOTUBES",   StartAmount, MaxAmount));  // Carbon Nanotubes
 		CONTAINER.Add(Inventory.Product("CASING",      StartAmount, MaxAmount));  // Metal Plating
 		CONTAINER.Add(Inventory.Product("CARBON_SEAL", StartAmount, MaxAmount));  // Hermetic Seal
+
+		CONTAINER.Add(Inventory.Substance("AF_METAL", StartAmount, MaxAmount));  // Tainted Metal
 	}
 	
 	//...........................................................

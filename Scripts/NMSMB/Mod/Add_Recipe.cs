@@ -26,24 +26,24 @@ public class Add_Recipe : cmk.NMS.Script.ModClass
 	protected List<GcRefinerRecipe> CreateRefiner()
 	{
 		var list = new List<GcRefinerRecipe>();
-		list.Add(Recipe.CreateRefiner(
+		list.Add(RefinerRecipe.CreateRefiner(
 			// Tainted Metal:
 			// Shredded fragments of a soft, grey metal. Its surface is porous,
 			// and when touched it oozes ever-so-slightly.
 			// Found in the creaking wreck of a derelict freighter.
 			// The space station <STELLAR>Scrap Dealer<> may find this interesting...
-			"X031415 - [CLASSIFIED]",                // RecipeType, normally a lang id else will use supplied string
-			"R_CMK_X031415",                         // RecipeName, not sure how game uses this
-			10,                                      // 10 sec to make
-			Recipe.Substance("AF_METAL", 10),        // Result: Tainted Metal
-			new(){                                   // List of ingredients:
-				Recipe.Substance("SPACEGUNK3", 10),  // Rusted Metal
-				Recipe.Substance("ROBOT1",      5),  // Pugneum
-				Recipe.Substance("CREATURE1",   5)   // Mordite
+			"X031415 - [CLASSIFIED]",                       // RecipeType, normally a lang id else will use supplied string
+			"R_CMK_X031415",                                // RecipeName, not sure how game uses this
+			10,                                             // 10 sec to make
+			RefinerRecipe.Substance("AF_METAL", 10),        // Result: Tainted Metal
+			new(){                                          // List of ingredients:
+				RefinerRecipe.Substance("SPACEGUNK3", 10),  // Rusted Metal
+				RefinerRecipe.Substance("ROBOT1",      5),  // Pugneum
+				RefinerRecipe.Substance("CREATURE1",   5)   // Mordite
 			},
 			Log
 		));
-		list.Add(Recipe.CreateRefiner(
+		list.Add(RefinerRecipe.CreateRefiner(
 			// Walker Brain:
 			// Shifting nanite clusters sewn together with a pugneum filament,
 			// this circuit is painfully hot to the touch.
@@ -51,11 +51,11 @@ public class Add_Recipe : cmk.NMS.Script.ModClass
 			// changing in intensity as it watches its holder.
 			"Neural Construction",
 			"R_CMK_NEURAL_CONSTRUCTION", 120,
-			Recipe.Product("WALKER_PROD", 1),         // Walker Brain
+			RefinerRecipe.Product("WALKER_PROD", 1),         // Walker Brain
 			new(){
-				Recipe.Substance("TECHFRAG", 10000),  // Nanite Cluster
-				Recipe.Substance("ROBOT1",    1000),  // Pugneum
-				Recipe.Substance("SOULFRAG",   100),  // Fragmented Qualia
+				RefinerRecipe.Substance("TECHFRAG", 10000),  // Nanite Cluster
+				RefinerRecipe.Substance("ROBOT1",    1000),  // Pugneum
+				RefinerRecipe.Substance("SOULFRAG",   100),  // Fragmented Qualia
 			},
 			Log
 		));
@@ -68,22 +68,22 @@ public class Add_Recipe : cmk.NMS.Script.ModClass
 	protected List<GcRefinerRecipe> CreateCooking()
 	{
 		var list = new List<GcRefinerRecipe>();
-		list.Add(Recipe.CreateCooking(
-			"UI_COOK_CAKE",                            // Assemble Baked Product
-			"UI_COOK_CAKE", 60,                        // cooking recipes have RecipeType == RecipeName
-			Recipe.Product("FOOD_SCHIPCOOK", 10),      // Stellar Chip Cookies
+		list.Add(RefinerRecipe.CreateCooking(
+			"UI_COOK_CAKE",                                   // Assemble Baked Product
+			"UI_COOK_CAKE", 60,                               // cooking recipes have RecipeType == RecipeName
+			RefinerRecipe.Product("FOOD_SCHIPCOOK", 10),      // Stellar Chip Cookies
 			new(){
-				Recipe.Product("FOOD_R_GCAKEMIX", 1),  // Proto-Batter
-				Recipe.Product("FOOD_SCHIPS",     1),  // Stellar Chips
+				RefinerRecipe.Product("FOOD_R_GCAKEMIX", 1),  // Proto-Batter
+				RefinerRecipe.Product("FOOD_SCHIPS",     1),  // Stellar Chips
 			},
 			Log
 		));	
-		list.Add(Recipe.CreateCooking(
-			"UI_COOK_CAKE", "UI_COOK_CAKE", 60,        // Assemble Baked Product
-			Recipe.Product("FOOD_SCHIPCOOKA", 10),     // Activated Stellar Chip Cookies
+		list.Add(RefinerRecipe.CreateCooking(
+			"UI_COOK_CAKE", "UI_COOK_CAKE", 60,               // Assemble Baked Product
+			RefinerRecipe.Product("FOOD_SCHIPCOOKA", 10),     // Activated Stellar Chip Cookies
 			new(){
-				Recipe.Product("FOOD_R_BCAKEMIX", 1),  // Thick, Sweet Batter
-				Recipe.Product("FOOD_SCHIPSA",    1),  // Activated Stellar Chips
+				RefinerRecipe.Product("FOOD_R_BCAKEMIX", 1),  // Thick, Sweet Batter
+				RefinerRecipe.Product("FOOD_SCHIPSA",    1),  // Activated Stellar Chips
 			},
 			Log
 		));

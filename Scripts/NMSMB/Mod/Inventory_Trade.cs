@@ -81,20 +81,48 @@ public class Inventory_Trade : cmk.NMS.Script.ModClass
 		DATA.MaxAmountOfProductAvailable  [(int)WealthClassEnum.Poor] *= 2;
 		DATA.MinAmountOfSubstanceAvailable[(int)WealthClassEnum.Poor] *= 2;
 		DATA.MaxAmountOfSubstanceAvailable[(int)WealthClassEnum.Poor] *= 2;
+		
 		foreach( var product in PRODUCTS.Table ) {
 			switch( product.Type.ProductCategory ) {
-				//case GcProductCategory.ProductCategoryEnum.Curiosity:
-					// may want to add some curiosities
-				case ProductCategoryEnum.Component:
+				case ProductCategoryEnum.Curiosity:
+					if( product.Name.Value.StartsWith("GEODE_") ) break;
+					continue;
+				case ProductCategoryEnum.Component: break;
 				case ProductCategoryEnum.Consumable:
-				case ProductCategoryEnum.Tradeable:	
+					if( product.Name.Value.StartsWith("SPEC_") ) continue;
 					break;
+				case ProductCategoryEnum.Tradeable: break;
 				default: continue;
 			}
 			DATA.OptionalProducts.AddUnique(product.Id);
 		}
+		// add specific items from skipped categories
+		DATA.OptionalProducts.AddUnique("ARTIFACT_KEY");    // Ancient Key
+		DATA.OptionalProducts.AddUnique("BP_SALVAGE");      // Salvaged Data
+		DATA.OptionalProducts.AddUnique("CATAPROD3");       // Destablised Sodium
+		DATA.OptionalProducts.AddUnique("CAVEPROD3");       // TetraCobalt
+		DATA.OptionalProducts.AddUnique("FIENDCORE");       // Larval Core
+		DATA.OptionalProducts.AddUnique("FREI_INV_TOKEN");  // Cargo Bulkhead
+		DATA.OptionalProducts.AddUnique("FRIG_TOKEN");      // Salvaged Frigate Module
+		DATA.OptionalProducts.AddUnique("FUELPROD3");       // Carbon Crystal
+		DATA.OptionalProducts.AddUnique("HEXCORE");         // Hex Core
+		DATA.OptionalProducts.AddUnique("LANDPROD3");       // Rare Metal Element
+		DATA.OptionalProducts.AddUnique("NAV_DATA");        // Navigation Data
+		DATA.OptionalProducts.AddUnique("NAV_DATA_DROP");   // Drop Pod Coordinate Data
+		DATA.OptionalProducts.AddUnique("OXYPROD3");        // Superoxide Crystal
+		DATA.OptionalProducts.AddUnique("SHIP_INV_TOKEN");  // Storage Augmentation
+		DATA.OptionalProducts.AddUnique("STORM_CRYSTAL");   // Storm Crystal
+		DATA.OptionalProducts.AddUnique("SUIT_INV_TOKEN");  // Exosuit Expansion Unit
+		DATA.OptionalProducts.AddUnique("TRIDENT_KEY");     // Trident Key
+		DATA.OptionalProducts.AddUnique("WATERPROD3");      // Chloride Lattice
+		DATA.OptionalProducts.AddUnique("WEAP_INV_TOKEN");  // Multi-Tool Expansion Slot
+		DATA.OptionalProducts.AddUnique("WORMCORE");        // Fleshy Rope
+		DATA.OptionalProducts.AddUnique("WORMPROD");        // Vile Spawn
+
 		foreach( var substance in SUBSTANCES.Table ) {
-			if( !substance.WikiEnabled ) continue;
+			if( substance.Name.Value.Contains("REWARD") ||
+				substance.Description == "UI_REWARDPOP_DESC"
+			)	continue;
 			DATA.OptionalSubstances.AddUnique(substance.ID);
 		}
 	}

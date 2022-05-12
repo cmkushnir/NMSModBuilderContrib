@@ -4,8 +4,8 @@
 
 public class Inventory_Ship : cmk.NMS.Script.ModClass
 {
-	public static int MaxAmount   { get; set; } = Inventory_.MaxAmount;
-	public static int StartAmount { get; set; } = MaxAmount / 2;	
+	public static int MaxAmount   => Inventory_.MaxAmount;
+	public static int StartAmount => MaxAmount / 2;	
 	
 	//...........................................................
 	

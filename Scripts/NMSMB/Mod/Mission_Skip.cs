@@ -253,10 +253,21 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 		Predicate<GcGenericMissionSequence> MATCH
 	){
 		var mbin = ExtractMbin<GcMissionTable>(LOOKUP);
+
 		foreach( var mission in mbin.Missions ) {
 			if( !MATCH(mission) ) continue;
 			R_SKIP_MISS_GetRewards(mission, PROD, TECH);
-			switch( SkipMethod ) {
+			
+			var method  = SkipMethod;
+			if( method == SkipMethodEnum.SkipTut ) {
+				switch( mission.MissionID ) {
+					case "SURVEY_TUT":  // broken stage to search for power hotspot
+						method = SkipMethodEnum.Mark;
+						break;
+				}
+			}
+
+			switch( method ) {
 				case SkipMethodEnum.Remove: break;
 				case SkipMethodEnum.SkipTut:
 					MISS.AddUnique(mission.MissionID);
@@ -277,6 +288,7 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 					break;
 			}
 		}
+
 		switch( SkipMethod ) {
 			case SkipMethodEnum.Remove:
 				mbin.Missions.RemoveAll(MISSION => MISS.Contains(MISSION.MissionID));
@@ -284,6 +296,7 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 			case SkipMethodEnum.SkipTut: break;
 			case SkipMethodEnum.Mark:    break;
 		}
+
 		return mbin;
 	}
 
