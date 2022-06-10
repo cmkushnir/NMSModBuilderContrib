@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// From: NMS Creative & Sharing Hub discord server
+// From: NMS Creative & Sharing Hub discord server.
 // MOD SCRIPT TO CREATE THE DESCRIPTOR LUA TABLES
 // USE WITH https://github.com/cmkushnir/NMSModBuilder
 //=============================================================================

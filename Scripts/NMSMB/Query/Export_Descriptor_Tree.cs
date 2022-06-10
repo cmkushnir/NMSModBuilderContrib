@@ -18,10 +18,11 @@ public class Export_Descriptor_Tree : cmk.NMS.Script.QueryClass
 	//	new Descriptor { Name = "MULTITOOL",  Path = "MODELS/COMMON/WEAPONS/MULTITOOL/MULTITOOL.DESCRIPTOR.MBIN" },	
 	//	new Descriptor { Name = "DROPSHIP",   Path = "MODELS/COMMON/SPACECRAFT/DROPSHIPS/DROPSHIP_PROC.DESCRIPTOR.MBIN" },
 	//	new Descriptor { Name = "FIGHTER",    Path = "MODELS/COMMON/SPACECRAFT/FIGHTERS/FIGHTER_PROC.DESCRIPTOR.MBIN" },
-		new Descriptor { Name = "S-CLASS",    Path = "MODELS/COMMON/SPACECRAFT/S-CLASS/S-CLASS_PROC.DESCRIPTOR.MBIN" },
+	//	new Descriptor { Name = "S-CLASS",    Path = "MODELS/COMMON/SPACECRAFT/S-CLASS/S-CLASS_PROC.DESCRIPTOR.MBIN" },
 	//	new Descriptor { Name = "SCIENTIFIC", Path = "MODELS/COMMON/SPACECRAFT/SCIENTIFIC/SCIENTIFIC_PROC.DESCRIPTOR.MBIN" },
 	//	new Descriptor { Name = "SHUTTLE",    Path = "MODELS/COMMON/SPACECRAFT/SHUTTLE/SHUTTLE_PROC.DESCRIPTOR.MBIN" },
 	//	new Descriptor { Name = "BIOSHIP",    Path = "MODELS/COMMON/SPACECRAFT/S-CLASS/BIOPARTS/BIOSHIP_PROC.DESCRIPTOR.MBIN" },
+		new Descriptor { Name = "NPCGEK",    Path = "MODELS/COMMON/PLAYER/PLAYERCHARACTER/NPCGEK.DESCRIPTOR.MBIN" },
 	};
 
 	//...........................................................

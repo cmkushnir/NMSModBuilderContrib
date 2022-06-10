@@ -31,7 +31,6 @@ public static partial class _x_
 		WeightingCurveEnum CURVE         = WeightingCurveEnum.MaxIsUncommon,
 		bool               ALWAYS_CHOOSE = false	
 	){
-		if( LIST == null ) return null;
 		var obj = ProceduralTechnologyStatLevel.Create(
 			TYPE, MIN, MAX, CURVE, ALWAYS_CHOOSE
 		);

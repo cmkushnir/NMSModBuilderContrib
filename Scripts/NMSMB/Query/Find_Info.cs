@@ -6,12 +6,11 @@
 public class Find_Info : cmk.NMS.Script.QueryClass
 {
 	protected override void Execute()
-	{
+	{	
 		Log.AddInformation($"Searching ...");
 
-		// can search using regex, predicate, startswith, endwith, contains.
-		// click on FindInfo and look at intellisense list below.
-		var regex = new Regex("AISPACESHIPGLOBALS.*MBIN");		
+		// various FindInfo*() methods e.g regex, predicate, startswith, endwith, contains.
+		var regex = new Regex("VOXEL");		
 		var list  = Game.PCBANKS.FindInfo(regex);
 
 		foreach( var info in list ) {

@@ -11,13 +11,13 @@ public class Search_All_MBIN : cmk.NMS.Script.QueryClass
 	{
 		Log.AddInformation($"Iterating ...");
 		
-		// ~13  sec to just extract and loop through all 68,814 (3.82) mbin's.
+		// ~13  sec to just extract and loop through all 70,422 (3.90) mbin's.
 		// ~3.5 min to get ebin for each mbin and search ebin for a string.
 		var count = 0;
 		Game.PCBANKS.ForEachMbin(( MBIN, LOG, CANCEL ) => {
 			Interlocked.Increment(ref count);
 			var ebin   = MBIN.CreateEBIN();
-			var index  = ebin.IndexOf("UseInteractCamera"); //, StringComparison.OrdinalIgnoreCase);
+			var index  = ebin.IndexOf("GcCostAnyCookedProduct"); //, StringComparison.OrdinalIgnoreCase);
 			if( index >= 0 ) LOG.AddInformation($"{MBIN.Path.Full}[{ebin.Length}] @ {index}.");
 		},	Log, Cancel);
 		
