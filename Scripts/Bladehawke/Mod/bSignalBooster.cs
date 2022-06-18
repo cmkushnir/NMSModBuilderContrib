@@ -94,12 +94,8 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
     );
 
     var scanner = mbin.Table.Find(ENTRY => ENTRY.Id == "SIGNALSCANNER");
-    var option = scanner.Options.FindFirst<GcAlienPuzzleOption>();
-    while (option != null)
-    {
-      scanner.Options.Remove(option);
-      option = scanner.Options.FindFirst<GcAlienPuzzleOption>();
-    }
+    scanner.Options.Clear();
+    GcAlienPuzzleOption option = null;
 
     var scannerMenu = new (string Name, string Event)[] {
       new( "UI_PORTAL_OPT", "REVEAL_PORTAL" ),              // Portal

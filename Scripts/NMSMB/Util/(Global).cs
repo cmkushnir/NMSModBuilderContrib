@@ -1,5 +1,8 @@
 ﻿//=============================================================================
-// Specify common usings here, so don't have to put in each utility script.
+// Specify common usings here, so don't have to put in each script.
+// The utility script Assembly is included in each query script project
+// and each mod project.  This utility (Global) script is also included in
+// each query script project and each mod project.
 //=============================================================================
 
 global using global::System;
@@ -42,6 +45,7 @@ global using ConditionTestEnum               = global::libMBIN.NMS.GameComponent
 global using CurrencyEnum                    = global::libMBIN.NMS.GameComponents.GcCurrency.CurrencyEnum;
 global using DependsOnHotspotsEnum           = global::libMBIN.NMS.GameComponents.GcBaseLinkGridData.DependsOnHotspotsEnum;
 global using EventStartTypeEnum              = global::libMBIN.NMS.GameComponents.GcScanEventData.EventStartTypeEnum;
+global using FocusTypeEnum                   = global::libMBIN.NMS.Toolkit.TkModelRendererData.FocusTypeEnum;
 global using FrigateStatTypeEnum             = global::libMBIN.NMS.GameComponents.GcFrigateStatType.FrigateStatTypeEnum;
 global using FrigateTraitStrengthEnum        = global::libMBIN.NMS.GameComponents.GcFrigateTraitStrength.FrigateTraitStrengthEnum;
 global using GalaxyStarTypeEnum              = global::libMBIN.NMS.GameComponents.GcGalaxyStarTypes.GalaxyStarTypeEnum;
@@ -49,6 +53,7 @@ global using InteractionTypeEnum             = global::libMBIN.NMS.GameComponent
 global using InventoryClassEnum              = global::libMBIN.NMS.GameComponents.GcInventoryClass.InventoryClassEnum;
 global using InventoryTypeEnum               = global::libMBIN.NMS.GameComponents.GcInventoryType.InventoryTypeEnum;
 global using MaterialFlagEnum                = global::libMBIN.NMS.Toolkit.TkMaterialFlags.MaterialFlagEnum;
+global using ModelViewEnum                   = global::libMBIN.NMS.GameComponents.GcModelViewCollection.ModelViewEnum;
 global using PlanetSizeEnum                  = global::libMBIN.NMS.GameComponents.GcPlanetSize.PlanetSizeEnum;
 global using PlayerSpawnLocationOverrideEnum = global::libMBIN.NMS.Globals.GcDebugOptions.PlayerSpawnLocationOverrideEnum;
 global using ProductCategoryEnum             = global::libMBIN.NMS.GameComponents.GcProductCategory.ProductCategoryEnum;

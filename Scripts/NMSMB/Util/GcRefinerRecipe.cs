@@ -10,8 +10,8 @@ public partial class RefinerRecipe
 	{
 		// Reset the id counter before each mod project execution.
 		// We serialize Builds so shouldn't have any conflict between mod projects.
-		NMS.Script.Files.Mod.BeforeModFilesCacheReleased += ( SENDER )
-		=> s_new_recipe_id = 0;
+		NMS.Script.Files.Mod.BeforeModFilesCacheReleased +=
+			MOD_FILES => s_new_recipe_id = 0;
 	}
 
 	//...........................................................

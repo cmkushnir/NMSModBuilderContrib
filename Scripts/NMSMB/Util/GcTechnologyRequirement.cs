@@ -42,7 +42,6 @@ public static partial class _x_
 		this List<GcTechnologyRequirement> LIST,
 		string ID, int AMOUNT
 	){
-		if( LIST == null || ID.IsNullOrEmpty() ) return null;
 		var substance = TechnologyRequirement.Substance(ID, AMOUNT);
 		LIST.Add(substance);
 		return substance;
@@ -54,7 +53,6 @@ public static partial class _x_
 		this List<GcTechnologyRequirement> LIST,
 		string ID, int AMOUNT
 	){
-		if( LIST == null || ID.IsNullOrEmpty() ) return null;
 		var product = TechnologyRequirement.Product(ID, AMOUNT);
 		LIST.Add(product);
 		return product;
@@ -66,7 +64,6 @@ public static partial class _x_
 		this List<GcTechnologyRequirement> LIST,
 		string ID, int AMOUNT
 	){
-		if( LIST == null || ID.IsNullOrEmpty() ) return null;
 		var technology = TechnologyRequirement.Technology(ID, AMOUNT);
 		LIST.Add(technology);
 		return technology;

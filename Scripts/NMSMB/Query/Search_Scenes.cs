@@ -11,29 +11,39 @@ public class Search_Scenes : cmk.NMS.Script.QueryClass
 		
 		var file = System.IO.File.CreateText(save_path);
 		
-		var anim_t               = typeof(TkAnimationComponentData);		
 		var TkSceneNodeDataClass = Game.Mbinc.FindClass("TkSceneNodeData");
+	
+		var falloff_values = new List<string>();
 		
 		foreach( var mbin_path in TkSceneNodeDataClass.PakItems ) {
 			var scene_mbin = ExtractMbin<TkSceneNodeData>(mbin_path, true, false);
-			if( scene_mbin == null || scene_mbin.Children.IsNullOrEmpty() ) continue;
+			if( scene_mbin == null || scene_mbin.Children.IsNullOrEmpty() ) continue;			
 			
-			foreach( var child in scene_mbin.Children ) {
-				if( child.Type == "MESH" || child.Attributes.IsNullOrEmpty() ) continue;
-				
-				foreach( var attrib in child.Attributes ) {
-					if( attrib.Name != "ATTACHMENT" || !attrib.Value.Value.EndsWith(".ENTITY.MBIN") ) continue;
-						
-					var entity_mbin = ExtractMbin<TkAttachmentData>(attrib.Value, true, false);
-					if( entity_mbin == null || entity_mbin.Components.IsNullOrEmpty() ) continue;
-					
-					foreach( var component in entity_mbin.Components ) {
-						if( component.GetType() == anim_t ) {
-							file.WriteLine($"{mbin_path} {child.Type.Value} {attrib.Value.Value}");
-						}
-					}
+			var nodes = new List<TkSceneNodeData>();
+			
+			// sarch for a non-MESH node that has an ENTITY ATTACHMENT w/ an anim component
+			scene_mbin.Visit((NODE, PARENTS) => {
+				if( NODE.Type == "LIGHT" && !NODE.Attributes.IsNullOrEmpty() ) {
+					nodes.Add(NODE);
+				}				
+				return true;
+			});
+			
+			if( nodes.IsNullOrEmpty() ) continue;
+		
+			file.WriteLine($"{mbin_path}:");	
+			foreach( var node in nodes ) {	
+				file.WriteLine($"\tName = {node.Name.Value} @ [{node.Transform.TransX}, {node.Transform.TransY}, {node.Transform.TransZ}]:");
+				foreach( var attrib in node.Attributes ) {
+					if( attrib.Name == "FALLOFF" ) falloff_values.AddUnique(attrib.Value);
+					file.WriteLine($"\t\t{attrib.Name.Value} = {attrib.Value.Value}:");				
 				}
 			}
+		}
+		
+		file.WriteLine($"\n\nFALLOFF values:");	
+		foreach( var falloff_value in falloff_values ) {	
+			file.WriteLine($"\t{falloff_value}");
 		}
 		
 		file.Flush();
