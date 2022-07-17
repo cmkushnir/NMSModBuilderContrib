@@ -1,18 +1,23 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class KeepTalkingChef : cmk.NMS.Script.ModClass
 {
 	protected override void Execute()
 	{
 		var mbin = ExtractMbin<GcAlienPuzzleTable>("METADATA/REALITY/TABLES/NMS_DIALOG_GCALIENPUZZLETABLE.MBIN");
-		var options = mbin.Table.Find(ID => ID.Id == "EXOTIC_CHEF").Options;
-		foreach(var option in options)
+		var allOptions = mbin.Table.FindAll(ID => ID.Id == "EXOTIC_CHEF");
+		foreach(var options in allOptions)
 		{
-			option.KeepOpen = true;
+			foreach(var option in options.Options)
+			{				
+				Log.AddInformation($"option.Cost.Value  = {option.Cost.Value }");
+				if(option.Cost == "C_NEXUSCHEF1" || option.Cost == "C_NEXUSCHEF2" || option.Cost == "C_NEXUSCHEF3")
+					option.KeepOpen = true;
+			}
 		}
 	}
-
-	//...........................................................
 }
 
 //=============================================================================
