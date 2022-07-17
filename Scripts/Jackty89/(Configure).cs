@@ -5,7 +5,7 @@ public class Global : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		
-	    switch (2)
+	    switch (1)
 	    {
 	        case 1:
 				PlayAs<MyModList>();

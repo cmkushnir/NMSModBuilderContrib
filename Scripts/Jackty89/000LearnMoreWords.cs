@@ -5,6 +5,7 @@
 public class LearnMoreWords : cmk.NMS.Script.ModClass
 {
 	public static int AddWordsTotal = 15;
+	public static int PercentageChance = 100;
 	protected override void Execute()
 	{
 		AddWords();
@@ -39,6 +40,7 @@ public class LearnMoreWords : cmk.NMS.Script.ModClass
 	{
 		var word       = table.Find(WORD => WORD.Id == id);
 		var wordReward = CloneMbin(word.List.List[0]);
+		wordReward.PercentageChance = PercentageChance;
 		var totalWords = word.List.List.Count + addWords;
 
 		for( int i = 0; i <= totalWords; i++ ) {
@@ -55,6 +57,7 @@ public class LearnMoreWords : cmk.NMS.Script.ModClass
 			var word = table.Find(WORD => WORD.Id == id);
 			word.List.RewardChoice = RewardChoiceEnum.GiveAll;
 			var wordReward = CloneMbin(word.List.List[1]);
+			wordReward.PercentageChance = PercentageChance;
 			var totalWords = word.List.List.Count + addWords - 1;
 
 			//As the direct teachign already has 2 words (specifc and misc) changing it to GiveAll would let us learn 16 words instead of 15

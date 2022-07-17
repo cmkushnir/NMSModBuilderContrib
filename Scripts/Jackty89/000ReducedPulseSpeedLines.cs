@@ -19,7 +19,6 @@ public class ReducedPulseSpeedLines : cmk.NMS.Script.ModClass
 		{
 			ReduceSpeedLines(sourcFile);
 		}
-		
 	}
 	
 	protected void ReduceSpeedLines(Tuple<string, int, float, float, float, float, float> sourceData)
@@ -35,7 +34,7 @@ public class ReducedPulseSpeedLines : cmk.NMS.Script.ModClass
 		
 		var mbin = ExtractMbin<TkSpeedLineData>(sourceFile);
 		
-		mbin.NumberOfParticles    = particles;
+        mbin.NumberOfParticles    = particles;
         mbin.Radius               = radius;
         mbin.Length               = length;
         mbin.Width                = width;
