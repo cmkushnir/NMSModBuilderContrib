@@ -5,9 +5,7 @@ public class PirateTimerRedux : cmk.NMS.Script.ModClass
 	public static int Multiplier = 3;
 	protected override void Execute()
 	{
-		var mbin = ExtractMbin<GcGameplayGlobals>(
-			"GCGAMEPLAYGLOBALS.GLOBAL.MBIN"
-		);
+		var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
 		mbin.PirateEarlySpawnTime              *= Multiplier;
 		
 		mbin.PlanetPirateTimers.Low 	       = mbin.PlanetPirateTimers.Low.Scale(Multiplier);

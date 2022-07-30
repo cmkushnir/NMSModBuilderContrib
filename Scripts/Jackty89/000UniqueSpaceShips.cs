@@ -215,15 +215,15 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		});
 
 		SpaceShipEdits();
-		EditSalvage();
+	//	EditSalvage();
 	}
 
 	//...........................................................
-	protected void EditSalvage()
-	{
-		var mbin = ExtractMbin<GcModelExplosionRules>("METADATA/SIMULATION/INTERACTIONS/SHIPSALVAGEMODELEXPLODERULES.MBIN");		
-		mbin.UseRules[(int)ShipClassEnum.Alien] = true;
-	}
+	//protected void EditSalvage()
+	//{
+	//	var mbin = ExtractMbin<GcModelExplosionRules>("METADATA/SIMULATION/INTERACTIONS/SHIPSALVAGEMODELEXPLODERULES.MBIN");		
+	//	mbin.UseRules[(int)ShipClassEnum.Alien] = true;
+	//}
 	protected void SpaceShipEdits()
 	{
 		var mbin = ExtractMbin<GcInventoryTable>(

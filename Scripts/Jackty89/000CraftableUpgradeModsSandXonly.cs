@@ -388,7 +388,7 @@ public class CraftableUpgradeModsSandXonly : cmk.NMS.Script.ModClass
         {
             string ProductBase = Mod.UpgradeBase;
             int HighestClassNo = Mod.HighestClassNo;
-            int LowestClassNo = Mod.LowestClassNo;
+            int LowestClassNo = Mod.HighestClassNo;
 
             Root.Children.Add(CreateChildNode(ProductBase, LowestClassNo, HighestClassNo));
         }

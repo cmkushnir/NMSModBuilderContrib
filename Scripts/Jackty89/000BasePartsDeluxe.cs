@@ -21,7 +21,7 @@ public class BasePartsDeluxe : cmk.NMS.Script.ModClass
 		var copTreeTrees = copyTree.Trees;
 
 		var basiceBaseParts = mbin.Trees[(int)UnlockableItemTreeEnum.BasicBaseParts];
-		//basiceBaseParts.Trees.Clear();
+		basiceBaseParts.Trees.Clear();
 
 		foreach( var tree in copTreeTrees ) {
 			basiceBaseParts.Trees.Add(tree);

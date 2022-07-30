@@ -4,6 +4,8 @@
 
 public class ExocraftRechargeRate : cmk.NMS.Script.ModClass
 {
+	public static float RechargeRate = 15f;
+
 	protected override void Execute()
 	{
 		GcDebugOptions();
@@ -13,7 +15,7 @@ public class ExocraftRechargeRate : cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 		var exoRecharge = mbin.Table.Find(TECH => TECH.ID == "EXO_RECHARGE");
-		exoRecharge.StatBonuses.Find(STAT => STAT.Stat.StatsType == GcStatsTypes.StatsTypeEnum.Vehicle_FuelRegen).Bonus = 15;
+		exoRecharge.StatBonuses.Find(STAT => STAT.Stat.StatsType == GcStatsTypes.StatsTypeEnum.Vehicle_FuelRegen).Bonus = RechargeRate;
 	}
 }
 

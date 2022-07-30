@@ -104,15 +104,15 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 			"GCVEHICLEGLOBALS.GLOBAL.MBIN"
 		);
 
-		float MechSuitJPForce      = 100f;
-		float MechSuitJPMaxSpeed   = 50f;
-		float MechSuitJPMaxUpSpeed = 80f;
-		float MechSuitJPDrainRate  = 0.40f;
-		float MechSuitJPFillRate   = 0.60f;
-
-		float VehicleFuelRate = 0.3f;
-		float VehicleFuelRateSurvival = 0.5f;
-		float VehicleBoostFuelRate    = 1f;
+		float MechSuitJPForce              = 100f;
+		float MechSuitJPMaxSpeed           = 50f;
+		float MechSuitJPMaxUpSpeed         = 80f;
+		float MechSuitJPDrainRate          = 0.40f;
+		float MechSuitJPFillRate           = 0.60f;
+		
+		float VehicleFuelRate              = 0.3f;
+		float VehicleFuelRateSurvival      = 0.5f;
+		float VehicleBoostFuelRate         = 1f;
 		float VehicleBoostFuelRateSurvival = 2f;
 
 		Mbin.MechJetpackForce      = MechSuitJPForce;
@@ -160,10 +160,6 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 		foreach( var vehicleSize in VehicleSizes ) {
 			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinSlots = 48;
 			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxSlots = 48;
-			//mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinTechSlots = 48;
-			//mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxTechSlots = 48;                
-			//mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinCargoSlots = 48;
-			//mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxCargoSlots = 48;
 		}
 	}
 

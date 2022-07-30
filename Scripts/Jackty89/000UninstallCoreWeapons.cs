@@ -4,6 +4,8 @@
 
 public class UninstallCoreWeapons : cmk.NMS.Script.ModClass
 {
+	public static bool UninstallExtra = false;
+	
 	protected override void Execute()
 	{
 		GcTechnologyTable();
@@ -16,6 +18,11 @@ public class UninstallCoreWeapons : cmk.NMS.Script.ModClass
 		var Mbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 		Mbin.Table.Find(PRODUCT => PRODUCT.ID == "SHIPGUN1").Core = false;
 		Mbin.Table.Find(PRODUCT => PRODUCT.ID == "LASER")   .Core = false;
+		if(UninstallExtra)
+		{
+			Mbin.Table.Find(PRODUCT => PRODUCT.ID == "SHIPJUMP1").Core = false;
+			Mbin.Table.Find(PRODUCT => PRODUCT.ID == "HYPERDRIVE").Core = false;
+		}			
 	}
 }
 
