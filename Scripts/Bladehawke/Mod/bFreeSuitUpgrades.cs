@@ -9,20 +9,23 @@ public class bFreeSuitUpgrades : cmk.NMS.Script.ModClass
     );
     var original = CloneList(mbin.Components);
     
-    GcMaintenanceComponentData data = new() {
+        var data = new GcMaintenanceComponentData
+        {
       VisibleMaintenanceSlots = -1,
       AllowRepair = true,
       UseBoundsForIconCentre = true,
-      Interactable = GcMaintenanceComponentData.InteractableEnum.OnlyWhenNotComplete,
+            Interactable = GcMaintenanceComponentData.InteractableEnum.Always,
       CompletedTransitionDelay = 1,
       ShareInteractionModelRender = true,
-      
-      ModelRendererData = new() {
-        Camera = new() {
+            ModelRendererData = new TkModelRendererData
+            {
+                Camera = new TkModelRendererCameraData
+                {
           Distance = 1.5f,
           LightPitch = 45,
           LightRotate = 45,
-          Wander = new() {
+                    Wander = new TkCameraWanderData
+                    {
             CamWanderPhase = 0.003f,
             CamWanderAmplitude = 0.5f,
           },
@@ -35,10 +38,9 @@ public class bFreeSuitUpgrades : cmk.NMS.Script.ModClass
         HeightOffset = 0.5f,
         UsePlayerCameraInHmd = true,
       },
-
       ModelRendererResource = GcMaintenanceComponentData.ModelRendererResourceEnum.ModelNode,
-
-      BroadcastLevel = new() {
+            BroadcastLevel = new GcBroadcastLevel
+            {
         BroadcastLevel = GcBroadcastLevel.BroadcastLevelEnum.LocalModel,
       },
       Title = "UI_DROPPOD_MAINT_TITLE",
@@ -54,39 +56,52 @@ public class bFreeSuitUpgrades : cmk.NMS.Script.ModClass
     
     mbin.Components.Add(data);
     
-    foreach(var item in original) {
+        foreach (var item in original)
+        {
       mbin.Components.Add(item);
-    };
+        }
     
     var interaction = mbin.Components.FindFirst<GcInteractionComponentData>();
     
     interaction.RepeatInteraction = true;
     interaction.ReseedAfterRewardSuccess = true;
     
+        var trigger = mbin.Components.FindFirst<GcTriggerActionComponentData>();
+        trigger.States.Remove(trigger.States.Find(NAME => NAME.StateID == "INTERACTOPTION"));
+
     mbin = ExtractMbin<TkAttachmentData>(
       "MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PARTS/COMMONPARTS/CRYOCHAMBERPOD/ENTITIES/CRYOCHAMBERPOD.ENTITY.MBIN"
     );
 
     original = new();
 
-    foreach(var component in mbin.Components) {
-      if (component is GcMaintenanceComponentData) continue;
+        foreach (var component in mbin.Components)
+        {
+            if (component is GcMaintenanceComponentData)
+                continue;
       original.Add(component);
     }
     
     mbin.Components.Clear();
-    foreach(var item in original) {
-      mbin.Components.Add(item);
-    };
+        mbin.Components.Add(data);
+
+        foreach (var component in original)
+        {
+            mbin.Components.Add(component);
+        }
+        ;
 
     interaction = mbin.Components.FindFirst<GcInteractionComponentData>();
     
     interaction.RepeatInteraction = true;
     interaction.ReseedAfterRewardSuccess = true;		
+
+        trigger = mbin.Components.FindFirst<GcTriggerActionComponentData>();
+        trigger.States.Remove(trigger.States.Find(NAME => NAME.StateID == "INTERACTOPTION"));
   }
 
   // This could probably go into Util, it's potentially handy	
-  protected List<T> CloneList<T>(List<T> source) where T: class
+    protected List<T> CloneList<T>(List<T> source) where T : class
   {
     return new List<T>(source);
   }
