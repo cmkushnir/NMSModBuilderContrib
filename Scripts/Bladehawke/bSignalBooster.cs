@@ -20,7 +20,8 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
       new("TOOL_LOCATION", "SHOP"),
       new("PLANET_ARCHIVES", "LIBRARY"),
       new("R_GRAVE", "SE_GRAVE"),
-      new("R_BASE", "SE_BASE")
+      new("R_BASE", "SE_BASE"),
+      new("R_GLITCH", "SE_GLITCH")
     };
 
     foreach (var pair in rewards)
@@ -35,9 +36,10 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
       "METADATA/SIMULATION/SCANNING/SCANEVENTTABLEPLANET.MBIN"
     );
 
-    var scanEvents = new (string Name, BuildingClassEnum Class, string OSD, string Label)[] {
-      new("SE_GRAVE", BuildingClassEnum.GraveInCave, "UI_MP_PLANTKILL_GRAVE_OSD", "SCAN_GRAVE"),
-      new("SE_BASE", BuildingClassEnum.Base, "UI_RECOVER_BASE_OSD", "UI_RECOVER_BASE_MARKER")
+    var scanEvents = new (string Name, BuildingClassEnum Class, string OSD, string Label, string Tooltip)[] {
+      new("SE_GRAVE", BuildingClassEnum.GraveInCave, "UI_MP_PLANTKILL_GRAVE_OSD", "SCAN_GRAVE", "SCAN_GRAVE"),
+      new("SE_BASE", BuildingClassEnum.Base, "UI_RECOVER_BASE_OSD", "UI_RECOVER_BASE_MARKER", "UI_RECOVER_BASE_MARKER"),
+      new("SE_GLITCH", BuildingClassEnum.StoryGlitch, "NPC_COMM_WEEK_04_GLITCH_OSD", "BUILDING_GLITCHYSTORYBOX", "BUILDING_GLITCHYSTORYBOX")
     };
 
     foreach (var scan in scanEvents)
@@ -52,6 +54,7 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
       target.BuildingClass.BuildingClass = scan.Class;
       target.OSDMessage = scan.OSD;
       target.MarkerLabel = scan.Label;
+      target.TooltipMessage = scan.Tooltip;
 
       mbin.Events.Add(target);
     };
@@ -94,6 +97,7 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
     );
 
     var scanner = mbin.Table.Find(ENTRY => ENTRY.Id == "SIGNALSCANNER");
+    scanner.TextAlien = "";
     scanner.Options.Clear();
     GcAlienPuzzleOption option = null;
 
@@ -112,7 +116,10 @@ public class bSignalBooster : cmk.NMS.Script.ModClass
       new( "?NUCLEARSCANNER", null),                        // Select Next Scanner Options
       new( "UI_SENTINEL_HIVE_NAME", "R_SHOW_HIVE_ONLY"),    // Sentinel Pillar
       new( "SCAN_GRAVE", "R_GRAVE"),                        // Traveller Grave
-      new( "UI_RECOVER_BASE_SUB", "R_BASE")                 // "Wild" Base computer
+      new( "UI_RECOVER_BASE_SUB", "R_BASE"),                // "Wild" Base computer
+      new( "?HYDRO_SCANNER", null ),                        // Select next scanner Options
+      new( "BUILDING_GLITCHYSTORYBOX", "R_GLITCH" )         // Settlement
+      
     };
 
     foreach (var pair in scannerMenu)
