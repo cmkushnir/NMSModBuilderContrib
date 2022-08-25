@@ -1,9 +1,6 @@
-//=============================================================================
+﻿//=============================================================================
 
-using nms = libMBIN.NMS;
-using libMBIN.NMS.Globals;
-using libMBIN.NMS.GameComponents;
-using libMBIN.NMS.Toolkit;
+
 
 //=============================================================================
 
@@ -11,7 +8,7 @@ namespace cmk.NMS.Scripts.Mod
 {
 	
 	
-	public class Natural_Settlements_Production : cmk.NMS.ModScript
+	public class Natural_Settlements_Production : cmk.NMS.Script.ModClass
 	{
 		protected override void Execute()
 		{
