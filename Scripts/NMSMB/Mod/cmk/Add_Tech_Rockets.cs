@@ -4,59 +4,56 @@
 
 public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 {
-	public static bool AddShipRocketTech     = false;  // add fixed spec upgrade to ship tech tree
-	public static bool AddShipRocketProcTech = false;  // add proc gen tech upgrade(s)
+	public bool AddShipRocketTech     = false;  // add fixed spec upgrade to ship tech tree
+	public bool AddShipRocketProcTech = false;  // add proc gen tech upgrade(s)
 
 	//...........................................................
 
 	protected override void Execute()
 	{
+		GcGameplayGlobals();
 		GcTechnologyTable();            // fixed   upgrades
 		GcProceduralTechnologyTable();  // procgen upgrades
+		GcProjectileDataTable();        // add effects to rocket blast
 		GcRealityManagerData();         // sell in space station shop
 		GcUnlockableTrees();            // add fixed to ship tech tree
-		
-		// GCGAMEPLAYGLOBALS.GLOBAL.MBIN MissileReloadTime = 13
 	}
 
 	//...........................................................
-	
+
+	protected void GcGameplayGlobals()
+	{
+		var mbin = ExtractMbin<GcGameplayGlobals>(
+			"GCGAMEPLAYGLOBALS.GLOBAL.MBIN"
+		);
+		mbin.MissileReloadTime = 4f;  // 13
+	}
+
+	//...........................................................
+
 	// non-proc gen tech class is based on (highest?) StatBonuses.Level,
 	// Level 1 = C, 2 = B, 3 = A, 4 = S.
 	protected void GcTechnologyTable()
 	{
-		if( !AddShipRocketTech ) return;			
 		var mbin = ExtractMbin<GcTechnologyTable>(
 			"METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN"
-		);	
-		
-		var dmg = CloneMbin(mbin.Table.Find(TECH => TECH.ID == "UT_ROCKETS"));  // clone Large Rocket Tubes
-		dmg.ID          = "UT_ROCKETS_DMG";
-		dmg.Name        = "HIGH DAMAGE ROCKETS";
-		dmg.NameLower   = "High Damage Rockets";
-		dmg.Description = "High yield warheads";
-		dmg.StatBonuses.Clear();
-		dmg.StatBonuses.Add(new(){
-			Stat = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_Damage },
-			Bonus = 100000,  // ~1,500 %
-			Level = 1
-		});
-		dmg.StatBonuses.Add(new(){
-			Stat = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius },
-			Bonus = 5,  // not displayed in game, end up damage ourselves if too high
-			Level = 1
-		});
-		dmg.StatBonuses.Add(new(){
-			Stat = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_CoolTime },
-			Bonus = 0.1f,  // 90 %
-			Level = 1
-		});
-		
-		mbin.Table.Add(dmg);
+		);
+		if( AddShipRocketTech ) {
+			var dmg = CloneMbin(mbin.Table.Find(TECH => TECH.ID == "UT_ROCKETS"));  // clone Large Rocket Tubes
+			dmg.ID          = "UT_ROCKETS_DMG";
+			dmg.Name        = "HIGH DAMAGE ROCKETS";
+			dmg.NameLower   = "High Damage Rockets";
+			dmg.Description = "High yield warheads";
+			dmg.StatBonuses.Clear();
+			dmg.StatBonuses.Add(StatsTypeEnum.Ship_Weapons_Guns_Damage,   100000);    // ~1,500 %
+			dmg.StatBonuses.Add(StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius, 5);    // not displayed in game, end up damage ourselves if too high
+			dmg.StatBonuses.Add(StatsTypeEnum.Ship_Weapons_Guns_CoolTime,      0.1f); // 90 %
+			mbin.Table.Add(dmg);
+		}
 	}
 
 	//...........................................................
-	
+
 	protected void GcProceduralTechnologyTable()
 	{
 		if( !AddShipRocketProcTech ) return;
@@ -90,18 +87,18 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 		var tech_mbin = ExtractMbin<GcTechnologyTable>(
 			"METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN"
 		);
-		var template = CloneMbin(tech_mbin.Table.Find(TECH => TECH.ID == "T_SHIPGUN"));		
+		var template = CloneMbin(tech_mbin.Table.Find(TECH => TECH.ID == "T_SHIPGUN"));
 		template.ID            = "T_SHIPROCKETS";
 		template.Group         = "SHIP_ROCKETS_NAME_L";
 		template.RequiredTech  = "SHIPROCKETS";
 		template.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.ROCKETMOD.DDS";
 		template.BaseStat.StatsType = StatsTypeEnum.Ship_Weapons_Rockets;
 		tech_mbin.Table.Add(template);
-		
+
 		// add proc tech that uses new template
 		var proc_mbin = ExtractMbin<GcProceduralTechnologyTable>(
 			"METADATA/REALITY/TABLES/NMS_REALITY_GCPROCEDURALTECHNOLOGYTABLE.MBIN"
-		);		
+		);
 		var proc = CloneMbin(proc_mbin.Table.Find(PROC => PROC.ID == "UP_SGUNX"));  // Illegal
 		proc.ID          = "UP_SROCKETSX";
 		proc.Template    = "T_SHIPROCKETS";
@@ -112,33 +109,17 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 		proc.NumStatsMin = 2;
 		proc.NumStatsMax = 3;
 		proc.StatLevels.Clear();
-		proc.StatLevels.Add(new() {
-			Stat           = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_Damage },
-			ValueMin       =  10000 / 4,
-			ValueMax       = 100000 / 4,
-			WeightingCurve = new GcWeightingCurve{ WeightingCurve = WeightingCurveEnum.MaxIsRare },
-			AlwaysChoose   = true,
-		});
-		proc.StatLevels.Add(new() {
-			Stat           = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius },
-			ValueMin       = 0.25f,
-			ValueMax       = 1.00f,
-			WeightingCurve = new GcWeightingCurve{ WeightingCurve = WeightingCurveEnum.MaxIsRare },
-		});
-		proc.StatLevels.Add(new() {
-			Stat           = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_CoolTime },
-			ValueMin       = 0.9f,
-			ValueMax       = 0.8f,
-			WeightingCurve = new GcWeightingCurve{ WeightingCurve = WeightingCurveEnum.MinIsRare },
-		});			
+		proc.StatLevels.Add(StatsTypeEnum.Ship_Weapons_Guns_Damage, 10000 / 4, 100000 / 4, WeightingCurveEnum.MaxIsRare, true);
+		proc.StatLevels.Add(StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius, 0.25f, 1.00f, WeightingCurveEnum.MaxIsRare);
+		proc.StatLevels.Add(StatsTypeEnum.Ship_Weapons_Guns_CoolTime,      0.9f,  0.8f,  WeightingCurveEnum.MinIsRare);
 		proc_mbin.Table.Add(proc);
-		
+
 		// add proc tech language text used when building instance name
 		foreach( var identifier in NMS.Game.Language.Identifier.List ) {
-			if( identifier != Game.Language.Identifier ) continue;  // comment out to add to all lang mbin's		
+			if( identifier != Game.LanguageId ) continue;  // comment out to add to all lang mbin's		
 			foreach( var pair in lang_map ) {
 				var data = GetLanguageData(identifier, pair.Item1);       // get existing text for existing id
-				SetLanguageText(data.Identifier, pair.Item2, data.Text);  // set existing text for new id
+				SetLanguageText(data.LanguageId, pair.Item2, data.Text);  // set existing text for new id
 			}
 		}
 
@@ -153,10 +134,27 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 		prod.NameLower     = "Suspicious Rocket Launcher Module";
 		prod.Description   =
 			"A <SPECIAL>black-market modification<> for the <TECHNOLOGY>Starship Rocket Launcher<>. Use <VAL_ON><IMG>FE_ALT1<><> to begin upgrade <VAL_ON>installation process<>.\r\n"
-		+	"The module is flexible, and exact upgrade statistics are <SPECIAL>unknown<> until installation is complete.\r\n"
-		+	"Potential improvements include: <STELLAR>damage<>, <STELLAR>radius<> and <STELLAR>overheat times<>."
+		+   "The module is flexible, and exact upgrade statistics are <SPECIAL>unknown<> until installation is complete.\r\n"
+		+   "Potential improvements include: <STELLAR>damage<>, <STELLAR>radius<> and <STELLAR>overheat times<>."
 		;
 		prod_mbin.Table.Add(prod);
+	}
+
+	//...........................................................
+
+	protected void GcProjectileDataTable()
+	{
+		var mbin = ExtractMbin<GcProjectileDataTable>(
+			"METADATA/PROJECTILES/PROJECTILETABLE.MBIN"
+		);
+		var rockets = mbin.Table.Find(DATA => DATA.Id == "SHIPROCKET");
+		rockets.BehaviourFlags = (BehaviourFlagsEnum)(
+			(int)BehaviourFlagsEnum.DestroyAsteroids |
+			(int)BehaviourFlagsEnum.DestroyTerrain   |
+			(int)BehaviourFlagsEnum.ExplosionForce   |
+			(int)BehaviourFlagsEnum.GatherResources  |
+			(int)BehaviourFlagsEnum.ScareCreatures
+		);
 	}
 
 	//...........................................................
@@ -168,12 +166,12 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 		);
 		if( AddShipRocketTech ) {
 			mbin.AvailableTech.AddUnique("UT_ROCKETS_DMG");
-		}	
+		}
 		if( AddShipRocketProcTech ) {  // only get from warriors and pirates
 			mbin.TradeSettings.LoneWar.OptionalProducts.AddUnique("U_SROCKETSX");
 			mbin.TradeSettings.WarShip.OptionalProducts.AddUnique("U_SROCKETSX");
 			mbin.TradeSettings.IllegalProds.AlwaysPresentProducts.AddUnique("U_SROCKETSX");
-			mbin.TradeSettings.PirateTech  .AlwaysPresentProducts.AddUnique("U_SROCKETSX");
+			mbin.TradeSettings.PirateTech.AlwaysPresentProducts.AddUnique("U_SROCKETSX");
 		}
 	}
 
@@ -181,17 +179,18 @@ public class Add_Tech_Rockets : cmk.NMS.Script.ModClass
 
 	protected void GcUnlockableTrees()
 	{
-		if( !AddShipRocketTech ) return;
 		var mbin = ExtractMbin<GcUnlockableTrees>(
 			"METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN"
 		);
-		var ship_tree   = mbin.Trees[(int)GcUnlockableItemTreeGroups.UnlockableItemTreeEnum.ShipTech];
-		var ship_guns   = ship_tree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPGUN1");
-		var ship_rocket = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPROCKETS");
-		ship_rocket.Children.Add(new GcUnlockableItemTreeNode{
-			Unlockable = "UT_ROCKETS_DMG",
-			Children   = new()
-		});
+		if( AddShipRocketTech ) {
+			var ship_tree   = mbin.Trees[(int)UnlockableItemTreeEnum.ShipTech];
+			var ship_guns   = ship_tree.FindUnlockable("SHIPGUN1");
+			var ship_rocket = ship_guns.FindUnlockable("SHIPROCKETS");
+			ship_rocket.Children.Add(new GcUnlockableItemTreeNode {
+				Unlockable = "UT_ROCKETS_DMG",
+				Children   = new()
+			});
+		}
 	}
 }
 

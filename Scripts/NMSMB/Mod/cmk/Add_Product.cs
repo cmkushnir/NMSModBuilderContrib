@@ -73,7 +73,7 @@ public class Add_Product : cmk.NMS.Script.ModClass
 		product.CraftAmountMultiplier = 10;
 		product.EggModifierIngredient = false;
 		PRODUCTS.Add(product);
-		
+
 		// RewardID = "DE_FOOD_ENERGY2"
 		var consumable = CloneMbin(CONSUMABLES.Find(CONSUMABLE => CONSUMABLE.ID == "FOOD_R_BCAKEMIX"));
 		consumable.ID  = "FOOD_SCHIPCOOK";

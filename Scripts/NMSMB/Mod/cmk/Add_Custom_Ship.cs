@@ -42,7 +42,7 @@ public class Add_Custom_Ship : cmk.NMS.Script.ModClass
 			RewardChoiceEnum.GiveAll,
 			new(){ ship }
 		);
-		mbin.GenericTable.Add(entry);		
+		mbin.GenericTable.Add(entry);
 	}
 }
 

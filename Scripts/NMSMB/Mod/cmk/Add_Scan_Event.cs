@@ -17,23 +17,23 @@ public class Add_Scan_Event : cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcScanEventTable>(
 			"METADATA/SIMULATION/SCANNING/SCANEVENTTABLEPLANET.MBIN"
-		);			
+		);
 		GcScanEventTabl_Base  (mbin);
 		GcScanEventTabl_Portal(mbin);
 	}
-	
+
 	//...........................................................
 
 	protected void ScanEventTable_Vehicle()
 	{
 		var mbin = ExtractMbin<GcScanEventTable>(
 			"METADATA/SIMULATION/SCANNING/SCANEVENTTABLEVEHICLE.MBIN"
-		);			
+		);
 		GcScanEventTabl_Base  (mbin);
 		GcScanEventTabl_Portal(mbin);     // or ...
 		//GcScanEventTabl_Portal2(mbin);  // test
 	}
-	
+
 	//...........................................................
 
 	protected void GcScanEventTabl_Base( GcScanEventTable TABLE )
@@ -44,13 +44,13 @@ public class Add_Scan_Event : cmk.NMS.Script.ModClass
 	//...........................................................
 
 	protected void GcScanEventTabl_Portal( GcScanEventTable TABLE )
-	{	
+	{
 		var scan = GcScanEventTable_Add(TABLE, "MONOLITH", "PORTAL", BuildingClassEnum.Portal);
 		scan.ForceInteractionType.InteractionType = InteractionTypeEnum.Portal;
 		scan.BuildingLocation = BuildingLocationEnum.AllNearest;
 		scan.ReplaceEventIfAlreadyActive = true;
 	}
-	
+
 	//...........................................................
 
 	// Can't seem to get any version of a portal scan event to work
@@ -59,11 +59,11 @@ public class Add_Scan_Event : cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcScanEventTable>(
 			"METADATA/SIMULATION/SCANNING/SCANEVENTTABLETUTORIAL.MBIN"
-		);			
+		);
 		var scan = mbin.Events.Find(EVENT => EVENT.Name == "PORTAL");
 		TABLE.Events.Add(scan);
 	}
-	
+
 	//...........................................................
 
 	protected GcScanEventData GcScanEventTable_Add(
@@ -76,7 +76,7 @@ public class Add_Scan_Event : cmk.NMS.Script.ModClass
 		if( target != null ) return target;  // no error, already exists
 
 		target = CloneMbin(TABLE.Events.Find(EVENT => EVENT.Name == SOURCE));
-		
+
 		target.Name           = TARGET;
 		target.OSDMessage     = "SIGNAL_" + TARGET;
 		target.TooltipMessage = "TIP_"    + TARGET;
