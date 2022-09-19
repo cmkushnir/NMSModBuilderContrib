@@ -2,7 +2,7 @@
 // Dump all unique min|max stats for all proc gen tech.
 //=============================================================================
 
-public class ProcTech_Stats : cmk.NMS.Script.QueryClass
+public class ProcTech_Stats: cmk.NMS.Script.QueryClass
 {
 	public class StatLevel {
 		public WeightingCurveEnum Curve;
@@ -10,7 +10,7 @@ public class ProcTech_Stats : cmk.NMS.Script.QueryClass
 		public float Max;
 		public int   Count;
 	}
-	
+
 	string [] StatTypeNames = Enum.GetNames(typeof(StatsTypeEnum));
 	string [] CurveNames    = Enum.GetNames(typeof(WeightingCurveEnum));
 
@@ -18,17 +18,17 @@ public class ProcTech_Stats : cmk.NMS.Script.QueryClass
 	{
 		Log.Clear();
 
-		var save_path = Dialog.SaveFile(null, "ProcTech_Stats.log");		
+		var save_path = Dialog.SaveFile(null, "ProcTech_Stats.log");
 		var file      = save_path.IsNullOrEmpty() ?
 			null : System.IO.File.CreateText(save_path)
 		;
-		
+
 		var mbin = ExtractMbin<GcProceduralTechnologyTable>(
 			"METADATA/REALITY/TABLES/NMS_REALITY_GCPROCEDURALTECHNOLOGYTABLE.MBIN"
 		);
-		
+
 		var types = new List<StatLevel>[StatTypeNames.Length];
-		
+
 		foreach( var data in mbin.Table ) {
 			foreach( var level in data.StatLevels ) {
 				var type = types[(int)level.Stat.StatsType];
@@ -42,7 +42,7 @@ public class ProcTech_Stats : cmk.NMS.Script.QueryClass
 					STAT.Max   == level.ValueMax
 				);
 				if( entry != null ) { ++entry.Count; continue; }
-				type.Add(new(){
+				type.Add(new() {
 					Curve = level.WeightingCurve.WeightingCurve,
 					Min   = level.ValueMin,
 					Max   = level.ValueMax,
@@ -50,7 +50,7 @@ public class ProcTech_Stats : cmk.NMS.Script.QueryClass
 				});
 			}
 		}
-		
+
 		for( var i = 0; i < types.Length; ++i ) {
 			var name = StatTypeNames[i];
 			var type = types[i];
@@ -64,7 +64,7 @@ public class ProcTech_Stats : cmk.NMS.Script.QueryClass
 				file?.WriteLine(info);
 			}
 		}
-		
+
 		file?.Flush();
 		Log.AddSuccess("Finished");
 	}

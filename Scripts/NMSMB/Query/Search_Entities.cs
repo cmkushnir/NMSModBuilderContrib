@@ -2,12 +2,12 @@
 // Search all entity mbin's for specific criteria.
 //=============================================================================
 
-public class Search_Entities : cmk.NMS.Script.QueryClass
+public class Search_Entities: cmk.NMS.Script.QueryClass
 {
 	protected override void Execute()
 	{
 		var TkAttachmentDataClass = Game.Mbinc.FindClass("TkAttachmentData");
-		
+
 		foreach( var path in TkAttachmentDataClass.PakItems ) {
 			var mbin = ExtractMbin<TkAttachmentData>(path, true, false);
 			// edit search criteria as desired:
@@ -18,7 +18,7 @@ public class Search_Entities : cmk.NMS.Script.QueryClass
 			);
 			if( elem != null ) Log.AddInformation($"{path}");
 		}
-		
+
 		Log.AddSuccess("Finished");
 	}
 }

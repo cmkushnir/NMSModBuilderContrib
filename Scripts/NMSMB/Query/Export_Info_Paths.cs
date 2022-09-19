@@ -5,18 +5,18 @@
 // the info records from all PCBANKS/*.pak files.
 //=============================================================================
 
-public class Export_Info_Paths : cmk.NMS.Script.QueryClass
+public class Export_Info_Paths: cmk.NMS.Script.QueryClass
 {
 	protected override void Execute()
 	{
 		var save_path = Dialog.SaveFile(null, "Export_Info_Paths.log");
 		if( save_path.IsNullOrEmpty() ) return;
-		
+
 		var file = System.IO.File.CreateText(save_path);
-		
+
 		Game.PCBANKS.InfoTree.ForEachTag(( INFO, CANCEL, LOG ) => {
 			file.WriteLine($"{INFO.File.Path.Name} {INFO.Path.Full}");
-		},	Cancel, Log);
+		}, Cancel, Log);
 
 		file.Flush();
 		Log.AddSuccess("Finished");

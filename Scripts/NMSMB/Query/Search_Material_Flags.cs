@@ -2,7 +2,7 @@
 // Search all material mbin's for those that contain all specified material flags.
 //=============================================================================
 
-public class Search_Material_Flags : cmk.NMS.Script.QueryClass
+public class Search_Material_Flags: cmk.NMS.Script.QueryClass
 {
 	// look for material mbin's that use ALL following flags:
 	MaterialFlagEnum [] matches = new [] {
@@ -10,10 +10,10 @@ public class Search_Material_Flags : cmk.NMS.Script.QueryClass
 		MaterialFlagEnum._F10_,
 		MaterialFlagEnum._F22_,
 		MaterialFlagEnum._F53_,
-	};		
+	};
 
 	//...........................................................
-	
+
 	protected override void Execute()
 	{
 		// can be many matches, write them to a file not log
@@ -21,7 +21,7 @@ public class Search_Material_Flags : cmk.NMS.Script.QueryClass
 		if( file_path.IsNullOrEmpty() ) return;
 
 		var file = System.IO.File.CreateText(file_path);
-		
+
 		var TkMaterialDataClass = Game.Mbinc.FindClass("TkMaterialData");
 		var paths = TkMaterialDataClass.PakItems;
 
@@ -30,9 +30,9 @@ public class Search_Material_Flags : cmk.NMS.Script.QueryClass
 			file.Write($"{match} ");
 		}
 		file.WriteLine();
-		
+
 		Log.AddSuccess($"Searching {paths.Count} material mbin's ...");
-		
+
 		foreach( var path in paths ) {
 			var mbin  = ExtractMbin<TkMaterialData>(path, false, false);
 			var found = true;
@@ -44,13 +44,13 @@ public class Search_Material_Flags : cmk.NMS.Script.QueryClass
 			}
 			if( found ) file.WriteLine(path);
 		}
-		
+
 		file.Flush();
 		Log.AddSuccess($"Finished saerching {paths.Count} material mbin's");
 	}
 
 	//...........................................................
-	
+
 	protected bool FlagListContains( List<TkMaterialFlags> FLAGS, MaterialFlagEnum MATCH )
 	{
 		foreach( var flag in FLAGS ) {
