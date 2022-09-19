@@ -29,7 +29,7 @@ public class Reward_Changes : cmk.NMS.Script.ModClass
 			}
 		}
 		
-		// make those otherwise useless planters w/ 10 carbon usefull.
+		// make those otherwise useless planters w/ 10 carbon useful.
 		var plants = mbin.GenericTable.Find(ENTRY => ENTRY.Id == "INTERIORPLANTS");
 		plants.List.List.Add(RewardTableItem.Nanites(100, 1000));		
 	}

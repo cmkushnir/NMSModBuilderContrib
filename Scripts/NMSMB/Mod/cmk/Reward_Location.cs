@@ -14,27 +14,27 @@ public class Reward_Location : cmk.NMS.Script.ModClass
 	// distinct chart for location, but not find using default A-D chart.
 	//...........................................................
 
-	public static float SecureDepot     { get; set; } = 30;  //  6
-	public static float SecureFactory   { get; set; } = 20;  // 12
-	public static float SecureHarvester { get; set; } = 20;  //  6
-	public static float SecureBaseSite  { get; set; } = 20;  // N/A
+	public float SecureDepot     = 30;  //  6
+	public float SecureFactory   = 20;  // 12
+	public float SecureHarvester = 20;  //  6
+	public float SecureBaseSite  = 20;  // N/A
 
-	public static float DistressCrashedShip      { get; set; } = 90;     // 4
-	public static float DistressCrashedShipNPC   { get; set; } =  0.1f;  // 4
-	public static float DistressCrashedFreighter { get; set; } = 10;     // 4
+	public float DistressCrashedShip      = 90;     // 4
+	public float DistressCrashedShipNPC   =  0.1f;  // 4
+	public float DistressCrashedFreighter = 10;     // 4
 
-	public static float InhabitedLibrary     { get; set; } =  5;     //  5
-	public static float InhabitedShelter     { get; set; } =  0.1f;  //  8
-	public static float InhabitedOutpost     { get; set; } =  5;     //  5
-	public static float InhabitedShop        { get; set; } = 50;     // 13
-	public static float InhabitedRadioTower  { get; set; } = 10;     //  8
-	public static float InhabitedObservatory { get; set; } = 10;     //  6 B, 8 C
-	public static float InhabitedAbandoned   { get; set; } = 10;     // 12 B
+	public float InhabitedLibrary     =  5;     //  5
+	public float InhabitedShelter     =  0.1f;  //  8
+	public float InhabitedOutpost     =  5;     //  5
+	public float InhabitedShop        = 50;     // 13
+	public float InhabitedRadioTower  = 10;     //  8
+	public float InhabitedObservatory = 10;     //  6 B, 8 C
+	public float InhabitedAbandoned   = 10;     // 12 B
 
-	public static float AncientRuin     { get; set; } = 10;  // 12 - gives words or marks treaure site (excavate)
-	public static float AncientPlaque   { get; set; } = 10;  // 12
-	public static float AncientMonolith { get; set; } = 10;  // 12
-	public static float AncientPortal   { get; set; } = 60;  // N/A
+	public float AncientRuin     = 10;  // 12 - gives words or marks treaure site (excavate)
+	public float AncientPlaque   = 10;  // 12
+	public float AncientMonolith = 10;  // 12
+	public float AncientPortal   = 60;  // N/A
 
 	//...........................................................
 
@@ -46,6 +46,8 @@ public class Reward_Location : cmk.NMS.Script.ModClass
 		GcRewardTable_StarChart (mbin);
 		GcRewardTable_RandomScan(mbin);
 	}
+	
+	//...........................................................
 	
 	protected void GcRewardTable_StarChart( GcRewardTable MBIN )
 	{	

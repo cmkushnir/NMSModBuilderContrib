@@ -4,11 +4,11 @@
 
 public class Reward_MoreWords : cmk.NMS.Script.ModClass
 {
-	public static uint  BonusWords      = 3;
-	public static uint  BonusAtlasWords = 6;
+	public uint  BonusWords      = 3;
+	public uint  BonusAtlasWords = 6;
 	
-	public static float BonusWordChance      = 100.0f;
-	public static float BonusAtlasWordChance =  50.0f;
+	public float BonusWordChance      = 100.0f;
+	public float BonusAtlasWordChance =  50.0f;
 
 	//...........................................................
 	
@@ -53,7 +53,7 @@ public class Reward_MoreWords : cmk.NMS.Script.ModClass
 			}
 			if( source_race == RaceEnum.Diplomats ) continue;  // no learn word reward found
 			
-			// add BonusWords more words, same race & category, 100% chance
+			// add BonusWords more words, same race & category, BonusWordChance%
 			for( var i = 0; i < BonusWords; ++i ) {
 				var word = RewardTableItem.TeachWord(source_race, source_category, BonusWordChance);
 				entry.List.List.Add(word);

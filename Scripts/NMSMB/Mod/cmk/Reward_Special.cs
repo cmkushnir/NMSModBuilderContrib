@@ -55,7 +55,9 @@ public class Rewards_Special : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcPurchaseableSpecials>(
 			"METADATA/REALITY/TABLES/PURCHASEABLESPECIALS.MBIN"
 		);
-		mbin.Table.ForEach(PURCHASEABLE => PURCHASEABLE.MissionTier = -1);	
+		mbin.Table.ForEach(PURCHASEABLE => {
+			PURCHASEABLE.MissionTier = -1;
+		});
 	}
 	
 	//...........................................................
@@ -102,7 +104,7 @@ public class Rewards_Special : cmk.NMS.Script.ModClass
 			var consume = product.Consumable;
 			if( id.Contains("_FIREW")  // fireworks
 			)	consume = true;        // allows specifying # to buy
-			
+					
 			purchaseables.Table.Add(new(){
 				ID           = id,
 				ShopNumber   =  1,

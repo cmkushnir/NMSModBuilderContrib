@@ -14,23 +14,24 @@
 
 public class Scan_Auto : cmk.NMS.Script.ModClass
 {
-	public static bool EnableShelter           = false;
-	public static bool EnableAbandoned         = false;
-	public static bool EnableRadioTower        = false;
-	public static bool EnableFactory           = false;
-	public static bool EnableObservatory       = false;
-	public static bool EnableShop              = false;
-	public static bool EnableOutpost           = false;
-	public static bool EnableSettlement        = false;
-	public static bool EnableBaseSite          = false;
-	public static bool EnableDroneHive         = false;
-	public static bool EnableDroneHiveDisabled = false;
-	public static bool EnableMonolith          = false;
-	public static bool EnablePortal            = false;
-	public static bool EnableDistress          = false;
-	public static bool EnableGrave             = false;
-	public static bool EnableBones             = false;
-	public static bool EnableTreasureRuin      = false;
+	public bool EnableShelter           = false;
+	public bool EnableAbandoned         = false;
+	public bool EnableRadioTower        = false;
+	public bool EnableFactory           = false;
+	public bool EnableObservatory       = false;
+	public bool EnableShop              = false;
+	public bool EnableOutpost           = false;
+	public bool EnableSettlement        = false;
+	public bool EnableBaseSite          = false;
+	public bool EnableDroneHive         = false;
+	public bool EnableDroneHiveDisabled = false;
+	public bool EnableMonolith          = false;
+	public bool EnablePortal            = false;
+	public bool EnableDistress          = false;
+	public bool EnableGrave             = false;
+	public bool EnableBones             = false;
+	public bool EnableTreasureRuin      = false;
+	public bool MessageModule           = false;
 
 	//...........................................................
 
@@ -53,6 +54,7 @@ public class Scan_Auto : cmk.NMS.Script.ModClass
 		if( EnableGrave )             Try(() => TkAttachmentData_Grave());
 		if( EnableBones )             Try(() => TkAttachmentData_Bones());
 		if( EnableTreasureRuin )      Try(() => TkAttachmentData_TreasureRuin());
+		if( MessageModule )           Try(() => TkAttachmentData_MessageModule());
 	}
 
 	//...........................................................
@@ -94,6 +96,9 @@ public class Scan_Auto : cmk.NMS.Script.ModClass
 		return scannable;
 	}
 	
+	//...........................................................
+	// For scene and lsystem mbin's for all buildings:
+	// METADATA/SIMULATION/ENVIRONMENT/PLANETBUILDINGTABLE.MBIN
 	//...........................................................
 	
 	// BUILDING_SHELTER_L "Shelter"
@@ -187,11 +192,10 @@ public class Scan_Auto : cmk.NMS.Script.ModClass
 	//...........................................................
 
 	protected void TkAttachmentData_Settlement()
-	{		
+	{
 		var mbin = ExtractMbin<TkAttachmentData>(
-			"MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/SETTLEMENT/CONSTRUCTION_TERMINAL/ENTITIES/CONSTRUCTIONTERMINAL.ENTITY.MBIN"
-		//	"MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/SETTLEMENT/MAYOR_TERMINAL/ENTITIES/MAYORTERMINAL.ENTITY.MBIN"
-		);
+			"MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/SETTLEMENT/TOWER_STONE_PLACEMENT/ENTITIES/PLACEMENTDATA.ENTITY.MBIN"
+		);	
 		var scannable = SetGcScannableComponentData(mbin, "UI_SETTLEMENT_LOCATED_OSD", ScanIconTypeEnum.FreighterTerminal);
 	}
 
@@ -292,6 +296,17 @@ public class Scan_Auto : cmk.NMS.Script.ModClass
 			"MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/RUINS/UNDERGROUNDRUINS/ENTITIES/TRIGGERVOLUME.ENTITY.MBIN"
 		);
 		var scannable = SetGcScannableComponentData(mbin, "PLANT_FOOD_38", ScanIconTypeEnum.ArtifactCrate);
+	}
+
+	//...........................................................
+
+	// BLD_MESSAGEMODULE_NAME_L "Message Module"
+	protected void TkAttachmentData_MessageModule()
+	{
+		var mbin = ExtractMbin<TkAttachmentData>(
+			"MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PARTS/BUILDABLEPARTS/TECH/MESSAGEMODULE/ENTITIES/MESSAGEMODULE.ENTITY.MBIN"
+		);
+		var scannable = SetGcScannableComponentData(mbin, "BLD_MESSAGEMODULE_NAME_L", ScanIconTypeEnum.Grave);
 	}
 }
 

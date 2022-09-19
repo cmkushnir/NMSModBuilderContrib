@@ -34,8 +34,8 @@ public class Start : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcBuildingGlobals>(
 			"GCBUILDINGGLOBALS.GLOBAL.MBIN"
 		);
-		mbin.StartCrashSiteMinDistance = float.MaxValue;  // other side of planet
-		mbin.StartCrashSiteMaxDistance = float.MaxValue;
+		mbin.StartCrashSiteMinDistance = 100;  // float.MaxValue;  // other side of planet ?
+		mbin.StartCrashSiteMaxDistance = 200;  // float.MaxValue;
 		mbin.StartShelterMinDistance   = 100;
 		mbin.StartShelterMaxDistance   = 300;
 	}

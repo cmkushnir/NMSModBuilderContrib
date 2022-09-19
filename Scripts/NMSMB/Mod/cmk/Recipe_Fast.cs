@@ -4,7 +4,7 @@
 
 public class Recipe_Fast : cmk.NMS.Script.ModClass
 {	
-	public static ulong MaxTimeSeconds = 1;
+	public ulong MaxTimeSeconds = 1;
 	
 	//...........................................................
 	

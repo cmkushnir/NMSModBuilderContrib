@@ -7,8 +7,8 @@
 
 public class Start_Ship : cmk.NMS.Script.ModClass
 {
-	public static int MaxAmount   => Inventory_Stack.MaxAmount;
-	public static int StartAmount => MaxAmount / 2;	
+	public int MaxAmount   => Script<Inventory_Stack>().MaxAmount;
+	public int StartAmount => MaxAmount / 2;	
 	
 	//...........................................................
 	
@@ -37,6 +37,7 @@ public class Start_Ship : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcDefaultSaveData>(
 			"METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN"
 		);
+		mbin.State.ShipLayout.Slots = 48;  // ignored ?
 		mbin.State.ShipInventory.Slots.Clear();
 		mbin.State.ShipInventory.Add(Inventory.Technology("LAUNCHER",        100, 100));  // Launch Thruster
 		mbin.State.ShipInventory.Add(Inventory.Technology("UT_LAUNCHCHARGE", 100, 100));  // Launch System Recharger		
@@ -49,6 +50,8 @@ public class Start_Ship : cmk.NMS.Script.ModClass
 		mbin.State.ShipInventory.Add(Inventory.Technology("SHIP_TELEPORT",   100, 100));  // Teleport Receiver
 		mbin.State.ShipInventory.Add(Inventory.Technology("SHIPSCAN_ECON",   100, 100));  // Economy  Scanner
 		mbin.State.ShipInventory.Add(Inventory.Technology("SHIPSCAN_COMBAT", 100, 100));  // Conflict Scanner
+		// somewhere around 3.98 stopped being able to buy void egg (anything vanilla thing with # counter)
+		mbin.State.ShipInventory.Add(Inventory.Product("ODD_EGG", 1, MaxAmount));  // Void Egg
 	}
 }
 

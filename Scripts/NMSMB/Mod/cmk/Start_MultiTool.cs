@@ -12,7 +12,7 @@ public class Start_MultiTool : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcDefaultSaveData>(
 			"METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN"
 		);
-		mbin.State.WeaponLayout.Slots = 48;
+		mbin.State.WeaponLayout.Slots = 48;  // ignored
 		mbin.State.WeaponInventory.Slots.Clear();
 		mbin.State.WeaponInventory.Add(Inventory.Technology("SCAN1",         100, 100));  // Scanner
 		mbin.State.WeaponInventory.Add(Inventory.Technology("SCANBINOC1",     -1, 100));  // Analysis Visor

@@ -15,7 +15,7 @@ public class Space_Station : cmk.NMS.Script.ModClass
 
 	//...........................................................
 
-	// attempt 1 to make stations destructable, individual panelts shootable
+	// attempt 1 to make stations destructable, individual panels shootable
 	protected void Scenes()
 	{
 		var parts = new [] {

@@ -8,8 +8,8 @@
 
 public class Start_ExoSuit : cmk.NMS.Script.ModClass
 {
-	public static int MaxAmount   => Inventory_Stack.MaxAmount;
-	public static int StartAmount => MaxAmount / 2;	
+	public int MaxAmount   => Script<Inventory_Stack>().MaxAmount;
+	public int StartAmount => MaxAmount / 2;	
 	
 	//...........................................................
 
@@ -72,6 +72,11 @@ public class Start_ExoSuit : cmk.NMS.Script.ModClass
 		
 		CONTAINER.Add(Inventory.Product("AMMO",       StartAmount, MaxAmount));  // Projectile Ammunition
 		CONTAINER.Add(Inventory.Product("BAIT_BASIC", StartAmount, MaxAmount));  // Creature Pellets
+
+		// use at refiner to create a void egg:
+		CONTAINER.Add(Inventory.Product  ("EGG1",        10, MaxAmount));  // Companion Egg
+		CONTAINER.Add(Inventory.Substance("TIMEDUST", 20000, MaxAmount));  // Somnal Dust
+		CONTAINER.Add(Inventory.Substance("TIMEMILK", 20000, MaxAmount));  // Ancestral Memories
 	}
 	
 	//...........................................................

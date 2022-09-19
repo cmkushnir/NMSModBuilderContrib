@@ -1,5 +1,6 @@
 ﻿//=============================================================================
-// Experimental: from discord post, force a starting system.
+// Based on discord post by ThatBomberBoi.
+// Force a starting system.
 //=============================================================================
 
 [NMSScriptDisabled]  // experimental, leave disabled unless you know what you are doing

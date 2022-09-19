@@ -7,14 +7,18 @@ public class Ship : cmk.NMS.Script.ModClass
 {
 	protected override void Execute()
 	{
+	//	Try(() => Squid());
+		Try(() => TkAttachmentData());
 		Try(() => GcGameplayGlobals());
 		Try(() => GcTechnologyTable());
 		Try(() => GcAISpaceshipGlobals());
 		Try(() => GcRealityManagerData());
 		Try(() => GcSpaceshipGlobals());
+		// control spawns by changing distribution
 		Try(() => GcSolarGenerationGlobals());
-	//	Try(() => Squid());
-		Try(() => TkAttachmentData());
+		// control spawns by disabling ship scenes - idea: Apex Fatality | Lenni
+	//	Try(() => GcAISpaceshipManagerData());
+	//	Try(() => GcExperienceSpawnTable());
 	}
 		
 	//...........................................................
@@ -41,7 +45,7 @@ public class Ship : cmk.NMS.Script.ModClass
 		scene.Children[4].Children[1].Children.Clear();
 		scene.Children[4].Children[1].Children.Add(node);
 	}
-
+	
 	//...........................................................
 
 	protected void TkAttachmentData()
@@ -85,7 +89,8 @@ public class Ship : cmk.NMS.Script.ModClass
 			"GCAISPACESHIPGLOBALS.GLOBAL.MBIN"
 		);
 
-		mbin.VisibleDistance = 20000;  // 3500
+		mbin.VisibleDistance                = 20000;  // 3500
+		mbin.MinimumCircleTimeBeforeLanding = 1;      // 5
 
 		var ranges = mbin.PlayerSquadronConfig.PilotRankTraitRanges;
 		for( var i = 0; i < ranges.Length; ++i ) {
@@ -159,9 +164,10 @@ public class Ship : cmk.NMS.Script.ModClass
 		mbin.ControlHeavy.PlanetEngine.MinSpeed = min_speed;
 		mbin.ControlHeavy.CombatEngine.MinSpeed = min_speed;
 
-		mbin.MiniWarpLinesNum             = 0;     // 4
-		mbin.MiniWarpFlashIntensity       = 0.1f;  // 0.9
-		mbin.MiniWarpHUDArrowAttractAngle = 2;     // 10
+		mbin.MiniWarpSpeed                = 100000;  // 30000
+		mbin.MiniWarpLinesNum             = 0;      // 4
+		mbin.MiniWarpFlashIntensity       = 0.1f ;  // 0.9
+		mbin.MiniWarpHUDArrowAttractAngle = 2;      // 10
 
 		mbin.FreighterBattleIgnoreFriendlyFireDistance *= 10;  // 10,000
 		
@@ -220,10 +226,44 @@ public class Ship : cmk.NMS.Script.ModClass
 			for( var i = 0; i < civilian.Length; ++i ) civilian[i] = 0;
 			civilian[(int)ShipClassEnum.Shuttle] = 1;
 			// leave shuttle = 1, and set 1 other to 100
-			civilian[(int)ShipClassEnum.Royal] = 100;
-			civilian[(int)ShipClassEnum.Alien] = 100;
+			//civilian[(int)ShipClassEnum.Royal] = 100;
+			//civilian[(int)ShipClassEnum.Alien] = 100;
 			civilian[(int)ShipClassEnum.Sail]  = 100;
 		}
+	}
+
+	//...........................................................
+
+	protected void GcAISpaceshipManagerData()
+	{
+		var mbin = ExtractMbin<GcAISpaceshipManagerData>(
+			"METADATA/SIMULATION/SPACE/AISPACESHIPMANAGER.MBIN"
+		);
+		foreach( var data in mbin.SystemSpaceships[(int)AIFactionEnum.Civilian].Spaceships ) {
+			switch( data.Class.ShipClass ) {
+				case ShipClassEnum.Dropship:
+				case ShipClassEnum.Shuttle:
+				case ShipClassEnum.Fighter:
+				case ShipClassEnum.Scientific:
+				case ShipClassEnum.Alien:
+				case ShipClassEnum.Sail:
+				case ShipClassEnum.Freighter:
+					data.Filename = "";  // don't want any of these to be able to spawn
+					break;
+				case ShipClassEnum.Royal:				
+					break;
+			}
+		}
+	}
+
+	//...........................................................
+
+	protected void GcExperienceSpawnTable()
+	{
+		var mbin = ExtractMbin<GcExperienceSpawnTable>(
+			"METADATA/SIMULATION/SCENE/EXPERIENCESPAWNTABLE.MBIN"
+		);
+		mbin.OutpostSpawns[0].Count = new(50, 100);  // [1, 3], increase # of spawns
 	}
 }
 
