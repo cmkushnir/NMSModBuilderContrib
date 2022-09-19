@@ -9,13 +9,13 @@ public class Lang_Norm_Names : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		foreach( var identifier in NMS.Game.Language.Identifier.List ) {
-			// language mbin's are big, generally only mod for your language,
+			// the game language mbin's are big, generally only mod for your language,
 			// don't bloat mod pak with language mbin's that will never be used.
 			// Loop is to illustrate how you'd update all languages,
 			// normally you'd just use Game.Language and Game.Language.Identifier.
-			if( identifier != Game.Language.Identifier ) continue;
+			if( identifier != Game.LanguageId ) continue;
 			
-			var language = Game.Languages.Get(identifier);  // cached, load-on-demand
+			var language = Game.PCBANKS.Languages.Get(identifier);  // cached, load-on-demand
 			
 			var econ_low    = language.GetText("UI_ECON_LEVEL_LOW_6");   // "Destitute"
 			var econ_medium = language.GetText("UI_ECON_LEVEL_MED_2");   // "Balanced"

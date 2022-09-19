@@ -1,7 +1,7 @@
 ﻿//=============================================================================
 // Copy the english text to all other language mbins.
-// You want to make sure tyhis script runs as one of the last ones, in-case
-// prior scripts add new language prefixes and mbins.
+// You want to make sure this script runs as one of the last ones, in-case
+// prior scripts add|change language prefixes and mbins.
 //=============================================================================
 
 [NMSScriptDisabled]  // intended as example for lang manip
@@ -18,10 +18,10 @@ public class Lang_All_English : cmk.NMS.Script.ModClass
 	// 2 min 17 sec execute
 	protected void Simple()
 	{
-		var english = Game.Languages.Get(LangId.English);
+		var english = Game.PCBANKS.Languages.Get(LangId.English);
 		foreach( var id in LangId.List ) {
 			if( id == LangId.English ) continue;
-			foreach( var key in english.List ) {
+			foreach( var key in english ) {
 				SetLanguageText(id, key.Id, key.Text);
 			}
 		}

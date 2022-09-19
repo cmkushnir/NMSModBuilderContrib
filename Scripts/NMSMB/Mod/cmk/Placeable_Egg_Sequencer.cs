@@ -22,12 +22,12 @@ public class Placeable_Egg_Sequencer : cmk.NMS.Script.ModClass
 		);		
 		var clone = CloneMbin(mbin.Table.Find(PRODUCT => PRODUCT.Id == "DRESSING_TABLE"));
 
-		clone.Id                = "EGGMACHINE";
-		clone.Name              = "UI_EGG_MODIFIER_NAME";
-		clone.NameLower         = "UI_EGG_MODIFIER_NAME_L";
-		clone.Subtitle.Value    = "UI_EGG_MODIFIER_NAME_L";
-		clone.Description.Value = "UI_EGG_MODIFIER_NAME_L";
-		clone.Icon.Filename     = "TEXTURES/UI/FRONTEND/ICONS/PRODUCTS/PRODUCT.CREATUREEGG.DDS";
+		clone.Id            = "EGGMACHINE";
+		clone.Name          = "UI_EGG_MODIFIER_NAME";
+		clone.NameLower     = "UI_EGG_MODIFIER_NAME_L";
+		clone.Subtitle      = "UI_EGG_MODIFIER_NAME_L";
+		clone.Description   = "UI_EGG_MODIFIER_NAME_L";
+		clone.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/PRODUCTS/PRODUCT.CREATUREEGG.DDS";
 
 		mbin.Table.Add(clone);
 
@@ -71,8 +71,6 @@ public class Placeable_Egg_Sequencer : cmk.NMS.Script.ModClass
 			clone.BuildableOnSpaceBase  = true;
 			clone.BuildableOnFreighter  = true;
 			clone.BuildableOnPlanet     = true;
-			clone.EnableCollision       = true;
-			clone.CanPlaceOnItself      = true;
 			clone.CanRotate3D           = true;
 			clone.CanScale              = true;
 			clone.CanChangeColour       = true;
@@ -94,8 +92,9 @@ public class Placeable_Egg_Sequencer : cmk.NMS.Script.ModClass
 
 	protected void TkSceneNodeData_Placement( string SOURCE, string TARGET )
 	{
-		var mbin  = CloneMbin<TkSceneNodeData>(SOURCE, TARGET);	
-		mbin.Name = mbin.Name.Value.Replace("CUSTOMISESTATION", "EGGMACHINE");
+		var mbin      = CloneMbin<TkSceneNodeData>(SOURCE, TARGET);	
+		mbin.Name     = mbin.Name.Value.Replace("CUSTOMISESTATION", "EGGMACHINE");
+		mbin.NameHash = TkSceneNodeDataNameHash(mbin.Name);
 		
 		var node   = mbin.Children.Find(CHILD => CHILD.Name == "PlacementData");
 		var source = node.Attributes[0].Value.Value;

@@ -4,7 +4,7 @@
 
 public class Planet : cmk.NMS.Script.ModClass
 {
-	public static float FogStrengthMult = 0.1f;
+	public float FogStrengthMult = 0.1f;
 	
 	//...........................................................
 

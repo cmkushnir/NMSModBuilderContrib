@@ -55,7 +55,7 @@ public class Notification : cmk.NMS.Script.ModClass
 		var time = 0.5f;
 		
 		// always show distance to target, never time - broken ?
-		mbin.HUDMarkerDistanceOrTimeDistance = 10000000;
+		mbin.HUDMarkerDistanceOrTimeDistance = 1000000;
 		
 		mbin.DiscoveryHelperTimings.DiscoverPlanetTotalTime   = time;  // 10
 		mbin.DiscoveryHelperTimings.DiscoverPlanetMessageWait = time;  //  1
@@ -80,6 +80,10 @@ public class Notification : cmk.NMS.Script.ModClass
 		mbin.DistanceUnitM   =  "m";    // "u"
 		mbin.DistanceUnitKM  = "km";    // "ks"
 		mbin.DistanceUnitMpS =  "m/s";  // "u/s"
+
+		mbin.FrontendConfirmTimeFast = 0.1f;  // 0.35
+		mbin.FrontendConfirmTime     = 0.3f;  // 0.7
+		mbin.FrontendConfirmTimeSlow = 0.6f;  // 1.6
 	}
 
 	//...........................................................

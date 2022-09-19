@@ -11,8 +11,8 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 	//    initialized as if they were newly added.
 	// ii) mark missions so they auto-complete.
 	// iii) add missions id's to SKIP_TUT mission.
-	public enum   SkipMethodEnum { Remove, Mark, SkipTut };
-	public static SkipMethodEnum SkipMethod = SkipMethodEnum.Remove;
+	public enum SkipMethodEnum { Remove, Mark, SkipTut };
+	public      SkipMethodEnum SkipMethod = SkipMethodEnum.Remove;
 	
 	//...........................................................
 	
@@ -316,7 +316,7 @@ public class Mission_Skip : cmk.NMS.Script.ModClass
 				if( item.Reward is GcRewardMultiSpecificTechRecipes techs ) {
 					techs.TechIds.ForEach(ID => TECH.AddUnique(ID));
 				}
-				if( item.Reward is GcRewardSpecificProductRecipe prod ) PROD.AddUnique(prod.Id);
+				if( item.Reward is GcRewardSpecificProductRecipe prod ) PROD.AddUnique(prod.ID);
 				if( item.Reward is GcRewardSpecificTech          tech ) TECH.AddUnique(tech.TechId);				
 			}
 		}

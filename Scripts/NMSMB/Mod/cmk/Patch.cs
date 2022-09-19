@@ -103,7 +103,7 @@ public class Patch : cmk.NMS.Script.ModClass
 		// can't ExtractMbin as can't specify type from diff libmbin,
 		// so extract mbin data wrapper then get generic object as dynamic.
 		var data = ExtractData<NMS.PAK.MBIN.Data>(path);	
-		dynamic mbin = data.Object();
+		dynamic mbin = data.ModObject();
 
 		// no compile time check on field name or type.
 		mbin.ForceScanEventsToGoPrime = true;

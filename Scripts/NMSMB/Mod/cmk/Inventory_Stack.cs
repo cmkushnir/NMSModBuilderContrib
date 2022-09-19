@@ -5,7 +5,7 @@
 
 public class Inventory_Stack : cmk.NMS.Script.ModClass
 {
-	public static int MaxAmount { get; set; } = 100000;
+	public int MaxAmount = 100000;
 
 	//...........................................................
 
@@ -115,7 +115,9 @@ public class Inventory_Stack : cmk.NMS.Script.ModClass
 		);
 		foreach( var product in mbin.Table ) {
 			// won't apply to new products added after this script
-			if( product.StackMultiplier > 0 ) product.StackMultiplier = STACK_MULTIPLIER;
+			if( product.StackMultiplier > 0 ) {
+				product.StackMultiplier = STACK_MULTIPLIER;
+			}
 		}
 	}
 	

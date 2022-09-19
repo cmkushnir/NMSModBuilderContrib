@@ -40,13 +40,13 @@ public class Placeable_Salvage : cmk.NMS.Script.ModClass
 	// as it's close in size and shape to the salvage terminal.
 	//...........................................................
 	
-	protected static readonly string SourceProductID = "DRESSING_TABLE";
-	protected static readonly string SourcePartID    = "_" + SourceProductID;
-	protected static readonly string SourceFileName  = "CUSTOMISESTATION";	
+	protected readonly string SourceProductID =  "DRESSING_TABLE";
+	protected readonly string SourcePartID    = "_DRESSING_TABLE";
+	protected readonly string SourceFileName  = "CUSTOMISESTATION";	
 	
-	public static readonly string ProductID = "SALVAGE_TERM"; 
-	public static readonly string PartID    = "_" + ProductID; 
-	public static readonly string FileName  = "SHIPSALVAGETERMINAL"; 
+	public readonly string ProductID =  "SALVAGE_TERM"; 
+	public readonly string PartID    = "_SALVAGE_TERM"; 
+	public readonly string FileName  = "SHIPSALVAGETERMINAL"; 
 
 	//...........................................................
 		
@@ -60,12 +60,12 @@ public class Placeable_Salvage : cmk.NMS.Script.ModClass
 		var dressing_table = mbin.Table.Find(OBJECT => OBJECT.Id == SourceProductID);
 		var salvage_term   = CloneMbin(dressing_table);
 
-		salvage_term.Id                = ProductID;
-		salvage_term.Name              = "SALVAGE";
-		salvage_term.NameLower         = "Salvage";
-		salvage_term.Subtitle.Value    = "Salvage";
-		salvage_term.Description.Value = "UI_SALVAGE_DESC";
-		salvage_term.Icon.Filename     = "TEXTURES/UI/FRONTEND/ICONS/BUILDABLE/RACESHIPSTART.DDS";
+		salvage_term.Id            = ProductID;
+		salvage_term.Name          = "SALVAGE";
+		salvage_term.NameLower     = "Salvage";
+		salvage_term.Subtitle      = "Salvage";
+		salvage_term.Description   = "UI_SALVAGE_DESC";
+		salvage_term.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/BUILDABLE/RACESHIPSTART.DDS";
 
 		mbin.Table.Add(salvage_term);
 		
@@ -118,8 +118,6 @@ public class Placeable_Salvage : cmk.NMS.Script.ModClass
 			salvage_term.BuildableOnSpaceBase  = true;
 			salvage_term.BuildableOnFreighter  = true;
 			salvage_term.BuildableOnPlanet     = true;
-			salvage_term.EnableCollision       = true;
-			salvage_term.CanPlaceOnItself      = true;
 			salvage_term.CanRotate3D           = true;
 			salvage_term.CanScale              = true;
 			salvage_term.CanChangeColour       = true;
@@ -149,8 +147,10 @@ public class Placeable_Salvage : cmk.NMS.Script.ModClass
 	// create a new placement scene
 	protected void TkSceneNodeData_Placement( string SOURCE_FILENAME, string TARGET_FILENAME )
 	{
-		var mbin  = CloneMbin<TkSceneNodeData>(SOURCE_FILENAME, TARGET_FILENAME);	
-		mbin.Name = mbin.Name.Value.Replace(SourceFileName, FileName);
+		var mbin      = CloneMbin<TkSceneNodeData>(SOURCE_FILENAME, TARGET_FILENAME);	
+		mbin.Name     = mbin.Name.Value.Replace(SourceFileName, FileName);
+		mbin.NameHash = TkSceneNodeDataNameHash(mbin.Name);
+
 		var node  = mbin.Children.Find(CHILD => CHILD.Name == "PlacementData");
 		
 		// need to create SHIPSALVAGETERMINAL_PLACEMENT\ENTITIES\PLACEMENTDATA.ENTITY.MBIN

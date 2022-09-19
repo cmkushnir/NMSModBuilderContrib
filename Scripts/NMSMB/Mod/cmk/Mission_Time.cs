@@ -4,7 +4,7 @@
 
 public class Mission_Time : cmk.NMS.Script.ModClass
 {
-	public static ulong MaxTimeSeconds = 10;
+	public ulong MaxTimeSeconds = 10;
 	
 	//...........................................................
 	

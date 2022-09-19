@@ -54,7 +54,6 @@ public class Base_Constraints : cmk.NMS.Script.ModClass
 				ITEM.RemovesAttachedDecoration = false;
 			//	ITEM.CheckPlaceholderCollision = false;
 				ITEM.CanChangeColour           = true;
-				ITEM.CanPlaceOnItself          = true;
 				ITEM.CanRotate3D               = true;
 				ITEM.CanScale                  = true;
 				// no limit on # can create

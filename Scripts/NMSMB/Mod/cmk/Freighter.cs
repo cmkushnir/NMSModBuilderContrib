@@ -24,7 +24,7 @@ public class Freighter : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcDebugOptions>(
 			"GCDEBUGOPTIONS.GLOBAL.MBIN"
 		);
-		mbin.MultiplePlayerFreightersInASystem = true;
+		mbin.MultiplePlayerFreightersInASystem = true;  // no longer used
 	}
 
 	//...........................................................

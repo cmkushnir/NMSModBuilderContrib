@@ -11,7 +11,7 @@ public class Base_Extractor : cmk.NMS.Script.ModClass
 			"METADATA/REALITY/TABLES/BASEBUILDINGOBJECTSTABLE.MBIN"
 		};
 		foreach( var path in paths ) {
-			var mbin = ExtractMbin<GcBaseBuildingTable>(path);			
+			var mbin = ExtractMbin<GcBaseBuildingTable>(path);
 
 			// Mineral Extractors mine faster, hold less (use silos)
 			var item = mbin.Objects.Find(OBJECT => OBJECT.ID == "U_EXTRACTOR_S");
