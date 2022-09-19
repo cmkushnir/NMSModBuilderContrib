@@ -3,35 +3,29 @@
 public class TechnologyRequirement
 {
 	public static GcTechnologyRequirement Substance( string ID, int AMOUNT )
-	{
-		return new(){
-			ID            = ID,
-			InventoryType = new(){ InventoryType = InventoryTypeEnum.Substance },
-			Amount        = AMOUNT
-		};
-	}
+	=> new() {
+		ID            = ID,
+		InventoryType = new() { InventoryType = InventoryTypeEnum.Substance },
+		Amount        = AMOUNT
+	};
 
 	//...........................................................
 
 	public static GcTechnologyRequirement Product( string ID, int AMOUNT )
-	{
-		return new(){
-			ID            = ID,
-			InventoryType = new(){ InventoryType = InventoryTypeEnum.Product },
-			Amount        = AMOUNT
-		};
-	}
+	=> new() {
+		ID            = ID,
+		InventoryType = new() { InventoryType = InventoryTypeEnum.Product },
+		Amount        = AMOUNT
+	};
 
 	//...........................................................
 
 	public static GcTechnologyRequirement Technology( string ID, int AMOUNT )
-	{
-		return new(){
-			ID            = ID,
-			InventoryType = new(){ InventoryType = InventoryTypeEnum.Technology },
-			Amount        = AMOUNT
-		};
-	}
+	=> new() {
+		ID            = ID,
+		InventoryType = new() { InventoryType = InventoryTypeEnum.Technology },
+		Amount        = AMOUNT
+	};
 }
 
 //=============================================================================
@@ -48,7 +42,7 @@ public static partial class _x_
 	}
 
 	//...........................................................
-	
+
 	public static GcTechnologyRequirement AddProduct(
 		this List<GcTechnologyRequirement> LIST,
 		string ID, int AMOUNT
@@ -59,7 +53,7 @@ public static partial class _x_
 	}
 
 	//...........................................................
-	
+
 	public static GcTechnologyRequirement AddTechnology(
 		this List<GcTechnologyRequirement> LIST,
 		string ID, int AMOUNT

@@ -33,13 +33,16 @@ global using LangId = global::cmk.NMS.Game.Language.Identifier;
 //=============================================================================
 
 global using AerialViewModeEnum              = global::libMBIN.NMS.GameComponents.GcCameraAerialViewData.AerialViewModeEnum;
+global using AIFactionEnum                   = global::libMBIN.NMS.GameComponents.GcRealityCommonFactions.AIFactionEnum;
 global using AlienRaceEnum                   = global::libMBIN.NMS.GameComponents.GcAlienRace.AlienRaceEnum;
 global using AutoStartEnum                   = global::libMBIN.NMS.GameComponents.GcGenericMissionSequence.AutoStartEnum;
 global using BaseTerrainEditShapeEnum        = global::libMBIN.NMS.GameComponents.GcBaseBuildingEntry.BaseTerrainEditShapeEnum;
+global using BehaviourFlagsEnum              = global::libMBIN.NMS.GameComponents.GcProjectileData.BehaviourFlagsEnum;
 global using BiomeEnum                       = global::libMBIN.NMS.GameComponents.GcBiomeType.BiomeEnum;
 global using BootModeEnum                    = global::libMBIN.NMS.Globals.GcDebugOptions.BootModeEnum;
 global using BuildingClassEnum               = global::libMBIN.NMS.GameComponents.GcBuildingClassification.BuildingClassEnum;
 global using BuildingLocationEnum            = global::libMBIN.NMS.GameComponents.GcScanEventData.BuildingLocationEnum;
+global using BuildingTypeEnum                = global::libMBIN.NMS.GameComponents.GcScanEventData.BuildingTypeEnum;
 global using CompletionRequirementEnum       = global::libMBIN.NMS.GameComponents.GcMaintenanceElement.CompletionRequirementEnum;
 global using ConditionTestEnum               = global::libMBIN.NMS.GameComponents.GcMissionConditionTest.ConditionTestEnum;
 global using CurrencyEnum                    = global::libMBIN.NMS.GameComponents.GcCurrency.CurrencyEnum;
@@ -62,6 +65,7 @@ global using RaceEnum                        = global::libMBIN.NMS.GameComponent
 global using RewardChoiceEnum                = global::libMBIN.NMS.GameComponents.GcRewardTableItemList.RewardChoiceEnum;
 global using ScanIconTypeEnum                = global::libMBIN.NMS.GameComponents.GcScannerIconTypes.ScanIconTypeEnum;
 global using ScannableTypeEnum               = global::libMBIN.NMS.GameComponents.GcScannableComponentData.ScannableTypeEnum;
+global using ScreenFilterEnum                = global::libMBIN.NMS.GameComponents.GcScreenFilters.ScreenFilterEnum;
 global using ShipClassEnum                   = global::libMBIN.NMS.GameComponents.GcSpaceshipClasses.ShipClassEnum;
 global using SizeTypeEnum                    = global::libMBIN.NMS.GameComponents.GcInventoryLayoutSizeType.SizeTypeEnum;
 global using SolarSystemBootEnum             = global::libMBIN.NMS.Globals.GcDebugOptions.SolarSystemBootEnum;
@@ -72,6 +76,7 @@ global using TechnologyRarityEnum            = global::libMBIN.NMS.GameComponent
 global using TradeCategoryEnum               = global::libMBIN.NMS.GameComponents.GcTradeCategory.TradeCategoryEnum;
 global using UnlockableItemTreeEnum          = global::libMBIN.NMS.GameComponents.GcUnlockableItemTreeGroups.UnlockableItemTreeEnum;
 global using WealthClassEnum                 = global::libMBIN.NMS.GameComponents.GcWealthClass.WealthClassEnum;
+global using WeatherEnum                     = global::libMBIN.NMS.GameComponents.GcWeatherOptions.WeatherEnum;
 global using WeightingCurveEnum              = global::libMBIN.NMS.GameComponents.GcWeightingCurve.WeightingCurveEnum;
 global using WordEnum                        = global::libMBIN.NMS.GameComponents.GcWordCategoryTableEnum.gcwordcategorytableEnumEnum;
 

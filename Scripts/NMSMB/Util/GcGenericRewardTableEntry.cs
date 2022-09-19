@@ -7,16 +7,14 @@ public class GenericRewardTableEntry
 		RewardChoiceEnum        CHOICE             = RewardChoiceEnum.GiveAll,
 		List<GcRewardTableItem> LIST               = null,
 		bool                    OVERRIDE_ZERO_SEED = false
-	){
-		return new(){
-			Id   = ID,
-			List = new(){
-				RewardChoice     = CHOICE,
-				OverrideZeroSeed = OVERRIDE_ZERO_SEED,
-				List             = LIST ?? new()
-			}
-		};
-	}
+	) => new() {
+		Id   = ID,
+		List = new() {
+			RewardChoice     = CHOICE,
+			OverrideZeroSeed = OVERRIDE_ZERO_SEED,
+			List             = LIST ?? new()
+		}
+	};
 }
 
 //=============================================================================

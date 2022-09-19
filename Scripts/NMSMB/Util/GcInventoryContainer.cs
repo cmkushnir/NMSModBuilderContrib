@@ -8,8 +8,8 @@ public static partial class _x_
 	/// </summary>
 	public static void Sort(
 		this GcInventoryContainer INVENTORY
-	){		
-		INVENTORY?.Slots?           .Sort(new GcInventoryElementIndexComparer());
+	){
+		INVENTORY?.Slots?.Sort(new GcInventoryElementIndexComparer());
 		INVENTORY?.ValidSlotIndices?.Sort(new GcInventoryIndexComparer());
 	}
 
@@ -41,8 +41,8 @@ public static partial class _x_
 		var index = ELEMENT.Index;
 		if( index.X < 0 || index.Y < 0 ) return null;
 
-		var index_equality_comparer = new GcInventoryIndexEqualityComparer();		
-		
+		var index_equality_comparer = new GcInventoryIndexEqualityComparer();
+
 		// is slot already used ? overwrite existing else add
 		var existing = INVENTORY.Slots.FindIndex(
 			ELEMENT => index_equality_comparer.Equals(index, ELEMENT.Index)
