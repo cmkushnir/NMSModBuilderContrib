@@ -17,6 +17,7 @@ public class Archaeologist : cmk.NMS.Script.ModClass
 		// - vanilla
 		
 		// - auto-mark buried items and ruins
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnableBones        = true;
 		Scan_Auto.EnableGrave        = true;
 		Scan_Auto.EnableTreasureRuin = true;

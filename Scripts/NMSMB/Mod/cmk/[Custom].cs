@@ -6,6 +6,7 @@ public class Custom : cmk.NMS.Script.ModClass
 {
 	protected override void Execute()
 	{
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnableShelter           = false;
 		Scan_Auto.EnableAbandoned         = false;
 	//	Scan_Auto.EnableRadioTower        = false;
@@ -13,7 +14,7 @@ public class Custom : cmk.NMS.Script.ModClass
 		Scan_Auto.EnableObservatory       = false;
 	//	Scan_Auto.EnableShop              = false;
 		Scan_Auto.EnableOutpost           = false;
-		Scan_Auto.EnableSettlement        = false;
+	//	Scan_Auto.EnableSettlement        = false;
 		Scan_Auto.EnableBaseSite          = false;
 	//	Scan_Auto.EnableDroneHive         = false;
 		Scan_Auto.EnableDroneHiveDisabled = false;

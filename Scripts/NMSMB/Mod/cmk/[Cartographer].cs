@@ -17,9 +17,10 @@ public class Cartographer : cmk.NMS.Script.ModClass
 		// - a bunch of each map type
 
 		// you know a guy who knows a guy who can get you specific charts
-		Mod<Starcharts>().IsExecutable = true;
+		Script<Starcharts>().IsExecutable = true;
 		
 		// - auto-mark most building locations
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnableAbandoned         = true;
 		Scan_Auto.EnableRadioTower        = true;
 		Scan_Auto.EnableFactory           = true;

@@ -19,6 +19,7 @@ public class Explorer : cmk.NMS.Script.ModClass
 		// - vanilla
 
 		// - auto-mark portals
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnablePortal = true;
 	}
 }

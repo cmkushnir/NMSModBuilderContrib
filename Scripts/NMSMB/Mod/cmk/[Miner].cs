@@ -17,6 +17,7 @@ public class Miner : cmk.NMS.Script.ModClass
 		// - max suit and ship slots
 
 		// - auto-mark rare resources
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnableBones = true;
 		// todo: floating crystals, buried gems, ...
 	}

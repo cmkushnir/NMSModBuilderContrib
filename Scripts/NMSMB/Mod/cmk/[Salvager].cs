@@ -18,9 +18,10 @@ public class Salvager : cmk.NMS.Script.ModClass
 		// - Storage Augmentation tokens
 		
 		// - buildable Salvage stations
-		Mod<Placeable_Salvage>().IsExecutable = true;
+		Script<Placeable_Salvage>().IsExecutable = true;
 
 		// - auto-mark crashed ships and such
+		var Scan_Auto = Script<Scan_Auto>();
 		Scan_Auto.EnableRadioTower = true;
 		Scan_Auto.EnableDistress   = true;
 	}
