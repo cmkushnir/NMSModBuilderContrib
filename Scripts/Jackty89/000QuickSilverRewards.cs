@@ -4,8 +4,8 @@
 
 public class QuickSilverRewards : cmk.NMS.Script.ModClass
 {
-	public static int MBRewardChance 	= 15;
-	public static int FleetRewardChance = 30;
+	public int MBRewardChance 	= 15;
+	public int FleetRewardChance = 30;
 	
 	Tuple<string, int, int>[] MissionBoardRewards = new Tuple<string, int, int>[] {
 		new ("R_MB_LOW",  	   100, 150),
@@ -19,24 +19,24 @@ public class QuickSilverRewards : cmk.NMS.Script.ModClass
 	};
 		
 	Tuple<string, int, int>[] FleetRewards = new Tuple<string, int, int>[] {
-		new ("R_DIP_EASY_0",  100, 150),
-		new ("R_DIP_EASY_1",  150, 200),
-		new ("R_DIP_EASY_2",  200, 250),
-		new ("R_DIP_EASY_3",  250, 300),
+		new ("R_DIPLOMATIC_0",  100, 150),
+		new ("R_DIPLOMATIC_1",  150, 200),
+		new ("R_DIPLOMATIC_2",  200, 250),
+		new ("R_DIPLOMATIC_3",  250, 300),
 		
-		new ("R_COM_EASY_0",  100, 150),
-		new ("R_COM_EASY_1",  150, 200),
-		new ("R_COM_EASY_2",  200, 250),
+		new ("R_COMBAT_0",  100, 150),
+		new ("R_COMBAT_1",  150, 200),
+		new ("R_COMBAT_2",  200, 250),
 		
-		new ("R_EXP_EASY_0",  100, 150),
-		new ("R_EXP_EASY_1",  150, 200),
-		new ("R_EXP_EASY_2",  200, 250),
-		new ("R_EXP_EASY_3",  250, 300),
+		new ("R_EXPLORATION_0",  100, 150),
+		new ("R_EXPLORATION_1",  150, 200),
+		new ("R_EXPLORATION_2",  200, 250),
+		new ("R_EXPLORATION_3",  250, 300),
 		
-		new ("R_MINE_EASY_0", 100, 150),
-		new ("R_MINE_EASY_1", 150, 200),
-		new ("R_MINE_EASY_2", 200, 250),
-		new ("R_MINE_EASY_3", 250, 300)
+		new ("R_MINING_0", 100, 150),
+		new ("R_MINING_1", 150, 200),
+		new ("R_MINING_2", 200, 250),
+		new ("R_MINING_3", 250, 300)
 	};
 
 	//...........................................................

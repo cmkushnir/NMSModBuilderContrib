@@ -2,21 +2,27 @@
 
 public class CraftableAlienToken : cmk.NMS.Script.ModClass
 {
-	static GcInventoryType Product   = new GcInventoryType { InventoryType = InventoryTypeEnum.Product };
-    static GcInventoryType Substance = new GcInventoryType { InventoryType = InventoryTypeEnum.Substance };
+    readonly GcInventoryType Product   = new GcInventoryType { InventoryType = InventoryTypeEnum.Product };
+    readonly GcInventoryType Substance = new GcInventoryType { InventoryType = InventoryTypeEnum.Substance };
 
-    Tuple<string, GcTechnologyRequirement[]>[] NewRequirementsArray = new Tuple<string, GcTechnologyRequirement[]>[] {
-        new("ALIEN_INV_TOKEN", new [] {
-            new GcTechnologyRequirement { ID = "FIENDCORE",   InventoryType = Product,   Amount = 10},
-            new GcTechnologyRequirement { ID = "EX_BLUE",     InventoryType = Substance, Amount = 500},
-            new GcTechnologyRequirement { ID = "CLAMPEARL",   InventoryType = Product,   Amount = 5}
-        })
-	};
+    Tuple<string, GcTechnologyRequirement[]>[] NewRequirementsArray;
     
     protected override void Execute()
     {
+        FillArray();
         SetCraftabletoTrueAndAddRequirements();
         AddUnlockableTrees();
+    }
+
+    protected void FillArray()
+    {
+        NewRequirementsArray = new Tuple<string, GcTechnologyRequirement[]>[] {
+            new("ALIEN_INV_TOKEN", new [] {
+                new GcTechnologyRequirement { ID = "FIENDCORE",   Type = Product,   Amount = 10},
+                new GcTechnologyRequirement { ID = "EX_BLUE",     Type = Substance, Amount = 500},
+                new GcTechnologyRequirement { ID = "CLAMPEARL",   Type = Product,   Amount = 5}
+            })
+        };
     }
 
     protected void SetCraftabletoTrueAndAddRequirements()
@@ -27,7 +33,7 @@ public class CraftableAlienToken : cmk.NMS.Script.ModClass
         {
             var productId           = prod.Item1;
             var productRequirements = prod.Item2;
-            var editProd            = prod_mbin.Table.Find(PRODUCT => PRODUCT.Id == productId);
+            var editProd            = prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == productId);
             
             editProd.IsCraftable    = true;
             editProd.Requirements.Clear();  //clearing requirement to be certain

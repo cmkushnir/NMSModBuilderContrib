@@ -34,11 +34,11 @@ public class MoreAndCheaperStarMaps : cmk.NMS.Script.ModClass
 		var settleMentId               = "CHART_SETTLE";
 
 		//Reduce cost of settlment map chart
-		Products.Find(SETTLE => SETTLE.Id == settleMentId).RecipeCost = 1;
+		Products.Find(SETTLE => SETTLE.ID == settleMentId).RecipeCost = 1;
 
 		//Make a copy of hive map to make custom made
-		var crashedShipMap           = CloneMbin(Products.Find(PRODUCT => PRODUCT.Id == "CHART_HIVE"));
-		crashedShipMap.Id            = starMapCrashedShipId;
+		var crashedShipMap           = CloneMbin(Products.Find(PRODUCT => PRODUCT.ID == "CHART_HIVE"));
+		crashedShipMap.ID            = starMapCrashedShipId;
 		crashedShipMap.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/U4PRODUCTS/PRODUCT.STARCHART.CRASHEDSHIP.dds";
 		Products.Add(crashedShipMap);
 

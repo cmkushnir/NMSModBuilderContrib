@@ -5,7 +5,7 @@
 public class SettlementTimerReduction : cmk.NMS.Script.ModClass
 {
 
-	public static float  Multiplier = 0.1f;
+	public float  Multiplier = 0.1f;
 	protected override void Execute()
 	{
 		GcSettlementGlobals();

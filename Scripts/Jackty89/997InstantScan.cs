@@ -4,7 +4,7 @@
 
 public class InstantScan : cmk.NMS.Script.ModClass
 {
-	public static float ScanTime = 0.0f;
+	public float ScanTime = 0.0f;
 	protected override void Execute()
 	{
 		GcGamePlayGlobals();

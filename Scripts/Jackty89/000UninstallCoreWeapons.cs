@@ -4,7 +4,7 @@
 
 public class UninstallCoreWeapons : cmk.NMS.Script.ModClass
 {
-	public static bool UninstallExtra = false;
+	public bool UninstallExtra = false;
 	
 	protected override void Execute()
 	{

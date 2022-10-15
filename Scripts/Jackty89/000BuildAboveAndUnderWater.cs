@@ -1,4 +1,6 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class BuildAboveAndUnderWater : cmk.NMS.Script.ModClass
 {
@@ -22,11 +24,8 @@ public class BuildAboveAndUnderWater : cmk.NMS.Script.ModClass
 				builldObject.BuildableAboveWater = true;
 				builldObject.BuildableUnderwater = true;
 			}
-		}			
-		
+		}				
 	}
-
-	//...........................................................
 }
 
 //=============================================================================

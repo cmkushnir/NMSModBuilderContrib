@@ -226,9 +226,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 	//}
 	protected void SpaceShipEdits()
 	{
-		var mbin = ExtractMbin<GcInventoryTable>(
-			"METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN"
-		);
+		var mbin = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
 
 		var Cclass = InventoryClassEnum.C;
 		var Bclass = InventoryClassEnum.B;

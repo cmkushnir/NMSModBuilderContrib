@@ -1,9 +1,11 @@
 ﻿//=============================================================================
-
+// Author: Jackty89
+//=============================================================================
 public class EqualPlantTimers : cmk.NMS.Script.ModClass
 {
-	public static int PlantTimer    = 3600; //time in seconds so = 1 hour
-	public static int HarvestAmount = 50;
+	public int PlantTimer    = 3600; //time in seconds so = 1 hour
+	public int HarvestAmount = 50;
+	
 	protected override void Execute()
 	{
 		ChangePlantTimers();
@@ -27,6 +29,7 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 			"FARMTOXIC",
 			"FARMVENOMSAC"
 		};
+		
 		foreach(var plant in plantList)
 		{
 			var path         = "MODELS/PLANETS/BIOMES/COMMON/INTERACTIVEFLORA/" + plant + "/ENTITIES/PLANTINTERACTION.ENTITY.MBIN";
@@ -39,7 +42,29 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 					triggerTimer.Time = PlantTimer;
 			}
 		}
-	}
+
+        List<string> plantProductIDList = new List<string>()
+        {
+            "PEARLPLANT",
+            "BARRENPLANT",
+            "CREATUREPLANT",
+            "GRAVPLANT",
+            "LUSHPLANT",
+            "NIPPLANT",
+            "POOPPLANT",
+            "RADIOPLANT",
+            "SCORCHEDPLANT",
+            "SNOWPLANT",
+            "TOXICPLANT",
+            "SACVENOMPLANT"
+        };
+        foreach (var plantID in plantProductIDList)
+        {
+            AddCustomProductDescription(plantID);
+        }
+
+
+    }
 	
 	protected void ChangePlantAmounts()
 	{
@@ -64,6 +89,34 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 			reward_item.AmountMax = HarvestAmount;
 		}
 	}
-	//...........................................................
+	
+	protected void AddCustomProductDescription(string plantID)
+	{
+		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
+		var product   = prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == plantID);
+		
+		var oldDescriptionID    = product.Description;
+		var customDescriptionID = "C" + product.Description;
+		
+		product.Description = customDescriptionID;
+		
+		AddNewLanguageString(product.ID, customDescriptionID, oldDescriptionID);
+	}
+	
+	protected void AddNewLanguageString(string foodId, string customDescriptionID, string oldDescriptionID)
+	{
+        foreach (var language in NMS.Game.Language.Identifier.List)
+        {
+			var data = GetLanguageData(language, oldDescriptionID);
+			Log.AddInformation($"Print language  = {language }");
+			Log.AddInformation($"Print oldDescriptionID  = {oldDescriptionID }");
+			Log.AddInformation($"Print customDescriptionID  = {customDescriptionID }");
+			Log.AddInformation($"Print data.Text  = {data.Text }");
+			var newDescrText = Regex.Replace(data.Text, ": .*<>", ": <IMG>CLOCK<> 01h : 00m : 00s<>");
+			Log.AddInformation($"Print newDescrText  = {newDescrText }");
+			//SetLanguageText(language, customDescriptionID, newDescrText);
+		}
+	}
+	
 }
 //=============================================================================

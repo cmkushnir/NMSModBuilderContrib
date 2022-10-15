@@ -1,8 +1,10 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class ReducedPulseSpeedLines : cmk.NMS.Script.ModClass
 {
-	private static string StringBase = "MODELS/EFFECTS/SPEEDLINES/";
+	private string StringBase = "MODELS/EFFECTS/SPEEDLINES/";
 	
 	protected override void Execute()
 	{

@@ -1,9 +1,11 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class LivingShipReducedTimer : cmk.NMS.Script.ModClass
 {
 	
-	public static float Multiplier = 0.001f;
+	public float Multiplier = 0.001f;
 	protected override void Execute()
 	{
 		

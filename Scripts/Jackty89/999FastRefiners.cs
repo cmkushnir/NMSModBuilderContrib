@@ -4,7 +4,7 @@
 
 public class FastRefiners : cmk.NMS.Script.ModClass
 {
-	public static float TimeToMake	= 1f;
+	public float TimeToMake	= 1f;
 	protected override void Execute()
 	{
 		GcRecipeTable();

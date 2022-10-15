@@ -4,7 +4,7 @@
 
 public class ExocraftRechargeRate : cmk.NMS.Script.ModClass
 {
-	public static float RechargeRate = 15f;
+	public float RechargeRate = 15f;
 
 	protected override void Execute()
 	{

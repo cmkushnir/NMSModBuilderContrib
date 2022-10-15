@@ -2,39 +2,26 @@
 
 public class Global : cmk.NMS.Script.ModClass
 {
-	protected override void Execute()
-	{
-		
-	    switch (1)
-	    {
-	        case 1:
-				PlayAs<MyModList>();
-	            break;	
-	        case 2:
-    			PlayAs<ExpeditionModList>();
-	            break;	
-	        default:
-	            break;
-	    }
-	}
-
-	//...........................................................
-	
-	// set initial state for scripts
-	protected void Presets()
-	{
-		
-		
-	}
-
-	//...........................................................
-	
-	// force script states, may override play-as settings
-	protected void Postsets()
-	{
-	}
-
-	
+    protected override void Execute()
+    {
+        switch (-2)
+        {
+            case 0:
+                Execute<MustHave>();
+                break;
+            case 1:
+                Execute<MyModList>();
+                break;	
+            case 2:
+                Execute<ExpeditionModList>();
+                break;
+			case -1:
+                Execute<ModTest>();
+				break;                
+            default:
+                break;
+        }
+    }
 }
 
 //=============================================================================

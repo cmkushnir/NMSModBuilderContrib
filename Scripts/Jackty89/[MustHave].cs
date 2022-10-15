@@ -1,25 +1,21 @@
 ﻿//=============================================================================
-using Microsoft.VisualBasic;
 
-public class MyModList : cmk.NMS.Script.ModClass
+public class MustHave : cmk.NMS.Script.ModClass
 {
      protected override void Execute()
      {
         bool enableCustomModsGalore                                 = true;
         bool runSandXonly                                           = true;
         bool balancedInventory                                      = true;
-        bool noShipStart                                            = true; //X
-        bool challengeMode                                          = false;
-        bool uninstallExtraTech                                     = false;
 
-        Script<AddDerelictFreighterLootToStore>().IsExecutable      = true;
+        Script<AddDerelictFreighterLootToStore>().IsExecutable      = false;
         Script<AddExpeditionTech>().IsExecutable                    = false;
         Script<AddNewFoods>().IsExecutable                          = false;
 
-        Script<BasePartsDeluxe>().IsExecutable                      = !noShipStart; // included in NoShipStart
-        Script<BuildAboveAndUnderWater>().IsExecutable              = true;
+        Script<BasePartsDeluxe>().IsExecutable                      = false; // included in NoShipStart
+        Script<BuildAboveAndUnderWater>().IsExecutable              = false;
         Script<BurnBabyBurn>().IsExecutable                         = !enableCustomModsGalore; // CMG also adds incinerator
-        Script<CheapPetSlots>().IsExecutable                        = true;
+        Script<CheapPetSlots>().IsExecutable                        = false;
         Script<CleanMultiplayer>().IsExecutable                     = true;
         Script<CraftableAlienToken>().IsExecutable                  = true;
         Script<CraftableModules>().IsExecutable                     = true;
@@ -53,11 +49,11 @@ public class MyModList : cmk.NMS.Script.ModClass
         EqualPlantTimers.PlantTimer                                 = 3600; // time in seconds => 60 min
 
         var ExocraftRechargeRate = Script<ExocraftRechargeRate>();
-        ExocraftRechargeRate.IsExecutable                           = true;
+        ExocraftRechargeRate.IsExecutable                           = false;
         ExocraftRechargeRate.RechargeRate                           = 15f;
 
         Script<ExtendedExocraftAndShipScanner>().IsExecutable       = true;
-        Script<FuelEconomy>().IsExecutable                          = true;
+        Script<FuelEconomy>().IsExecutable                          = false;
         Script<GalaxyMapUpgrade>().IsExecutable                     = false;
 
         //Inventory Edits
@@ -72,40 +68,40 @@ public class MyModList : cmk.NMS.Script.ModClass
         InventoryRebalanceParams.TechHeightNormal                   = 4;
         InventoryRebalanceParams.RefundNormal                       = 0.75f;
 
-        Script<KeepTalkingChef>().IsExecutable                      = true;
+        Script<KeepTalkingChef>().IsExecutable                      = false;
 
         var LearnMoreWords = Script<LearnMoreWords>();
-        LearnMoreWords.IsExecutable                                 = true;
+        LearnMoreWords.IsExecutable                                 = false;
         LearnMoreWords.AddWordsTotal                                = 20;
         LearnMoreWords.PercentageChance                             = 100;
         
         var LivingShipReducedTimer = Script<LivingShipReducedTimer>();
-        LivingShipReducedTimer.IsExecutable                         = true;
+        LivingShipReducedTimer.IsExecutable                         = false;
         LivingShipReducedTimer.Multiplier                           = 0.001f;
 
         Script<MaxUpgradeFreighterSlotAllClasses>().IsExecutable    = true;
         Script<MaxUpgradeFreighterSlotAllClasses48>().IsExecutable  = false;
-        Script<MoreAndCheaperStarMaps>().IsExecutable               = true;
+        Script<MoreAndCheaperStarMaps>().IsExecutable               = false;
 
         var MoreSalvageData = Script<MoreSalvageData>();
-        MoreSalvageData.IsExecutable                                = true;
+        MoreSalvageData.IsExecutable                                = false;
         MoreSalvageData.Min                                         = 5;
         MoreSalvageData.Max                                         = 15;
 
         Script<NoLadderAutoGrab>().IsExecutable                     = true;
         Script<NoPortalCharge>().IsExecutable                       = true;
         
-        Script<NoShipStart>().IsExecutable                          = noShipStart;
-        Script<PickUpGeoBays>().IsExecutable                        = !noShipStart; // this is already included in NoShipStart
+        Script<NoShipStart>().IsExecutable                          = false;
+        Script<PickUpGeoBays>().IsExecutable                        = false; // this is already included in NoShipStart
 
         var PirateTimerRedux = Script<PirateTimerRedux>();
-        PirateTimerRedux.IsExecutable                               = true;
+        PirateTimerRedux.IsExecutable                               = false;
         PirateTimerRedux.Multiplier                                 = 3;
 
-        Script<QuickSilverCrafting>().IsExecutable                  = true;
-        Script<QuickSilverRewards>().IsExecutable                   = true;
+        Script<QuickSilverCrafting>().IsExecutable                  = false;
+        Script<QuickSilverRewards>().IsExecutable                   = false;
         
-        Script<RealisticTimers>().IsExecutable                      = challengeMode;
+        Script<RealisticTimers>().IsExecutable                      = false;
 
         Script<ReducedPulseSpeedLines>().IsExecutable               = true;
         Script<RepeatInventoryExpansion>().IsExecutable             = true;
@@ -119,11 +115,11 @@ public class MyModList : cmk.NMS.Script.ModClass
         Script<SkipTutorial>().IsExecutable                         = false; //!noShipStart; // also in no shipstart
 
         var SlotMaster = Script<SlotMaster>();
-        SlotMaster.IsExecutable                                     = true;
+        SlotMaster.IsExecutable                                     = false;
         SlotMaster.ImproveShip                                      = false;
         SlotMaster.ImproveWeapon                                    = false;
         SlotMaster.ImproveVehicle                                   = false; // Already in unique exocrafts
-        SlotMaster.ImproveAlien                                     = true;
+        SlotMaster.ImproveAlien                                     = false;
         SlotMaster.ImproveInventory                                 = false;
         SlotMaster.ImproveFreighter                                 = false;
 
@@ -132,7 +128,7 @@ public class MyModList : cmk.NMS.Script.ModClass
 
         var UninstallCoreWeapons = Script<UninstallCoreWeapons>();
         UninstallCoreWeapons.IsExecutable                           = true;
-        UninstallCoreWeapons.UninstallExtra                         = uninstallExtraTech;
+        UninstallCoreWeapons.UninstallExtra                         = false;
         
         Script<UniqueExocrafts>().IsExecutable                      = true;
         Script<UniqueSpaceShips>().IsExecutable                     = true;
@@ -148,8 +144,9 @@ public class MyModList : cmk.NMS.Script.ModClass
         var FastRefiners = Script<FastRefiners>();
         FastRefiners.IsExecutable                                   = true;
         FastRefiners.TimeToMake                                     = 1f;
-        
         Script<test>().IsExecutable                                 = false;
     }
+
 }
-//..............PickUpGeoBaysAndHarvesters.............................................
+
+//=============================================================================

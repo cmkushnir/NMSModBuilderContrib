@@ -1,8 +1,10 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class DerelictSpeedIncrease : cmk.NMS.Script.ModClass
 {
-	public static float SpeedMultiplier = 1f;
+	public float SpeedMultiplier = 1f;
 
 	protected override void Execute()
 	{

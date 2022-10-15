@@ -1,4 +1,6 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class QuickSilverCrafting : cmk.NMS.Script.ModClass
 {
@@ -9,11 +11,10 @@ public class QuickSilverCrafting : cmk.NMS.Script.ModClass
 	//...........................................................
 	protected void AddQuickSilverRecipe()
 	{
-		var mbin = ExtractMbin<GcRecipeTable>(
-			"METADATA/REALITY/TABLES/NMS_REALITY_GCRECIPETABLE.MBIN"
-		);
+		var mbin = ExtractMbin<GcRecipeTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCRECIPETABLE.MBIN");
 
-		var taintedRecipe = RefinerRecipe.CreateRefiner(
+		var quickSilverRecipe = RefinerRecipe.CreateRefiner(
+			"CUSTR_QUICKS",			
 			"RECIPE_FISHCORE",   			// RecipeType, normally a lang id else will use supplied string
 			"RECIPE_SPACEGUNK3",            // RecipeName, not sure how game uses this
 			10,                             // Time
@@ -25,7 +26,7 @@ public class QuickSilverCrafting : cmk.NMS.Script.ModClass
 			},
 			Log
 		);
-		mbin.Table.Add(taintedRecipe);
+		mbin.Table.Add(quickSilverRecipe);
 	}
 }
 //=============================================================================

@@ -4,97 +4,130 @@
 
 public class InventoryRebalance : cmk.NMS.Script.ModClass
 {
-	protected override void Execute()
-	{
-		EditSurvivalOptions("METADATA/GAMESTATE/DEFAULTINVENTORYBALANCESURVIVAL.MBIN"); //This also includes permadeath
-		EditNormalOptions  ("METADATA/GAMESTATE/DEFAULTINVENTORYBALANCE.MBIN");
+    protected override void Execute()
+    {
+        int substanceAndProcductSizeLimit = 9999999;
+        EditRestrictedOptions(substanceAndProcductSizeLimit);
+        EditStandardOptions(substanceAndProcductSizeLimit);
+        //EditGrid();
+    }
+
+    //...........................................................
+	protected void EditGrid()
+    {
+        var invTable = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
+        //invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].MinSlots = 20;
+        //invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].MaxSlots = 20;
+        
+        //invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthSmall     = 10; //7
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightSmall    = 12; //5
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthStandard  = 10; //10 
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightStandard = 12; //5
+    	invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthLarge     = 10; //10
+    	invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightLarge    = 12; // 12
+    	
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthSmall     = 10; //6
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightSmall    = 10; //3
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthStandard  = 10; //10
+    	//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightStandard = 10; //3
+    	invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthLarge     = 10; //10
+    	invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightLarge    = 12; //6
+        
 	}
+    protected void EditRestrictedOptions( int substanceAndProcductSizeLimit )
+    {
+        // -- Restricted == Survival/Perma
+        int SubstanceInventorySizeRestricted          = 500;
+        int SubstanceCargoSizeRestricted              = 1000;
+        int SubstanceShipInventorySizeRestricted      = 2000;
+        int SubstanceShipCargoSizeRestricted          = 2000;
+        int SubstanceFreighterInventorySizeRestricted = 5000;
+        int SubstanceFreighterCargoSizeRestricted     = 5000;
+        int SubstanceVehicleInventorySizeRestricted   = 2000;
+        int SubstanceChestAndCapSizeRestricted        = 5000;
 
-	//...........................................................
+        int ProductInventorySizeRestricted           = 5;
+        int ProductCargoSizeRestricted               = 10;
+        int ProductShipInventorySizeRestricted       = 10;
+        int ProductShipCargoSizeRestricted           = 10;
+        int ProductFreighterInventorySizeRestricted  = 25;
+        int ProductFreighterCargoSizeRestricted      = 25;
+        int ProductVehicleInventorySizeRestricted    = 10;
+        int ProductChestAndCapSizeRestricted         = 25;
 
-	protected void EditSurvivalOptions( string filepath )
-	{
-		int SubstanceDefaultStackSizeSurvival             = 250; // Stacksize of substances(Original 50)
-		int ProductDefaultStackSizeSurvival               = 1;   // Stacksize of products you can craft or buy(Original 1)
+        var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
 
-		int StackMultiPlierExosuitInvetorySurvival        = 2; // Inventory stack size  250 x 2 = 500
-		int StackMultiPlierExosuitCargoSurvival           = 4; // CargoInvetory 250 x 4 = 1000
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].ProductStackLimit   = substanceAndProcductSizeLimit;
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].SubstanceStackLimit = substanceAndProcductSizeLimit;
+        
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Default]           = SubstanceInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Personal]          = SubstanceInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.PersonalCargo]     = SubstanceCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Ship]              = SubstanceShipInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.ShipCargo]         = SubstanceShipCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Freighter]         = SubstanceFreighterInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.FreighterCargo]    = SubstanceFreighterCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Vehicle]           = SubstanceVehicleInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Chest]             = SubstanceChestAndCapSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.BaseCapsule]       = SubstanceChestAndCapSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.MaintenanceObject] = SubstanceInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.UIPopup]           = SubstanceInventorySizeRestricted;
+		
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Default]               = ProductInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Personal]              = ProductInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.PersonalCargo]         = ProductCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Ship]                  = ProductShipInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.ShipCargo]             = ProductShipCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Freighter]             = ProductFreighterInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.FreighterCargo]        = ProductFreighterCargoSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Vehicle]               = ProductVehicleInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Chest]                 = ProductChestAndCapSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.BaseCapsule]           = ProductChestAndCapSizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.MaintenanceObject]     = ProductInventorySizeRestricted;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.Normal].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.UIPopup]               = ProductInventorySizeRestricted;
+    }
 
-		int StackMultiPlierShipSurvival                   = 8;// Ship Inventory 250 x 10 = 2000
-		int StackMultiPlierFreighterAndContainerSurvival  = 20; // Freighter and Cotainer 250 x 20 = 5000
+    //...........................................................
 
-		int ProductStackMultiPlierExosuitInvetorySurvival = 5;  // Product Stack Size = 5 ExoSuitInvetory
-		int ProductStackMutiplierExosuitCargoAndShip      = 10; // Product Stack Size = 10 ExoSuitCargo and ShipInvetory
-		int ProductStackMutiplierFreighterAndContainer    = 25; // Product Stack Size = 25 Freigher and BaseContainer
+    protected void EditStandardOptions( int substanceAndProcductSizeLimit )
+    {
+        // -- Standard == NORMAL
+        int SubstanceInventorySizeStandard           = 50000;
+        int SubstanceCargoSizeStandard               = 100000;
+        int ProductInventorySizeStandard             = 50;
+        int ProductCargoSizeStandard                 = 100;
+        
+        var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
 
-		// ExoSuit Tech Slot 8 x 3 = 24
-		int TechWidthSurvival                             = 8; // Exosuit Tech slots increase(Original 7) (8 is max)
-		int TechHeightSurvival                            = 3; // Exosuit Tech slots increase(Original 2)	(5 is max)
-		float RefundSurvival                              = 0.5f; // Refund from base Deconstruct(Original 0.5).This will refund 50 % when deconstructing
-		int SubstanceAndProcductStackSizeLimit            = 1000000; //(Original 9999)
-
-		var mbin = ExtractMbin<GcInventoryStoreBalance>(filepath);
-
-		mbin.DefaultSubstanceMaxAmount             = SubstanceDefaultStackSizeSurvival;
-		mbin.DefaultProductMaxAmount               = ProductDefaultStackSizeSurvival;
-		mbin.CargoSubstanceStorageMultiplier       = StackMultiPlierExosuitCargoSurvival;
-		mbin.CargoProductStorageMultiplier         = ProductStackMutiplierExosuitCargoAndShip;
-		mbin.FreighterSubstanceStorageMultiplier   = StackMultiPlierFreighterAndContainerSurvival;
-		mbin.FreighterProductStorageMultiplier     = ProductStackMutiplierFreighterAndContainer;
-		mbin.ShipSubstanceStorageMultiplier        = StackMultiPlierShipSurvival;
-		mbin.ShipProductStorageMultiplier          = ProductStackMutiplierExosuitCargoAndShip;
-		mbin.ChestSubstanceStorageMultiplier       = StackMultiPlierFreighterAndContainerSurvival;
-		mbin.ChestProductStorageMultiplier         = ProductStackMutiplierFreighterAndContainer;
-		mbin.BaseCapsuleSubstanceStorageMultiplier = StackMultiPlierFreighterAndContainerSurvival;
-		mbin.BaseCapsuleProductStorageMultiplier   = ProductStackMutiplierFreighterAndContainer;
-		mbin.DefaultSubstanceStorageMultiplier     = StackMultiPlierExosuitInvetorySurvival;
-		mbin.DefaultProductStorageMultiplier       = ProductStackMultiPlierExosuitInvetorySurvival;
-		mbin.SubstanceMaxAmountLimit               = SubstanceAndProcductStackSizeLimit;
-		mbin.ProductMaxAmountLimit                 = SubstanceAndProcductStackSizeLimit;
-		mbin.PlayerPersonalInventoryTechWidth      = TechWidthSurvival;
-		mbin.PlayerPersonalInventoryTechHeight     = TechHeightSurvival;
-		mbin.DeconstructRefundPercentage           = RefundSurvival;
-	}
-
-	//...........................................................
-
-	protected void EditNormalOptions( string filepath )
-	{
-		int SubstanceAndProcductStackSizeLimit     = 1000000; // (Original 9999)
-														  //NORMAL
-		int SubstanceDefaultStackSizeNormal        = 50000; // Stacksize of substances(Original 9999)
-		int ProductDefaultStackSizeNormal          = 50;    // Stacksize of products you can craft or buy(Original 1)
-
-		int StackMultiPlierExosuitAndShipNormal    = 1; // 50000 and 50 after mutiplier
-		int StackMultiPlierFreighterAndCargoNormal = 2; // 100000 and 100 after mutiplier
-		float RefundNormal                         = 1; // Refund from base Deconstruct(Original 0.5).This will give you a 100 % refund
-
-		// ExoSuit Tech Slot 8 x 4 = 32
-		int TechWidthNormal                        = 8; // Tech slots increase(Original 7)
-		int TechHeightNormal                       = 4; // Tech slots increase(Original 2)
-
-		var mbin = ExtractMbin<GcInventoryStoreBalance>(filepath);
-
-		mbin.DefaultSubstanceMaxAmount             = SubstanceDefaultStackSizeNormal;
-		mbin.DefaultProductMaxAmount               = ProductDefaultStackSizeNormal;
-		mbin.CargoSubstanceStorageMultiplier       = StackMultiPlierFreighterAndCargoNormal;
-		mbin.CargoProductStorageMultiplier         = StackMultiPlierFreighterAndCargoNormal;
-		mbin.FreighterSubstanceStorageMultiplier   = StackMultiPlierFreighterAndCargoNormal;
-		mbin.FreighterProductStorageMultiplier     = StackMultiPlierFreighterAndCargoNormal;
-		mbin.ShipSubstanceStorageMultiplier        = StackMultiPlierExosuitAndShipNormal;
-		mbin.ShipProductStorageMultiplier          = StackMultiPlierExosuitAndShipNormal;
-		mbin.ChestSubstanceStorageMultiplier       = StackMultiPlierExosuitAndShipNormal;
-		mbin.ChestProductStorageMultiplier         = StackMultiPlierExosuitAndShipNormal;
-		mbin.BaseCapsuleSubstanceStorageMultiplier = StackMultiPlierFreighterAndCargoNormal;
-		mbin.BaseCapsuleProductStorageMultiplier   = StackMultiPlierFreighterAndCargoNormal;
-		mbin.DefaultSubstanceStorageMultiplier     = StackMultiPlierExosuitAndShipNormal;
-		mbin.DefaultProductStorageMultiplier       = StackMultiPlierExosuitAndShipNormal;
-		mbin.SubstanceMaxAmountLimit               = SubstanceAndProcductStackSizeLimit;
-		mbin.ProductMaxAmountLimit                 = SubstanceAndProcductStackSizeLimit;
-		mbin.PlayerPersonalInventoryTechWidth      = TechWidthNormal;
-		mbin.PlayerPersonalInventoryTechHeight     = TechHeightNormal;
-		mbin.DeconstructRefundPercentage           = RefundNormal;
-	}
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].ProductStackLimit   = substanceAndProcductSizeLimit;
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].SubstanceStackLimit = substanceAndProcductSizeLimit;
+        
+        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Default]           = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Personal]          = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.PersonalCargo]     = SubstanceCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Ship]              = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.ShipCargo]         = SubstanceCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Freighter]         = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.FreighterCargo]    = SubstanceCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Vehicle]           = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Chest]             = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.BaseCapsule]       = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.MaintenanceObject] = SubstanceInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.UIPopup]           = SubstanceInventorySizeStandard;
+		
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Default]               = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Personal]              = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.PersonalCargo]         = ProductCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Ship]                  = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.ShipCargo]             = ProductCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Freighter]             = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.FreighterCargo]        = ProductCargoSizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Vehicle]               = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Chest]                 = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.BaseCapsule]           = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.MaintenanceObject]     = ProductInventorySizeStandard;
+		mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)GcDifficultyConfig.InventoryStackLimitsOptionDataEnum.High].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.UIPopup]               = ProductInventorySizeStandard;
+    }
 }
 
 //=============================================================================

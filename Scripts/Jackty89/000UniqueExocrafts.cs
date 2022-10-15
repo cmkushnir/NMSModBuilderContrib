@@ -111,20 +111,20 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 		float MechSuitJPFillRate           = 0.60f;
 		
 		float VehicleFuelRate              = 0.3f;
-		float VehicleFuelRateSurvival      = 0.5f;
+		//float VehicleFuelRateSurvival      = 0.5f;
 		float VehicleBoostFuelRate         = 1f;
 		float VehicleBoostFuelRateSurvival = 2f;
 
-		Mbin.MechJetpackForce      = MechSuitJPForce;
-		Mbin.MechJetpackMaxSpeed   = MechSuitJPMaxSpeed;
-		Mbin.MechJetpackMaxUpSpeed = MechSuitJPMaxUpSpeed;
-		Mbin.MechJetpackDrainRate  = MechSuitJPDrainRate;
-		Mbin.MechJetpackFillRate   = MechSuitJPFillRate;
+		Mbin.MechJetpackForce              = MechSuitJPForce;
+		Mbin.MechJetpackMaxSpeed           = MechSuitJPMaxSpeed;
+		Mbin.MechJetpackMaxUpSpeed         = MechSuitJPMaxUpSpeed;
+		Mbin.MechJetpackDrainRate          = MechSuitJPDrainRate;
+		Mbin.MechJetpackFillRate           = MechSuitJPFillRate;
 
-		Mbin.VehicleFuelRate         = VehicleFuelRate;
-		Mbin.VehicleFuelRateSurvival = VehicleFuelRateSurvival;
-		Mbin.VehicleBoostFuelRate    = VehicleBoostFuelRate;
-		Mbin.VehicleBoostFuelRate    = VehicleBoostFuelRateSurvival;
+		Mbin.VehicleFuelRate               = VehicleFuelRate;
+		//Mbin.VehicleFuelRateSurvival       = VehicleFuelRateSurvival;
+		Mbin.VehicleBoostFuelRate          = VehicleBoostFuelRate;
+		Mbin.VehicleBoostFuelRateSurvival  = VehicleBoostFuelRateSurvival;
 
 		foreach( var exoCraftData in ExocraftDataArray ) {
 			var exocraft = Mbin.VehicleDataTable.Find(EXOCRAFT => EXOCRAFT.Name == exoCraftData.Name);
@@ -154,9 +154,7 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 
 	protected void ImproveExoCraftInv()
 	{
-		var mbin = ExtractMbin<GcInventoryTable>(
-			"METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN"
-		);
+		var mbin = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
 		foreach( var vehicleSize in VehicleSizes ) {
 			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinSlots = 48;
 			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxSlots = 48;
@@ -170,9 +168,7 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 		float MechSuitLaserDamange = 350f;
 		float MechSuitCanonDamange = 2500f;
 
-		var Mbin = ExtractMbin<GcTechnologyTable>(
-			"METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN"
-		);
+		var Mbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 
 		var Laser = Mbin.Table.Find(TECH => TECH.ID == "MECH_LASER");
 		Laser.StatBonuses.Find(BONUS => BONUS.Stat.StatsType == StatsTypeEnum.Vehicle_LaserDamage).Bonus = MechSuitLaserDamange;

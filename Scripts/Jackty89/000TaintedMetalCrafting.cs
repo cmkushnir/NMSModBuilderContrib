@@ -14,6 +14,7 @@ public class TaintedMetalCrafting : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcRecipeTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCRECIPETABLE.MBIN");
 
 		var taintedRecipe = RefinerRecipe.CreateRefiner(
+			"CUSTR_TAINTED",
 			"RECIPE_FISHCORE",   			// RecipeType, normally a lang id else will use supplied string
 			"RECIPE_SPACEGUNK3",            // RecipeName, not sure how game uses this
 			10,                             // Time

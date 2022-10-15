@@ -4,8 +4,8 @@
 
 public class LearnMoreWords : cmk.NMS.Script.ModClass
 {
-	public static int AddWordsTotal = 15;
-	public static int PercentageChance = 100;
+	public int AddWordsTotal = 15;
+	public int PercentageChance = 100;
 	protected override void Execute()
 	{
 		AddWords();

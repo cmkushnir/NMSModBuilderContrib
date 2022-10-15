@@ -1,21 +1,23 @@
 ﻿//=============================================================================
+// Author: Jackty89
+//=============================================================================
 
 public class CustomDescriptions : cmk.NMS.Script.ModClass
 {
 	protected class CustomSubstanceDescription
     {
         public string SubstanceID;
-        public List<Tuple<LangId, string>> CustomLangDescStrings;
+        public List<Tuple<LanguageId, string>> CustomLangDescStrings;
     }
-    private static List<CustomSubstanceDescription> CustomSubstanceDescriptions = new List<CustomSubstanceDescription>()
+    private List<CustomSubstanceDescription> CustomSubstanceDescriptions = new List<CustomSubstanceDescription>()
     {
         new CustomSubstanceDescription()
 		{
 			SubstanceID = "CATALYST1",
-			CustomLangDescStrings = new List<Tuple<LangId, string>>()
+			CustomLangDescStrings = new List<Tuple<LanguageId, string>>()
             {
-                new(LangId.English, "It's sodium baby."),
-                new(LangId.French, "C'est sodium baby.")
+                new(LanguageId.English, "It's sodium baby."),
+                new(LanguageId.French, "C'est sodium baby.")
             }			
 		}
 	};    
@@ -23,16 +25,16 @@ public class CustomDescriptions : cmk.NMS.Script.ModClass
 	protected class CustomProductDescription
     {
         public string ProductID;
-        public List<Tuple<LangId, string>> CustomLangDescStrings;
+        public List<Tuple<LanguageId, string>> CustomLangDescStrings;
     }
-    private static List<CustomProductDescription> CustomProductDescriptions = new List<CustomProductDescription>()
+    private List<CustomProductDescription> CustomProductDescriptions = new List<CustomProductDescription>()
     {
         new CustomProductDescription()
 		{
 			ProductID = "FOOD_CM_APPLE",
-			CustomLangDescStrings = new List<Tuple<LangId, string>>()
+			CustomLangDescStrings = new List<Tuple<LanguageId, string>>()
             {
-                new(LangId.English, "Apple Cake.")
+                new(LanguageId.English, "Apple Cake.")
             }			
 		}
 	};
@@ -53,12 +55,12 @@ public class CustomDescriptions : cmk.NMS.Script.ModClass
 	protected void AddCustomProductDescription(CustomProductDescription productData)
 	{
 		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
-		var product = prod_mbin.Table.Find(PRODUCT => PRODUCT.Id == productData.ProductID);
+		var product = prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == productData.ProductID);
 		var customDescriptionID = "C" + product.Description;
 		
 		product.Description = customDescriptionID;
 		
-		AddNewLanguageString(product.Id, customDescriptionID, productData.CustomLangDescStrings);
+		AddNewLanguageString(product.ID, customDescriptionID, productData.CustomLangDescStrings);
 	}
 	
 	protected void AddCustomSubstanceDescription(CustomSubstanceDescription substanceData)
@@ -72,7 +74,7 @@ public class CustomDescriptions : cmk.NMS.Script.ModClass
 		AddNewLanguageString(substance.ID, customDescriptionID, substanceData.CustomLangDescStrings);
 	}
 	
-	protected void AddNewLanguageString(string foodId, string customDescriptionID, List<Tuple<LangId, string>> languages)
+	protected void AddNewLanguageString(string foodId, string customDescriptionID, List<Tuple<LanguageId, string>> languages)
 	{
 		foreach (var language in languages)
         {
