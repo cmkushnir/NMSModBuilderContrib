@@ -12,9 +12,9 @@ public class SlotMaster : cmk.NMS.Script.ModClass
     public bool ImproveInventory = true;
     public bool ImproveFreighter = true;
     
-    public bool MaxStartingSlots = true;
+    public bool MaxStartingSlot  = false;
     public bool MaxSlot			 = true;
-	public bool MaxSpecialSlot	 = true;
+	public bool MaxSpecialSlot	 = false; //doesnt work
 
 	public int MinUnlockedTechSlots = 60;
 	public int MinUnlockedCargoSlots = 120;
@@ -122,9 +122,15 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 	{
 		foreach( var size in sizes ) {
 			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].MaxNumSpecialTechSlots = MaxSpecialSlots;
-			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].SpecialTechSlotMaxIndex.X = 0;
+			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].SpecialTechSlotMaxIndex.X = 6;
 			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].SpecialTechSlotMaxIndex.Y = 10;
 		}
+		//var mbin = ExtractMbin<GcDefaultSaveData>("METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN");
+
+		//for( int i = 0; i <= 6; i++ )
+		//	for( int j = 0; j <= 10; j++ )
+		//		mbin.State.Inventory_TechOnly.SpecialSlots.Add(GcInventorySpecialSlot.);
+		
 	}
 	protected void SetGridSizes( GcInventoryTable inventoryTable, GcInventoryLayoutSizeType.SizeTypeEnum[] sizes )
 	{
@@ -242,7 +248,7 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 		if(MaxSpecialSlot) {
 			SetUnlockedSpecialTechSlots(inventoryTable, PlayerSizes);
 		}
-    	if(MaxStartingSlots) {
+    	if(MaxStartingSlot) {
     		NewSaveStartingSlots();
     	}
 		SetGridSizes(inventoryTable, PlayerSizes);
@@ -251,8 +257,8 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 	protected void NewSaveStartingSlots()
 	{
 		var mbin = ExtractMbin<GcRealityManagerData>("METADATA/REALITY/DEFAULTREALITY.MBIN");
-		mbin.SuitStartingSlotLayout = 120;
-		mbin.SuitTechOnlyStartingSlotLayout = 60;
+		mbin.SuitStartingSlotLayout.Slots = 120;
+		mbin.SuitTechOnlyStartingSlotLayout.Slots = 60;
 		mbin.ShipStartingLayout.Slots = 120;
 		mbin.ShipTechOnlyStartingLayout.Slots = 60;
 	}

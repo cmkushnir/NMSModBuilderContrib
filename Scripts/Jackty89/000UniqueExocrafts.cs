@@ -156,8 +156,10 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
 		foreach( var vehicleSize in VehicleSizes ) {
-			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinSlots = 48;
-			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxSlots = 48;
+			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinSlots = 120;
+			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxSlots = 120;
+			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MinTechSlots = 60;
+			mbin.GenerationData.GenerationDataPerSizeType[(int)vehicleSize].MaxTechSlots = 60;
 		}
 	}
 

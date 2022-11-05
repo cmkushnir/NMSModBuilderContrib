@@ -2,7 +2,7 @@
 // Author: Jackty89
 //=============================================================================
 
-public class CustomModsGalore : cmk.NMS.Script.ModClass
+public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
 {
     public int MinProcModLimit                  = 1;
     public int RecipeCostPriceMultiplier        = 1;
@@ -45,6 +45,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
         new (LanguageId.English, "CL_ROCK_TECH3", "High Yield Missles"),
         new (LanguageId.English, "CL_MINI_TECH1", "HE Rounds"),
         
+        new (LanguageId.English, "CL_NUKE_TECH", "Tactical Nuke"),
     };
     readonly Tuple<LanguageId, string, string>[] CustomLangDescStrings = new Tuple<LanguageId, string, string>[]
     {
@@ -66,6 +67,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
         new (LanguageId.English, "CL_ROCK_DESC2", "Cooling vents to missile tubes. Improves fire rate cooldown and more"),
         new (LanguageId.English, "CL_ROCK_DESC3", "Increases blast radius, careful to not be caught by it"),
         new (LanguageId.English, "CL_MINI_DESC1", "Blast rounds, bring the pain"),
+        new (LanguageId.English, "CL_NUKE_DESC", "Tactical Nuke Incoming, welp gl"),
     };
 
     protected class CustomTemplate
@@ -194,6 +196,27 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
             StatBonuses        = new List<GcStatsBonus>() 
             {
                 StatsBonus.Create(StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius, 10, 3)
+            },
+            Requirements       = new List<GcTechnologyRequirement>(){
+                TechnologyRequirement.Product("TECH_COMP", 5),
+                TechnologyRequirement.Substance("BLUE2", 100),
+                TechnologyRequirement.Product("GRENFUEL1", 10)
+            }
+        },
+        new CustomUpgradeTech{
+            BaseTechID         = "GRENADE", //from what tech we will we copy  as base
+            NewTechID          = "UT_NUKE",
+            RequiredTech       = "GRENADE", 
+            Name               = "CL_NUKE_TECH", 
+            Description        = "CL_NUKE_DESC", 
+            FragmentCost       = 10000,
+            TechnologyRarity   = TechnologyRarityEnum.VeryRare,
+            TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Weapon,
+            FileName           = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.GRENADE.DDS",
+            StatBonuses        = new List<GcStatsBonus>() 
+            {
+                StatsBonus.Create(StatsTypeEnum.Weapon_Grenade_Radius, 5000, 3),
+                StatsBonus.Create(StatsTypeEnum.Weapon_Grenade_Damage, 100000, 3)
             },
             Requirements       = new List<GcTechnologyRequirement>(){
                 TechnologyRequirement.Product("TECH_COMP", 5),

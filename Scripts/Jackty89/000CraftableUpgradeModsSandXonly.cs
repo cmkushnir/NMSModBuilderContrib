@@ -148,7 +148,10 @@ public class CraftableUpgradeModsSandXonly : cmk.NMS.Script.ModClass
 
     List<CraftableUpgradeMod> XclassMods6 = new List<CraftableUpgradeMod>() {
         new CraftableUpgradeMod { UpgradeBase = "U_SENTGUN",  HighestClassNo = 0, LowestClassNo = 0 },
-        new CraftableUpgradeMod { UpgradeBase = "U_SENTSUIT", HighestClassNo = 0, LowestClassNo = 0 }
+        new CraftableUpgradeMod { UpgradeBase = "U_SENTSUIT", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_CARBOX", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_HAZBOX", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_STARTBOX", HighestClassNo = 0, LowestClassNo = 0 }
     };
 
     List<CraftableUpgradeMod> CustomFreighterMods = new List<CraftableUpgradeMod>() {

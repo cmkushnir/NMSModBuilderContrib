@@ -27,7 +27,14 @@ public class MustHave : cmk.NMS.Script.ModClass
         var CraftableUpgradeModsSandXonly = Script<CraftableUpgradeModsSandXonly>();
         CraftableUpgradeModsSandXonly.IsExecutable                  = runSandXonly;
         CraftableUpgradeModsSandXonly.RecipeCostPriceMultiplier     = 1;
-
+		
+        var CustomModsGaloreNuke = Script<CustomModsGaloreNuke>();
+        CustomModsGaloreNuke.IsExecutable                               = false;
+        if (runSandXonly)
+        {
+            CustomModsGaloreNuke.MinProcModLimit                        = 4;
+            CustomModsGaloreNuke.RecipeCostPriceMultiplier              = 1;
+        }
         var CustomModsGalore = Script<CustomModsGalore>();
         CustomModsGalore.IsExecutable                               = enableCustomModsGalore;
         if (runSandXonly)
@@ -98,7 +105,6 @@ public class MustHave : cmk.NMS.Script.ModClass
         PirateTimerRedux.IsExecutable                               = false;
         PirateTimerRedux.Multiplier                                 = 3;
 
-        Script<QuickSilverCrafting>().IsExecutable                  = false;
         Script<QuickSilverRewards>().IsExecutable                   = false;
         
         Script<RealisticTimers>().IsExecutable                      = false;
