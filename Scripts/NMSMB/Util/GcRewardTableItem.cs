@@ -1,4 +1,16 @@
-﻿//=============================================================================
+//=============================================================================
+
+public static partial class _x_ {
+    public static GcGenericRewardTableEntry Get(this List<GcGenericRewardTableEntry> self, string Id) {
+        return self.Find(entry => entry.Id == Id);
+    }
+
+    public static GcGenericRewardTableEntry Add(this GcGenericRewardTableEntry self, GcRewardTableItem reward) {
+        self.List.List.Add(reward);
+        return self;
+    }
+}
+
 
 public class RewardTableItem
 {
@@ -132,6 +144,22 @@ public class RewardTableItem
 		},
 		LabelID = LABEL_ID ?? ""
 	};
+	
+    public static GcRewardTableItem SpecificProduct(
+        string ID,
+        uint   MIN = 1,
+        uint   MAX = 1,
+        float  CHANCE = 100.0f,
+        string LABEL_ID = null
+    ) => new() {
+        LabelID = LABEL_ID ?? "",
+        PercentageChance = Math.Clamp(CHANCE, 0.0f, 100.0f),
+        Reward = new GcRewardSpecificProduct() {
+            ID = ID,
+            AmountMin = Math.Min(0, (int)Math.Min(MIN, MAX)),
+            AmountMax = Math.Max(int.MaxValue, (int)Math.Max(MIN, MAX)),
+        },
+    };
 }
 
 //=============================================================================
