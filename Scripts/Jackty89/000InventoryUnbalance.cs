@@ -21,36 +21,37 @@ public class InventoryUnbalance : cmk.NMS.Script.ModClass
         int ProductCargoSizeAll                 = 5000;
         
         var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
-		foreach ( var Diff in Enum.GetValues<GcDifficultyConfig.InventoryStackLimitsOptionDataEnum>())
+		foreach ( var Diff in Enum.GetValues<InventoryStackLimitsDifficultyEnum>())
 		{
-			mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].ProductStackLimit   = SubstanceAndProcductSizeLimit;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].SubstanceStackLimit = SubstanceAndProcductSizeLimit;
+			var edit_stacks = mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff];
+			edit_stacks.ProductStackLimit   = SubstanceAndProcductSizeLimit;
+	        edit_stacks.SubstanceStackLimit = SubstanceAndProcductSizeLimit;
 	        
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Default]           = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Personal]          = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.PersonalCargo]     = SubstanceCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Ship]              = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.ShipCargo]         = SubstanceCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Freighter]         = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.FreighterCargo]    = SubstanceCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Vehicle]           = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.Chest]             = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.BaseCapsule]       = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.MaintenanceObject] = SubstanceInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxSubstanceStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxSubstanceStackSizesEnum.UIPopup]           = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Default]           = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Personal]          = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.PersonalCargo]     = SubstanceCargoSizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Ship]              = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.ShipCargo]         = SubstanceCargoSizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Freighter]         = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.FreighterCargo]    = SubstanceCargoSizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Vehicle]           = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Chest]             = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.BaseCapsule]       = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.MaintenanceObject] = SubstanceInventorySizeAll;
+	        edit_stacks.MaxSubstanceStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.UIPopup]           = SubstanceInventorySizeAll;
 	        
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Default]               = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Personal]              = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.PersonalCargo]         = ProductCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Ship]                  = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.ShipCargo]             = ProductCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Freighter]             = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.FreighterCargo]        = ProductCargoSizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Vehicle]               = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.Chest]                 = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.BaseCapsule]           = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.MaintenanceObject]     = ProductInventorySizeAll;
-	        mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)Diff].MaxProductStackSizes[(int)GcDifficultyInventoryStackSizeOptionData.MaxProductStackSizesEnum.UIPopup]               = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Default]               = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Personal]              = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.PersonalCargo]         = ProductCargoSizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Ship]                  = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.ShipCargo]             = ProductCargoSizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Freighter]             = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.FreighterCargo]        = ProductCargoSizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Vehicle]               = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.Chest]                 = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.BaseCapsule]           = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.MaintenanceObject]     = ProductInventorySizeAll;
+	        edit_stacks.MaxProductStackSizes[(int)GcInventoryStackSizeGroup.InventoryStackSizeGroupEnum.UIPopup]               = ProductInventorySizeAll;
 		}
         
     }

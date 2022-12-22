@@ -1,10 +1,8 @@
 ﻿//=============================================================================
-// Author: Jackty89
-//=============================================================================
 
-public class CraftableAlienToken : cmk.NMS.Script.ModClass
+public class CraftableEmergencySignalScanner : cmk.NMS.Script.ModClass
 {
-    readonly GcInventoryType Product   = new GcInventoryType { InventoryType = InventoryTypeEnum.Product };
+	readonly GcInventoryType Product   = new GcInventoryType { InventoryType = InventoryTypeEnum.Product };
     readonly GcInventoryType Substance = new GcInventoryType { InventoryType = InventoryTypeEnum.Substance };
 
     Tuple<string, GcTechnologyRequirement[]>[] NewRequirementsArray;
@@ -19,10 +17,10 @@ public class CraftableAlienToken : cmk.NMS.Script.ModClass
     protected void FillArray()
     {
         NewRequirementsArray = new Tuple<string, GcTechnologyRequirement[]>[] {
-            new("ALIEN_INV_TOKEN", new [] {
-                new GcTechnologyRequirement { ID = "FIENDCORE",   Type = Product,   Amount = 10},
-                new GcTechnologyRequirement { ID = "EX_BLUE",     Type = Substance, Amount = 500},
-                new GcTechnologyRequirement { ID = "CLAMPEARL",   Type = Product,   Amount = 5}
+            new("ABAND_LOCATOR", new [] {
+                new GcTechnologyRequirement { ID = "STARCHART_A", Type = Product,   Amount = 1},
+                new GcTechnologyRequirement { ID = "STARCHART_B", Type = Substance, Amount = 1},
+                new GcTechnologyRequirement { ID = "STARCHART_D", Type = Product,   Amount = 1}
             })
         };
     }
@@ -54,9 +52,8 @@ public class CraftableAlienToken : cmk.NMS.Script.ModClass
         var mbin = ExtractMbin<GcUnlockableTrees>("METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN");        
         var tree = mbin.Trees[(int)UnlockableItemTreeEnum.CraftProducts];
         
-        tree.Trees[0].Root.Children.Insert(0, new GcUnlockableItemTreeNode { Unlockable = "ALIEN_INV_TOKEN", Children = new() });
+        tree.Trees[0].Root.Children.Insert(0, new GcUnlockableItemTreeNode { Unlockable = "ABAND_LOCATOR", Children = new() });
     }
-
 }
 
 //=============================================================================

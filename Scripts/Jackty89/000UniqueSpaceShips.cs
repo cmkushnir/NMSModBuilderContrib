@@ -50,6 +50,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		var Fighter           = ShipClassEnum.Fighter;
 		var Royal             = ShipClassEnum.Royal;
 		var Scientific        = ShipClassEnum.Scientific;
+		var Sail              = ShipClassEnum.Sail;
 		var Alien             = ShipClassEnum.Alien;
 
 		string HyperDrive     = "SHIP_HYPERDRIVE";
@@ -97,6 +98,14 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			BclassMultiplier = MedVale,
 			AclassMultiplier = MedHighValue,
 			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Sail,
+			StatId = HyperDrive,
+			CclassMultiplier = MedVale,
+			BclassMultiplier = MedHighValue,
+			AclassMultiplier = HighValue,
+			SclassMultiplier = HighExtrValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Alien,
@@ -148,6 +157,14 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			SclassMultiplier = HighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
+			ShipType = Sail,
+			StatId = Damage,
+			CclassMultiplier = MedVale,
+			BclassMultiplier = MedHighValue,
+			AclassMultiplier = HighValue,
+			SclassMultiplier = HighExtrValue
+		});
+		ShipData.Add(new ShipMultiplierData {
 			ShipType = Alien,
 			StatId = Damage,
 			CclassMultiplier = 0f,
@@ -195,6 +212,14 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			BclassMultiplier = MedVale,
 			AclassMultiplier = MedHighValue,
 			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Sail,
+			StatId = Shield,
+			CclassMultiplier = MedVale,
+			BclassMultiplier = MedHighValue,
+			AclassMultiplier = HighValue,
+			SclassMultiplier = HighExtrValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Alien,
