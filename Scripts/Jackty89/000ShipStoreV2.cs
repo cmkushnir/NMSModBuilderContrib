@@ -3,7 +3,7 @@
 //=============================================================================
 
 
-public class ShipStore : cmk.NMS.Script.ModClass
+public class ShipStoreV2 : cmk.NMS.Script.ModClass
 {
 	private int Total_Seeds_Per_Class = 10000;
 	private List<Tuple<string, LanguageId, string, string>> Custom_Language_Desccription_Strings = new List<Tuple<string,LanguageId, string, string>>
@@ -18,6 +18,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 		new("CL_BALIEN", LanguageId.English, "H.G. Corp. Alien", "H.G. Corp. Spacecraft Dynamics Bioship"),
 		new("CL_STORE", LanguageId.English, "H.G. Corp. Spacecraft Dynamics", "Spacecraft constucted by H.G. Corp."),
 	};
+	//Maybe add frigate(s) too
 	protected ShipClassEnum[] Ship_Types = new[] {
 		//ShipClassEnum.Freighter,
 		ShipClassEnum.Dropship,
@@ -37,11 +38,13 @@ public class ShipStore : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		Random random = new Random();
-		string short_name = "";
 		List<GcInventoryBaseStatEntry> ship_stats = new List<GcInventoryBaseStatEntry>();
 		List<GcProductData> consumable_products = new List<GcProductData>();
 		List<GcConsumableItem> consumables = new List<GcConsumableItem>();
 		List<GcGenericRewardTableEntry> generic_rewards = new List<GcGenericRewardTableEntry>();
+
+		List<GcRewardTableItem> ships_per_class = new List<GcRewardTableItem>();
+
 
 		var product_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false, false);
 		var consumable_mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN", false, false);
@@ -54,28 +57,29 @@ public class ShipStore : cmk.NMS.Script.ModClass
 				//(shiptype, shipmodel, shipclass, price, langString)
 				var data = GetShipData(ship_type, ship_class);
 				string ship_type_from_data = data.Item1;
-				short_name = data.Item1.Substring(0, 2).ToUpper() + "_" + ship_class;
 				string ship_model_from_data = data.Item2;
 				string ship_class_from_data = data.Item3;
 				int ship_price_from_data = data.Item4;
 				string ship_languagestring_from_data = data.Item5;
+				
+				ships_per_class.Clear();
 
 				if( (ship_type == ShipClassEnum.Royal || ship_type == ShipClassEnum.Alien) && ship_class != InventoryClassEnum.S )
 					continue;
+				string reward_name = data.Item1.ToUpper() + "_" + ship_class;
+
+				consumable_products.Add(CreateCustomConsumableProducts(reward_name, ship_price_from_data, ship_languagestring_from_data, ship_class_from_data));
+				consumables.Add(CreateCustomConsumable(reward_name));
+				realitymanagerdata_mbin.SpaceStation.AlwaysPresentProducts.Add(reward_name);
 
 				for( int i = 1; i <= Total_Seeds_Per_Class; i++ ) {
 					if( Cancel.IsCancellationRequested ) break;
 					var seed = random.NextInt64();
-					int slot_number = random.Next(20, 100);
-					string reward_name =  short_name + i;
+					int slot_number = random.Next(20, 48);
 
-					ProgressReport($"{ship_type} {ship_type} seed = 0x{seed:x16}");
-
-					generic_rewards.Add(CrateNewShipRewards("CL_STORE_DESC", seed, ship_type, ship_class, ship_model_from_data, slot_number, GetShipTechnologies(ship_type), ship_stats, reward_name));
-					consumable_products.Add(CreateCustomConsumableProducts(reward_name, ship_price_from_data, ship_languagestring_from_data, ship_class_from_data));
-					consumables.Add(CreateCustomConsumable(reward_name));
-					realitymanagerdata_mbin.SpaceStation.OptionalProducts.Add(reward_name);
+					ships_per_class.Add(CreateNewShip("CL_STORE_DESC", seed, ship_type, ship_class, ship_model_from_data, slot_number, GetShipTechnologies(ship_type), ship_stats));
 				}
+				generic_rewards.Add(CrateNewShipRewards(reward_name, ships_per_class));
 			}
 		}
 
@@ -287,7 +291,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 		return new_consumable;
 	}
 
-	protected GcGenericRewardTableEntry CrateNewShipRewards( string ship_name, long ship_seed, ShipClassEnum ship_type, InventoryClassEnum ship_class, string ship_model, int ship_number_of_slots, List<GcInventoryElement> ship_technologies, List<GcInventoryBaseStatEntry> ship_stats, string reward_name )
+	protected GcRewardTableItem CreateNewShip( string ship_name, long ship_seed, ShipClassEnum ship_type, InventoryClassEnum ship_class, string ship_model, int ship_number_of_slots, List<GcInventoryElement> ship_technologies, List<GcInventoryBaseStatEntry> ship_stats )
 	{
 		var ship = RewardTableItem.SpecificShip(
 			ship_name,
@@ -299,20 +303,19 @@ public class ShipStore : cmk.NMS.Script.ModClass
 			ship_technologies,
 			ship_stats
 		);
+		return ship;
+	}
 
+	protected GcGenericRewardTableEntry CrateNewShipRewards( string reward_name, List<GcRewardTableItem> ships_per_class )
+	{
 		var entry = GenericRewardTableEntry.Create(
 			"R_" + reward_name ,
-			RewardChoiceEnum.GiveAll,
-			new(){ ship }
+			RewardChoiceEnum.Select,
+			new(){}
 		);
-
-		//if( ship_type == ShipClassEnum.Freighter ) {
-		//	var extra = RewardTableItem.GcRewardOpenFreeFreighter(
-		//		100,
-		//		ship_name
-		//	);
-		//	entry.Add(extra);
-		//}
+		foreach( var ship in ships_per_class ) {
+			entry.Add(ship);
+		}
 		return entry;
 	}
 
