@@ -3,17 +3,17 @@
 // create|mod the required mbin's so that the dds can be used as a decal|poster in-game.
 
 // Given:
-// nmsmb/Scripts/Mod/Add_Decal/TEXTURES/NMSMB/POSTERS/XOSTIR/Bubble Time.dds
-// nmsmb/Scripts/Mod/Add_Decal/TEXTURES/NMSMB/POSTERS/XOSTIR/Bubble Time_icon.dds
+// nmsmb/Scripts/Mod/Add_Decal/TEXTURES/NMSMB/POSTER/XOSTIR/Bubble Time.dds
+// nmsmb/Scripts/Mod/Add_Decal/TEXTURES/NMSMB/POSTER/XOSTIR/Bubble Time_icon.dds
 // Will add to pak as:
-// TEXTURES/NMSMB/POSTERS/XOSTIR/BUBBLETIME.DDS
-// TEXTURES/NMSMB/POSTERS/XOSTIR/BUBBLETIME_ICON.DDS
+// TEXTURES/NMSMB/POSTER/XOSTIR/BUBBLETIME.DDS
+// TEXTURES/NMSMB/POSTER/XOSTIR/BUBBLETIME_ICON.DDS
 // Will generate and add to pak:
-// MODELS/NMSMB/POSTERS/XOSTIR/BUBBLETIME/BUBBLETIME.DESCRIPTOR.MBIN
-// MODELS/NMSMB/POSTERS/XOSTIR/BUBBLETIME/BUBBLETIME.SCENE.MBIN
-// MODELS/NMSMB/POSTERS/XOSTIR/BUBBLETIME/BUBBLETIME.MATERIAL.MBIN
-// MODELS/NMSMB/POSTERS/XOSTIR/BUBBLETIME/BUBBLETIME_PLACEMENT.SCENE.MBIN
-// MODELS/NMSMB/POSTERS/XOSTIR/BUBBLETIME/ENTITIES/PLACEMENTDATA.ENTITY.MBIN
+// MODELS/NMSMB/POSTER/XOSTIR/BUBBLETIME/BUBBLETIME.DESCRIPTOR.MBIN
+// MODELS/NMSMB/POSTER/XOSTIR/BUBBLETIME/BUBBLETIME.SCENE.MBIN
+// MODELS/NMSMB/POSTER/XOSTIR/BUBBLETIME/BUBBLETIME.MATERIAL.MBIN
+// MODELS/NMSMB/POSTER/XOSTIR/BUBBLETIME/BUBBLETIME_PLACEMENT.SCENE.MBIN
+// MODELS/NMSMB/POSTER/XOSTIR/BUBBLETIME/ENTITIES/PLACEMENTDATA.ENTITY.MBIN
 //
 // - The icon dds is optional, but desired if main dds not a square, in order
 //   to get correct aspect ratio in build menu (not required for placement).
@@ -22,15 +22,31 @@
 //   then fill surround w/ white & alpha = 0, then resize to 256x256.
 // - Wil use existing geometry mbin's from clone source.
 // - Will add entries to products, parts, building tables.
+//
+// Note: Shares source folder structure with Add_Distress_Flags.
 //=============================================================================
 
 public class Add_Decal : cmk.NMS.Script.ModClass
 {
+	protected struct DecalData
+	{
+		public NMS.PAK.Item.Path  Dds;     // main .dds in pak
+		public NMS.PAK.Item.Path  Icon;    // icon .dds in pak, may be same as Dds
+		public string             Name;    // name from disk path (case sensitive w/ spaces)
+		public int                Width;   // .dds width  (pixels)
+		public int                Height;  // .dds height (pixels)
+		public string             ID;      // product
+		public string             Part;    // '_' + ID
+		public ModelPaths         Model;
+	}
+
+	//...........................................................
+	
 	protected override void Execute()
 	{
 		// get loose files for this script
 		// i.e. all the dds we want to turn into posters|decals
-		var files = GetLoose();
+		var files = GetLoose();  // key = pak path, value = disk path
 
 		for( var i = 0; i < files.Count; ++i ) {
 			var  file = files[i];
@@ -60,16 +76,16 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 			var index = files.FindIndex(KV => string.Equals(KV.Key, icon, StringComparison.OrdinalIgnoreCase));
 			if( index < 0 ) icon = dds;
 			else icon = files[index].Key;
-
+			
 			var data = new DecalData {
-				Dds    = dds,
-				Icon   = icon,
-				Name   = disk.Name,
-				Width  = width,
-				Height = height,
-				ID     =       id,  // <= 15 char
-				Part   = '_' + id,  // <= 16 char
-				Model  = ModelPaths.Create(dds.Directory.Replace("TEXTURES/", "MODELS/"), dds.Name),
+				Dds     = dds,
+				Icon    = icon,
+				Name    = disk.Name,
+				Width   = width,
+				Height  = height,
+				ID      =       id,  // <= 15 char
+				Part    = '_' + id,  // <= 16 char
+				Model   = ModelPaths.Create(dds.Directory.Replace("TEXTURES/", "MODELS/"), dds.Name),
 			};
 
 			GcProductTable(data);
@@ -78,20 +94,6 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 			GcBaseBuildingCostsTable(data);
 			GcBaseBuildingObjectsTable(data);
 		}
-	}
-
-	//...........................................................
-
-	protected struct DecalData
-	{
-		public NMS.PAK.Item.Path  Dds;     // main .dds in pak
-		public NMS.PAK.Item.Path  Icon;    // icon .dds in pak, may be same as Dds
-		public string             Name;    // name from disk path (case sensitive w/ spaces)
-		public int                Width;   // .dds width  (pixels)
-		public int                Height;  // .dds height (pixels)
-		public string             ID;      // product
-		public string             Part;    // '_' + ID
-		public ModelPaths         Model;
 	}
 
 	//...........................................................
@@ -147,9 +149,7 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 		var mbin = ExtractMbin<GcBaseBuildingCostsTable>(
 			"METADATA/REALITY/TABLES/BASEBUILDINGCOSTSTABLE.MBIN"
 		);
-		// doesn't have poster, so use decal "0"
-		// is it really needed if they don't even have their own in there ?
-		var clone = CloneMbin(mbin.ObjectCosts.Find(OBJECT => OBJECT.ID == "BUILDDECALNUM0"));
+		var clone = CloneMbin(mbin.ObjectCosts.Find(OBJECT => OBJECT.ID == "BUILDDECALSIMP1"));
 
 		clone.ID = DATA.Part;
 
@@ -160,28 +160,34 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 
 	protected void GcBaseBuildingObjectsTable( DecalData DATA )
 	{
+		Log.AddInformation("GcBaseBuildingObjectsTable");
+		
 		var mbin = ExtractMbin<GcBaseBuildingTable>(
 			"METADATA/REALITY/TABLES/BASEBUILDINGOBJECTSTABLE.MBIN"
 		);
 		var source = mbin.Objects.Find(OBJECT => OBJECT.ID == "BUILDDECALSIMP1");
 		var clone  = CloneMbin(source);
 
-		GcBaseBuildingEntry(clone, DATA.ID);
+		GcBaseBuildingEntry_Init(clone, DATA.ID);
 
-		if( DATA.Dds.Directory.Contains("POSTER") ) {
+		if( DATA.Dds.Directory.Contains("POSTER/") ) {
 			clone.Groups[0].SubGroupName = "WALLPOSTERS";
 		}
-
-		clone.PlacementScene.Filename = DATA.Model.PlacementScene.Full;
+		
+		clone.PlacementScene.Filename = DATA.Model.PlacementScene.Full;	
 		TkSceneNodeData_Placement(DATA, source.PlacementScene.Filename.Value);
 
+		TkSceneNodeData_Scene(DATA, source.PlacementScene.Filename.Value.Replace("_PLACEMENT", ""));
+		
 		mbin.Objects.Add(clone);
 	}
 
 	//...........................................................
 
-	protected void GcBaseBuildingEntry( GcBaseBuildingEntry ENTRY, string ID )
+	protected void GcBaseBuildingEntry_Init( GcBaseBuildingEntry ENTRY, string ID )
 	{
+		Log.AddInformation("GcBaseBuildingEntry_Init");
+		
 		ENTRY.ID                   = ID;
 		ENTRY.IsFromModFolder      = true;
 		ENTRY.PlanetBaseLimit      = 0;
@@ -203,7 +209,7 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 		mbin.Name     = name;
 		mbin.NameHash = TkSceneNodeDataNameHash(mbin.Name);
 
-		var child = mbin.Children.Find(DATA => DATA.Type == "MESH");
+		var child = mbin.Children.Find(DATA => DATA.Type == "MESH");	
 		if( DATA.Height > DATA.Width ) {
 			child.Transform.ScaleX *= ((float)DATA.Width / DATA.Height);
 		}
@@ -211,7 +217,8 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 			child.Transform.ScaleY *= ((float)DATA.Height / DATA.Width);
 		}
 
-		child.Children.Find(DATA => DATA.Type == "COLLISION").Name = name;
+		var collision = child.Children?.Find(DATA => DATA.Type == "COLLISION");
+		if( collision != null ) collision.Name = name;
 
 		var material   = child.Attributes.Find(DATA => DATA.Name == "MATERIAL");
 		var source     = material.Value.Value;
@@ -226,7 +233,7 @@ public class Add_Decal : cmk.NMS.Script.ModClass
 	// descriptor
 	protected void TkModelDescriptorList_Scene( DecalData DATA, NMS.PAK.Item.Path SOURCE )
 	{
-		var mbin  = CloneMbin<TkModelDescriptorList>(SOURCE, DATA.Model.Descriptor);
+		var mbin = CloneMbin<TkModelDescriptorList>(SOURCE, DATA.Model.Descriptor, true, false);
 	}
 
 	//...........................................................
